@@ -24,7 +24,8 @@ public class Warehouse implements Serializable {
 
   // FIXME define attributes
   
-  private List<Partner> _partners;
+  public List<Partner> _partners;
+
   // FIXME define contructor(s)
   public Warehouse() {
     _partners = new ArrayList<>();

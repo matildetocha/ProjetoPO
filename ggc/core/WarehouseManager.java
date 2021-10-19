@@ -4,10 +4,15 @@ package ggc.core;
 
 import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
+import ggc.core.Warehouse;
 
 import java.io.Serializable;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 import ggc.core.exception.BadEntryException;
 import ggc.core.exception.ImportFileException;
@@ -66,9 +71,18 @@ public class WarehouseManager {
       throw new ImportFileException(textfile, e);
     }
   }
+//eu coloquei a lista _partners como publica e dei import mas msm assim n ta a ler, idk why
+  public Partner getPartner(String id){
+    Iterator<Partner> iterator = _partners.iterator();
+    while (iterator.hasNext()) {
 
-  //public Partner getPartner(String id){
-
-    //return;}
+      Partner partner = iterator.next();
+        if (partner.getId().equals(id)) {
+            return partner;
+        }
+    }
+    return null;
+  }
   
+   // public List<Partner> getPartners(){}
 }
