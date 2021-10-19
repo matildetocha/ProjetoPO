@@ -5,6 +5,7 @@ package ggc.core;
 import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
 import ggc.core.Warehouse;
+// nao posso dar import em message pq ta em app
 
 import java.io.Serializable;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class WarehouseManager {
 
   //FIXME define other attributes
 
-  
+
   //FIXME define constructor(s)
   //FIXME define other methods
 
@@ -50,9 +51,19 @@ public Partner getPartner(String id){
  // public List<Partner> getPartners(){}
 }
 
+public void registerPartner(Partner partner){
 
+  _partners.add(partner);
+}
 
-
+public void CurrentDate(){
+  return _date.getTime();
+}
+//Message.currentDate();
+public void daysToAdvance(int days){
+  
+}
+//Prompt.daysToAdvance().
 
 
 

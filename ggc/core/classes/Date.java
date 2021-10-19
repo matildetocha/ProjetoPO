@@ -13,6 +13,8 @@ public class Date {
     //static Date now(){
         //return _days; }
    
-
+    public int getTime(){
+        return _days;
+    }
     
 }
