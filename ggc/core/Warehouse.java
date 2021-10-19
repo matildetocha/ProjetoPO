@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
 
-/**
+/**ddd
  * Class Warehouse implements a warehouse.
  */
 public class Warehouse implements Serializable {
