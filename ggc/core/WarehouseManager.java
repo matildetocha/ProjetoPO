@@ -1,6 +1,6 @@
 package ggc.core;
 
-//FIXME import classes (cannot import from pt.tecnico or ggc.app) AAAAAA
+//FIXME import classes (cannot import from pt.tecnico or ggc.app)
 
 import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
