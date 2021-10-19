@@ -1,7 +1,7 @@
 package ggc.core;
 
 
-// FIXME import classes (cannot import from pt.tecnico or ggc.app)
+// FIXME import classes (cannot import from pt.tecnico or ggc.app)A
 
 import java.io.Serializable;
 import java.io.IOException;
