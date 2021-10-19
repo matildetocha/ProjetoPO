@@ -1,10 +1,18 @@
 package ggc.core;
 
+
 // FIXME import classes (cannot import from pt.tecnico or ggc.app)
 
 import java.io.Serializable;
 import java.io.IOException;
 import ggc.core.exception.BadEntryException;
+
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+
+import ggc.core.classes.Partner;
+import ggc.core.classes.transactions.Acquisition;
 
 /**
  * Class Warehouse implements a warehouse.
@@ -15,7 +23,12 @@ public class Warehouse implements Serializable {
   private static final long serialVersionUID = 202109192006L;
 
   // FIXME define attributes
+  
+  private List<Partner> _partners;
   // FIXME define contructor(s)
+  public Warehouse() {
+    _partners = new ArrayList<>();
+  }
   // FIXME define methods
 
   /**
