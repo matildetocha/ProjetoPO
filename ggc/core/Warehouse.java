@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
+import ggc.core.classes.Date;
 
 /**ddd
  * Class Warehouse implements a warehouse.
@@ -24,6 +25,8 @@ public class Warehouse implements Serializable {
 
   // FIXME define attributes
   
+  private Date _date;
+  private int _nextTransactionId;
   public List<Partner> _partners;
 
   // FIXME define contructor(s)
@@ -31,6 +34,8 @@ public class Warehouse implements Serializable {
     _partners = new ArrayList<>();
   }
   // FIXME define methods
+
+
 
   /**
    * @param txtfile filename to be loaded.

@@ -29,8 +29,40 @@ public class WarehouseManager {
   private Warehouse _warehouse = new Warehouse();
 
   //FIXME define other attributes
+
+  
   //FIXME define constructor(s)
   //FIXME define other methods
+
+//eu coloquei a lista _partners como publica e dei import mas msm assim n ta a ler, idk why
+public Partner getPartner(String id){
+  Iterator<Partner> iterator = _partners.iterator();
+  while (iterator.hasNext()) {
+
+    Partner partner = iterator.next();
+      if (partner.getId().equals(id)) {
+          return partner;
+      }
+  }
+  return null;
+}
+
+ // public List<Partner> getPartners(){}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * @@throws IOException
@@ -71,18 +103,3 @@ public class WarehouseManager {
       throw new ImportFileException(textfile, e);
     }
   }
-//eu coloquei a lista _partners como publica e dei import mas msm assim n ta a ler, idk why
-  public Partner getPartner(String id){
-    Iterator<Partner> iterator = _partners.iterator();
-    while (iterator.hasNext()) {
-
-      Partner partner = iterator.next();
-        if (partner.getId().equals(id)) {
-            return partner;
-        }
-    }
-    return null;
-  }
-  
-   // public List<Partner> getPartners(){}
-}
