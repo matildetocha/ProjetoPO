@@ -15,7 +15,7 @@ class DoDisplayDate extends Command<WarehouseManager> {
   }
 
   @Override
-  public final void execute() throws CommandException {
+  protected final void execute() throws CommandException {
     //FIXME implement command
 
     _display.popup("" + Date.now());
