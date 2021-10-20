@@ -3,20 +3,16 @@ package ggc.core.classes;
 import java.lang.Math;
 
 public class Date {
-    private int _days;
+    private static int _days;
 
-    public int add(int days){
-        return _days;
+    public static void add(int days){
+        _days += days;
     }
     public int difference(Date other){
-        return Math.abs(other.getTime() - _days);
+        return Math.abs(other.now() - _days);
     }
 
-    static int now(){
+    public static int now(){
         return _days; }
-   
-    public int getTime(){
-        return _days;
-    }
-    
+
 }
