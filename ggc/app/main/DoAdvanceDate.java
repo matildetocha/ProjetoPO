@@ -21,7 +21,7 @@ class DoAdvanceDate extends Command<WarehouseManager> {
   protected final void execute() throws CommandException {
 
     Date.add(integerField("timeAdd"));
-    _display.popup("" + Date.now());
+    
   }
 
 }
