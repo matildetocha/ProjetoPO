@@ -1,4 +1,4 @@
-package ggc.core.classes;
+package ggc.core.classes; 
 
 import java.lang.Math;
 
@@ -12,7 +12,7 @@ public class Date {
         return Math.abs(other.getTime() - _days);
     }
 
-    static int now(){
+    public int now(){
         return _days; }
    
     public int getTime(){
