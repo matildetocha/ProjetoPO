@@ -49,7 +49,7 @@ public Partner getPartner(String id){
 }
 
  // public List<Partner> getPartners(){}
-}
+
 
 public void registerPartner(Partner partner){
 
@@ -64,13 +64,6 @@ public void daysToAdvance(int days){
   
 }
 //Prompt.daysToAdvance().
-
-
-
-
-
-
-
 
 
 
@@ -114,3 +107,4 @@ public void daysToAdvance(int days){
       throw new ImportFileException(textfile, e);
     }
   }
+}

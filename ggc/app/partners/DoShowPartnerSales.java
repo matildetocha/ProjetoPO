@@ -18,6 +18,7 @@ class DoShowPartnerSales extends Command<WarehouseManager> {
   @Override
   public void execute() throws CommandException {
     //FIXME implement command
+    //if(cath exception3)
   }
 
 }
