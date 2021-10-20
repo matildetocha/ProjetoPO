@@ -36,7 +36,10 @@ public class WarehouseManager {
   //FIXME define other methods
 
 //eu coloquei a lista _partners como publica e dei import mas msm assim n ta a ler, idk why
+//estas funcoes deve ser na app i dont know
+/*
 public Partner getPartner(String id){
+  
   Iterator<Partner> iterator = _partners.iterator();
   while (iterator.hasNext()) {
 
@@ -59,13 +62,15 @@ public void registerPartner(Partner partner){
 public void CurrentDate(){
   return _date.getTime();
 }
+
+
 //Message.currentDate();
 public void daysToAdvance(int days){
   
 }
 //Prompt.daysToAdvance().
 
-
+*/
 
 
   /**
