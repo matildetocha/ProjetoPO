@@ -12,7 +12,7 @@ public class Date {
         return Math.abs(other.now() - _days);
     }
 
-    public int now(){
+    public static int now(){
         return _days; }
 
 }
