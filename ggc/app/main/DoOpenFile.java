@@ -3,6 +3,10 @@ package ggc.app.main;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import ggc.core.WarehouseManager;
+import ggc.core.exception.UnavailableFileException;
+import ggc.app.exception.FileOpenFailedException;
+import java.lang.ClassNotFoundException;
+
 //FIXME import classes
 
 /**
@@ -17,16 +21,18 @@ class DoOpenFile extends Command<WarehouseManager> {
   }
 
   @Override
-  public final void execute() throws CommandException {
-    /*
-    try {
-      //FIXME implement command
-    } catch (UnavailableFileException ufe) {
-      throw new FileOpenFailedException(ufe.getFilename());
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();  
-    }
-    */
+  protected final void execute() throws CommandException {
+    
+  //   try {
+
+
+  //     //FIXME implement command
+  //   } catch (UnavailableFileException ufe) {
+  //     throw new FileOpenFailedException(ufe.getFilename());
+  //   } catch (ClassNotFoundException e) {
+  //     e.printStackTrace();  
+  //   }
+    
   }
 
 }
