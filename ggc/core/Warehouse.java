@@ -15,7 +15,7 @@ import ggc.core.classes.Partner;
 import ggc.core.classes.transactions.Acquisition;
 import ggc.core.classes.Date;
 
-/**ddd
+/**TESTE TESTE no windows
  * Class Warehouse implements a warehouse.
  */
 public class Warehouse implements Serializable {
