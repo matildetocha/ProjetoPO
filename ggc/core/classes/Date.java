@@ -1,5 +1,7 @@
 package ggc.core.classes;
 
+import java.lang.Math;
+
 public class Date {
     private int _days;
 
@@ -7,11 +9,11 @@ public class Date {
         return _days;
     }
     public int difference(Date other){
-        return other._days - _days;
+        return Math.abs(other.getTime() - _days);
     }
 
-    //static Date now(){
-        //return _days; }
+    static int now(){
+        return _days; }
    
     public int getTime(){
         return _days;
