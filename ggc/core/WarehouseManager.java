@@ -20,6 +20,7 @@ import ggc.core.exception.ImportFileException;
 import ggc.core.exception.UnavailableFileException;
 import ggc.core.exception.MissingFileAssociationException;
 
+import pt.tecnico.uilib.Display;
 /** Façade for access. */
 public class WarehouseManager {
 
@@ -40,7 +41,7 @@ public class WarehouseManager {
 
 public Partner getPartner(String id){
   
-  Iterator<Partner> iterator = _warehouse._partners.iterator();
+  Iterator<Partner> iterator = _warehouse.getPartners().iterator();
   while (iterator.hasNext()) {
 
     Partner partner = iterator.next();
@@ -56,7 +57,19 @@ public Partner getPartner(String id){
 
 public void registerPartner(Partner partner){
 
-  _warehouse._partners.add(partner);
+  _warehouse.getPartners().add(partner);
+}
+
+public void removePartner(Partner partner){
+
+  _warehouse.getPartners().remove(partner);
+}
+
+public void displayPartners(){
+  Display _display = new Display();
+  for (Partner partner : _warehouse.getPartners())
+    _display.addLine(partner.toString());
+  _display.display();
 }
 
   /**

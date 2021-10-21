@@ -34,7 +34,11 @@ public class Warehouse implements Serializable {
     _partners = new ArrayList<>();
   }
   // FIXME define methods
+  public List<Partner> getPartners(){
+    return _partners;
+  }
 
+  
 
 
   /**
