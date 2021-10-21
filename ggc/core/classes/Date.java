@@ -16,7 +16,6 @@ public class Date {
         _days += days;
     }
     public int difference(Date other){
-        //return Math.abs(other.now() - _days);
         return Math.abs(Date.now() - other.now());
     }
 

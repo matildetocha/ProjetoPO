@@ -7,7 +7,7 @@ abstract class Product{
 
     public void Product(String id){}
 
-   // abstract protected void checkQuantity(int quantity, Partner p);
+   // abstract void checkQuantity(int quantity, Partner p);
     public String getId(){
         return _id;
     }

@@ -17,7 +17,7 @@ public class Parser {
   public Parser(Warehouse w) {
     _store = w;
   }
-
+/*  
   void parseFile(String filename) throws IOException, BadEntryException {
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
       String line;
@@ -82,7 +82,7 @@ public class Parser {
     // add batch with price, stock and partner to product
   }
  
-    
+  
   //BATCH_M|idProduto|idParceiro|prec ̧o|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
   private void parseAggregateProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 7)
@@ -115,5 +115,5 @@ public class Parser {
     int stock = Integer.parseInt(components[4]);
     // add code here to
     // add batch with price, stock and partner to product
-  }
+  }*/
 }

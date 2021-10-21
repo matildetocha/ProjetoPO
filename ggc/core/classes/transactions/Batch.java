@@ -7,6 +7,6 @@ public class Batch {
 
     //public String toString(){}
 
-    //protected Batch makeCopy(){}
+    //Batch makeCopy(){}
     
 }
