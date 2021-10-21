@@ -55,8 +55,13 @@ public Partner getPartner(String id){
  // public List<Partner> getPartners(){}
 
 
-public void registerPartner(Partner partner){
+public void registerPartner(Partner partner) throws BadEntryException{
+  for (Partner part : _warehouse.getPartners()){
 
+    if(part.getId().equals(partner.getId())){
+      throw new BadEntryException(partner.getId());
+    }
+  }
   _warehouse.getPartners().add(partner);
 }
 
