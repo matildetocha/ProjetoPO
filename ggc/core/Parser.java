@@ -73,7 +73,7 @@ public class Parser {
     // add code here to do the following
     //if (!_store does not have product with idProduct)
     //  register simple product with idProduct in _store;
-    
+    //teste teste teste
     // add code here 
     //Product product = get Product in _store with productId;
     //Partner partner = get Partner in _store with partnerId;
