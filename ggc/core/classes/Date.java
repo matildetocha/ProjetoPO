@@ -3,7 +3,7 @@ package ggc.core.classes;
 import java.lang.Math;
 
 import ggc.core.exception.BadEntryException;
-
+//Adada
 public class Date {
     private static int _days;
 
