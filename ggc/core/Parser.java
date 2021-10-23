@@ -12,12 +12,12 @@ import ggc.core.exception.BadEntryException;
 public class Parser {
 
   // It could be WarehouseManager too. Or something else.
-  private Warehouse _store;
+  private WarehouseManager _store;
 
-  public Parser(Warehouse w) {
+  public Parser(WarehouseManager w) {
     _store = w;
   }
-/*  
+
   void parseFile(String filename) throws IOException, BadEntryException {
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
       String line;
@@ -39,7 +39,7 @@ public class Parser {
         break;
 
       case "BATCH_M":
-        parseAggregateProduct(components, line);
+        //parseAggregateProduct(components, line);
         break;
         
       default:
@@ -58,6 +58,8 @@ public class Parser {
     
     // add code here to
     // register partner with id, name, address in _store;
+    Partner partner = new Partner(name, id, address);
+    _store.registerPartner(partner);
   }
 
   //BATCH_S|idProduto|idParceiro|prec ̧o|stock-actual
@@ -70,19 +72,31 @@ public class Parser {
     double price = Double.parseDouble(components[3]);
     int stock = Integer.parseInt(components[4]);
     
-    // add code here to do the following
-    //if (!_store does not have product with idProduct)
+    //if (!_store does not have product with idProduct)  (feito dentro do register)
     //  register simple product with idProduct in _store;
-    //teste teste teste
-    // add code here 
+    Product product = new SimpleProduct(idProduct);
+
+    //get partner com o id recebido
+    _store.registerProduct(product);
+
     //Product product = get Product in _store with productId;
     //Partner partner = get Partner in _store with partnerId;
+    for (Partner part : _store.getPartnersManager()){
 
+      if(part.getId().equals(idPartner)){
+        Batch batch = new Batch(product, part, price, stock);
+        _store.registerBatch(batch);
+      }
+        
+      
+    }
     // add code here to
     // add batch with price, stock and partner to product
+
+
   }
  
-  
+/*
   //BATCH_M|idProduto|idParceiro|prec ̧o|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
   private void parseAggregateProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 7)
