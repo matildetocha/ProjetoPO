@@ -9,8 +9,8 @@ class SimpleProduct extends Product{
     void checkQuantity(int quantity, Partner p) {
     
     }
-
+/*
     public String toString() {
-
-    }
+        idProduto|preço-máximo|stock-actual-total
+    }*/
 }
