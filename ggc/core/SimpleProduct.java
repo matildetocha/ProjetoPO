@@ -10,7 +10,5 @@ class SimpleProduct extends Product{
     
     }
 
-    public String toString() {
-
-    }
+    // public String toString(){}
 }
