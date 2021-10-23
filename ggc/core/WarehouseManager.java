@@ -61,6 +61,21 @@ public void registerPartner(Partner partner) throws BadEntryException{
   _warehouse.getPartners().add(partner);
 }
 
+public void registerProduct(Product product) throws BadEntryException{
+  for (Product prod : _warehouse.getProducts()){
+
+    if(prod.getId().equals(product.getId())){
+      throw new BadEntryException(product.getId());
+    }
+  }
+  _warehouse.getProducts().add(product);
+}
+
+
+public void registerBatch(Batch batch) throws BadEntryException{
+  _warehouse.getBatches().add(batch);
+}
+
 public void removePartner(Partner partner){
 
   _warehouse.getPartners().remove(partner);
@@ -72,6 +87,16 @@ public void displayPartners(){
     _display.addLine(partner.toString());
   _display.display();
 }
+
+public List<Partner> getPartnersManager(){
+  return _warehouse.getPartners();
+}
+
+public List<Product> getProductsManager(){
+  return _warehouse.getProducts();
+}  
+
+
 
   /**
    * @@throws IOException
