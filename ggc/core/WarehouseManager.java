@@ -1,6 +1,5 @@
 package ggc.core;
 
-//FIXME import classes (cannot import from pt.tecnico or ggc.app)
 import ggc.core.Warehouse;
 // nao posso dar import em message pq ta em app 
 import ggc.core.exception.BadEntryException;
@@ -12,12 +11,12 @@ import java.io.Serializable;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ArrayList;
 
-import pt.tecnico.uilib.Display;
-/** Façade for access. */
+/** Facade for access. */
 public class WarehouseManager {
 
   /** Name of file storing current warehouse. */
@@ -34,32 +33,17 @@ public class WarehouseManager {
 
 //eu coloquei a lista _partners como publica e dei import mas msm assim n ta a ler, idk why
 //estas funcoes deve ser na app i dont know
-
-public Partner getPartner(String id){
-  
-  Iterator<Partner> iterator = _warehouse.getPartners().iterator();
-  while (iterator.hasNext()) {
-
-    Partner partner = iterator.next();
-      if (partner.getId().equals(id)) {
-          return partner;
-      }
+  public Warehouse getWarehouse() {
+    return _warehouse;
   }
-  return null;
-}
 
- // public List<Partner> getPartners(){}
-
-
-public void registerPartner(Partner partner) throws BadEntryException{
-  for (Partner part : _warehouse.getPartners()){
-
-    if(part.getId().equals(partner.getId())){
-      throw new BadEntryException(partner.getId());
-    }
+  public Partner getPartner(String id){
+    return getWarehouse().getPartner(id);
   }
-  _warehouse.getPartners().add(partner);
-}
+
+  public Map<String, Partner> getPartners() {
+    return getWarehouse().getPartners();
+  }
 
 public void registerProduct(Product product) throws BadEntryException{
   for (Product prod : _warehouse.getProducts()){
@@ -76,17 +60,20 @@ public void registerBatch(Batch batch) throws BadEntryException{
   _warehouse.getBatches().add(batch);
 }
 
-public void removePartner(Partner partner){
+  public void registerPartner(String name, String id, String address) throws BadEntryException {
+    getWarehouse().registerPartner(id, name, address);
+  }
 
-  _warehouse.getPartners().remove(partner);
-}
+  public void removePartner(Partner partner){
+    _warehouse.getPartners().remove(partner);
+  }
 
-public void displayPartners(){
-  Display _display = new Display();
-  for (Partner partner : _warehouse.getPartners())
-    _display.addLine(partner.toString());
-  _display.display();
-}
+  // public void displayPartners(){
+  //   Display _display = new Display();   // ! não podemos dar import do pt.tecnico aqui, logo não é para dar display no WM só na app
+  //   for (Partner partner : _warehouse.getPartners())
+  //     _display.addLine(partner.toString());
+  //   _display.display();
+  // }
 
 public List<Partner> getPartnersManager(){
   return _warehouse.getPartners();

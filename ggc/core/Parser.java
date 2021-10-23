@@ -58,8 +58,7 @@ public class Parser {
     
     // add code here to
     // register partner with id, name, address in _store;
-    Partner partner = new Partner(name, id, address);
-    _store.registerPartner(partner);
+    _store.registerPartner(name, id, address);
   }
 
   //BATCH_S|idProduto|idParceiro|prec ̧o|stock-actual
@@ -81,7 +80,8 @@ public class Parser {
 
     //Product product = get Product in _store with productId;
     //Partner partner = get Partner in _store with partnerId;
-    for (Partner part : _store.getPartnersManager()){
+    
+ /*   for (Partner part : _store.getPartnersManager()){
 
       if(part.getId().equals(idPartner)){
         Batch batch = new Batch(product, part, price, stock);
@@ -89,7 +89,8 @@ public class Parser {
       }
         
       
-    }
+    }*/
+    
     // add code here to
     // add batch with price, stock and partner to product
 
