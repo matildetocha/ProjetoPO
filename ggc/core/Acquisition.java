@@ -1,6 +1,6 @@
-package ggc.core.classes.transactions;
+package ggc.core;
 
-import ggc.core.classes.Partner;
+import ggc.core.Partner;
 
 public class Acquisition extends Transaction{
 

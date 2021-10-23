@@ -1,4 +1,4 @@
-package ggc.core.classes;
+package ggc.core;
 
 public class Partner {
     private String _id;

@@ -3,7 +3,7 @@ package ggc.app.partners;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import ggc.core.WarehouseManager;
-import ggc.core.classes.Partner;
+import ggc.core.Partner;
 
 import java.util.List;
 import java.util.ArrayList;

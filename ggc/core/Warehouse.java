@@ -5,15 +5,14 @@ package ggc.core;
 
 import java.io.Serializable;
 import java.io.IOException;
-import ggc.core.exception.BadEntryException;
-
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-import ggc.core.classes.Partner;
-import ggc.core.classes.transactions.Acquisition;
-import ggc.core.classes.Date;
+import ggc.core.Partner;
+import ggc.core.exception.BadEntryException;
+import ggc.core.Acquisition;
+import ggc.core.Date;
 
 /**TESTE TESTE no windows
  * Class Warehouse implements a warehouse.

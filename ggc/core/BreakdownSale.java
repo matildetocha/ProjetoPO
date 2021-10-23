@@ -1,4 +1,4 @@
-package ggc.core.classes.transactions.sales;
+package ggc.core;
 
 public class BreakdownSale extends Sale{
     

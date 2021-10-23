@@ -1,4 +1,4 @@
-package ggc.core.classes; 
+package ggc.core; 
 
 import java.lang.Math;
 

@@ -1,8 +1,5 @@
-package ggc.core.classes.transactions.sales;
+package ggc.core;
 
-import ggc.core.classes.Date;
-
-// extends Sale
 public class SaleByCredit extends Sale{
 
     private Date _Date;
