@@ -1,8 +1,10 @@
-package ggc.core.classes;
+package ggc.core.classes.products;
+
+import ggc.core.classes.Partner;
 
 public class AggregateProduct extends Product{
 
-    protected void AggregateProduct(String id){}
+    protected AggregateProduct(String id) {}
 
     protected void checkQuantity(int quantity, Partner p){}
 

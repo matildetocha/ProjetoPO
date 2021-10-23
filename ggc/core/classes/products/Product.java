@@ -1,11 +1,12 @@
-package ggc.core.classes;
+package ggc.core.classes.products;
 
 abstract class Product{
     
     private double _maxPrice;
     private String _id;
 
-    public void Product(String id){}
+    Product(String id) {
+    }
 
    // abstract void checkQuantity(int quantity, Partner p);
     public String getId(){
