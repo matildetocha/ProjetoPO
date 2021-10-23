@@ -10,10 +10,10 @@ import ggc.core.WarehouseManager;
  */
 public class DoRegisterBreakdownTransaction extends Command<WarehouseManager> {
 
-  public DoRegisterBreakdownTransaction(WarehouseManager receiver) {
-    super(Label.REGISTER_ACQUISITION_TRANSACTION, receiver);
-    //FIXME maybe add command fields
-  }
+public DoRegisterBreakdownTransaction(WarehouseManager receiver) {
+   super(Label.REGISTER_BREAKDOWN_TRANSACTION, receiver);
+   //FIXME maybe add command fields
+ }
 
   @Override
   public final void execute() throws CommandException {
