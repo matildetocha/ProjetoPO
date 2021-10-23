@@ -1,11 +1,12 @@
 package ggc.core;
 
 //FIXME import classes (cannot import from pt.tecnico or ggc.app)
-
-import ggc.core.classes.Partner;
-import ggc.core.classes.transactions.Acquisition;
 import ggc.core.Warehouse;
-// nao posso dar import em message pq ta em app
+// nao posso dar import em message pq ta em app 
+import ggc.core.exception.BadEntryException;
+import ggc.core.exception.ImportFileException;
+import ggc.core.exception.MissingFileAssociationException;
+import ggc.core.exception.UnavailableFileException;
 
 import java.io.Serializable;
 import java.io.IOException;
@@ -14,11 +15,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
-
-import ggc.core.exception.BadEntryException;
-import ggc.core.exception.ImportFileException;
-import ggc.core.exception.UnavailableFileException;
-import ggc.core.exception.MissingFileAssociationException;
 
 import pt.tecnico.uilib.Display;
 /** Façade for access. */

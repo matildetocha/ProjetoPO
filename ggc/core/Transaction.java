@@ -1,4 +1,4 @@
-package ggc.core.classes.transactions;
+package ggc.core;
 
 import java.sql.Date;
 

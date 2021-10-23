@@ -4,8 +4,7 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.InvalidDateException;
 import ggc.core.WarehouseManager;
-import ggc.core.classes.Date;
-//FIXME import classes
+import ggc.core.Date;
 import ggc.core.exception.BadEntryException;
 
 
