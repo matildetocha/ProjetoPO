@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import ggc.core.Partner;
 import ggc.core.exception.BadEntryException;
@@ -26,8 +27,9 @@ public class Warehouse implements Serializable {
   
   private Date _date;
   private int _nextTransactionId;
-  public List<Partner> _partners;
-
+  private List<Partner> _partners;
+  private List<Product> _products; 
+  private List<Batch> _batches; 
   // FIXME define contructor(s)
   public Warehouse() {
     _partners = new ArrayList<>();
@@ -37,9 +39,13 @@ public class Warehouse implements Serializable {
     return _partners;
   }
 
-  
+  public List<Product> getProducts(){
+    return _products;
+  }  
 
-
+  public List<Batch> getBatches(){
+    return _batches;
+  } 
   /**
    * @param txtfile filename to be loaded.
    * @throws IOException
