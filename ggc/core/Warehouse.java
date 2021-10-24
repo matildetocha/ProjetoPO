@@ -37,12 +37,30 @@ public class Warehouse implements Serializable {
 		return _partners.get(id);
 	}
 
-	void registerPartner(String name, String id,  String address) throws BadEntryException {
+	void registerPartner(String name, String id, String address) throws BadEntryException {
 		Partner partner = new Partner(name, id, address);
-			if (_partners.containsKey(id)) 
-				throw new BadEntryException(partner.getId());
-			
+		if (_partners.containsKey(id))
+			throw new BadEntryException(partner.getId());
+
 		_partners.put(partner.getId(), partner);
+	}
+
+	Map<String, Product> getProducts() {
+		return _products;
+	}
+
+	Product getProduct(String id) throws BadEntryException {
+		if (!_products.containsKey(id))
+			throw new BadEntryException(id);
+		
+			return _products.get(id);
+	}
+
+	void registerProduct(Product product) throws BadEntryException {
+		if (_products.containsKey(product.getId()))
+			throw new BadEntryException(product.getId());
+
+		_products.put(product.getId(), product);
 	}
 
 	/**

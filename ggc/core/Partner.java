@@ -1,5 +1,8 @@
 package ggc.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Partner {
     private static final String NORMAL = "Normal";
     private static final String SELECTION = "Selection";
@@ -13,6 +16,7 @@ public class Partner {
     private double _valueAcquisitions;
     private double _valueSales;
     private double _valuePaidSales;
+    private List<Batch> _batches;
         
     Partner(String name, String id, String address){
         _name = name;
@@ -21,6 +25,7 @@ public class Partner {
         _status = NORMAL;
         _points = 0;
         _valueAcquisitions = _valueSales = _valuePaidSales = 0;
+        _batches = new ArrayList<>();
     }
 
     String getId(){
@@ -34,7 +39,11 @@ public class Partner {
 
     }
 
-    public String toString(){
+    void addBatch(Batch batch) {
+		_batches.add(batch);
+	}
+
+    public String toString() {
 
         return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  _points + 
             "|" + _valueAcquisitions + "|" + _valueSales + "|" + _valuePaidSales; 

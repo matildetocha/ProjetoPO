@@ -36,30 +36,16 @@ public class WarehouseManager {
     _warehouse.registerPartner(name, id, address);
   }
 
-// public void registerProduct(Product product) throws BadEntryException{
-//   for (Product prod : _warehouse.getProducts()){
+  public Product getProduct(String id) throws BadEntryException {
+    return _warehouse.getProduct(id);
+  }
 
-//     if(prod.getId().equals(product.getId())){
-//       throw new BadEntryException(product.getId());
-//     }
-//   }
-//   _warehouse.getProducts().add(product);
-// }
-
-
-// public void registerBatch(Batch batch) throws BadEntryException{
-//   _warehouse.getBatches().add(batch);
-// }
-
-  // public List<Partner> getPartnersManager(){
-  //   return _warehouse.getPartners();
-  // }
-
-  // public List<Product> getProductsManager(){
-  //   return _warehouse.getProducts();
-  // }  
-
-
+  public Map<String, Product> getProducts() {
+    return _warehouse.getProducts();
+  }
+  public void registerProduct(Product product) throws BadEntryException {
+    _warehouse.registerProduct(product);
+  }
 
   /**
    * @@throws IOException

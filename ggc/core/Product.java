@@ -23,4 +23,8 @@ public abstract class Product {
 		return _maxPrice;
 	}
 
+	void addBatch(Batch batch) {
+		_batches.add(batch);
+	}
+
 }
