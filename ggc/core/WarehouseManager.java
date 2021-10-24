@@ -8,7 +8,7 @@ import ggc.core.exception.UnavailableFileException;
 import java.io.Serializable;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-
+import java.util.List;
 import java.util.Map;
 
 /** Facade for access. */
@@ -45,6 +45,14 @@ public class WarehouseManager {
   }
   public void registerProduct(Product product) throws BadEntryException {
     _warehouse.registerProduct(product);
+  }
+
+  public List<Batch> getBatchesByPartner(String id) throws BadEntryException {
+    return _warehouse.getBatchesByPartner(id);
+  }
+
+  public List<Batch> getBatchesByProduct(String id) throws BadEntryException {
+    return _warehouse.getBatchesByProduct(id);
   }
 
   /**

@@ -3,8 +3,9 @@ package ggc.core;
 import java.io.Serializable;
 import java.io.IOException;
 
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
 import java.util.HashMap;
 
 import ggc.core.exception.BadEntryException;
@@ -31,7 +32,7 @@ public class Warehouse implements Serializable {
 	}
 
 	Partner getPartner(String id) throws BadEntryException {
-		if (!_partners.containsKey(id)) 
+		if (!_partners.containsKey(id))
 			throw new BadEntryException(id);
 
 		return _partners.get(id);
@@ -52,8 +53,8 @@ public class Warehouse implements Serializable {
 	Product getProduct(String id) throws BadEntryException {
 		if (!_products.containsKey(id))
 			throw new BadEntryException(id);
-		
-			return _products.get(id);
+
+		return _products.get(id);
 	}
 
 	void registerProduct(Product product) throws BadEntryException {
@@ -61,6 +62,18 @@ public class Warehouse implements Serializable {
 			throw new BadEntryException(product.getId());
 
 		_products.put(product.getId(), product);
+	}
+
+	List<Batch> getBatchesByPartner(String id) throws BadEntryException {
+		if (!_partners.containsKey(id))
+			throw new BadEntryException(id);
+		return _partners.get(id).getBatches();
+	}
+
+	List<Batch> getBatchesByProduct(String id) throws BadEntryException {
+		if (!_products.containsKey(id))
+			throw new BadEntryException(id);
+		return _products.get(id).getBatches();
 	}
 
 	/**

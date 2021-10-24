@@ -43,9 +43,14 @@ public class Partner {
 		_batches.add(batch);
 	}
 
+    List<Batch> getBatches() {
+        return _batches;
+    }
+
     public String toString() {
 
         return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  _points + 
             "|" + _valueAcquisitions + "|" + _valueSales + "|" + _valuePaidSales; 
     }
+
 }   

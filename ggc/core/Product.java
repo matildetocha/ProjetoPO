@@ -27,4 +27,8 @@ public abstract class Product {
 		_batches.add(batch);
 	}
 
+	List<Batch> getBatches() {
+		return _batches;
+	}
+
 }
