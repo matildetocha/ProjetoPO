@@ -3,7 +3,6 @@ package ggc.app.partners;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
-import ggc.app.partners.Message;
 import ggc.app.exception.DuplicatePartnerKeyException;
 
 import ggc.core.WarehouseManager;
@@ -23,7 +22,7 @@ class DoRegisterPartner extends Command<WarehouseManager> {
   }
 
   @Override
-  public void execute() throws CommandException, DuplicatePartnerKeyException {
+  public void execute() throws CommandException {
     try {
       _receiver.registerPartner(stringField("name"), stringField("id"), stringField("address"));
     } catch (BadEntryException e) {

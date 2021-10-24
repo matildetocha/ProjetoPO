@@ -1,19 +1,13 @@
 package ggc.core;
 
-// FIXME import classes (cannot import from pt.tecnico or ggc.app)
-
 import java.io.Serializable;
 import java.io.IOException;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.HashMap;
 
-import ggc.core.Partner;
 import ggc.core.exception.BadEntryException;
-import ggc.core.Acquisition;
-import ggc.core.Date;
 
 /**
  * TESTE TESTE no windows Class Warehouse implements a warehouse.
@@ -25,7 +19,8 @@ public class Warehouse implements Serializable {
 
 	private Date _date;
 	private int _nextTransactionId;
-	public Map<String, Partner> _partners; // ! mudei para set, porque assumo que não se podem repetir partners
+	private Map<String, Partner> _partners;
+	private Map<String, Product> _products;
 
 	Warehouse() {
 		_partners = new HashMap<>();
@@ -35,29 +30,19 @@ public class Warehouse implements Serializable {
 		return _partners;
 	}
 
-	Partner getPartner(String id) {
-		Set<String> keys = getPartners().keySet();
-		Iterator<String> iterator = keys.iterator();
-		Partner partner;
+	Partner getPartner(String id) throws BadEntryException {
+		if (!_partners.containsKey(id)) 
+			throw new BadEntryException(id);
 
-		while (iterator.hasNext()) {
-			partner = getPartners().get(iterator.next());
-			if (partner.getId().equals(id)) {
-				return partner;
-			}
-		}
-		return null;
+		return _partners.get(id);
 	}
 
 	void registerPartner(String name, String id,  String address) throws BadEntryException {
 		Partner partner = new Partner(name, id, address);
-		for (String key : getPartners().keySet()) {
-			if (key.equals(partner.getId())) {
+			if (_partners.containsKey(id)) 
 				throw new BadEntryException(partner.getId());
-			}
-		}
-
-		getPartners().put(partner.getId(), partner);
+			
+		_partners.put(partner.getId(), partner);
 	}
 
 	/**
