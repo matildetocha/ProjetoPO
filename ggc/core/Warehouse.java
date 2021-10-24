@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Set;
 
 import java.util.HashMap;
 
@@ -76,6 +78,17 @@ public class Warehouse implements Serializable {
 		return _products.get(id).getBatches();
 	}
 
+	List<Batch> getBatches(){	    
+
+		List<Batch> orderedBatches = new ArrayList<Batch>();
+		
+		Set<String> keys = this.getPartners().keySet();
+			Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) 
+		_receiver.getPartner(iterator.next());
+
+	}
 	/**
 	 * @param txtfile filename to be loaded.
 	 * @throws IOException

@@ -17,5 +17,6 @@ class DoShowAllPartners extends Command<WarehouseManager> {
   @Override
   public void execute() throws CommandException {
     _display.popup(_receiver.getPartners().values());
+    
   }
 }
