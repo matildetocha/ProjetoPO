@@ -36,7 +36,6 @@ public class Partner {
         if (_points <= 2000) _status = NORMAL;
         else if (_points < 25000 && _points > 2000) _status = SELECTION;
         else if (_points > 25000) _status = ELITE;
-
     }
 
     void addBatch(Batch batch) {
@@ -48,7 +47,6 @@ public class Partner {
     }
 
     public String toString() {
-
         return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  _points + 
             "|" + _valueAcquisitions + "|" + _valueSales + "|" + _valuePaidSales; 
     }

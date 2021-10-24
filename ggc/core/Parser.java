@@ -68,18 +68,17 @@ public class Parser {
     double price = Double.parseDouble(components[3]);
     int stock = Integer.parseInt(components[4]);
 
-    if (_store.getProducts().containsKey(idProduct)) {
+    if (!_store.getProducts().containsKey(idProduct)) {
       SimpleProduct simpleProduct = new SimpleProduct(idProduct);
       _store.registerProduct(simpleProduct);
+
+      Product product = _store.getProduct(idProduct);
+      Partner partner = _store.getPartner(idPartner);
+
+      Batch batch = new Batch(product, partner, price, stock);
+      product.addBatch(batch);
+      partner.addBatch(batch);
     }
-
-    Product product = _store.getProduct(idProduct);
-    Partner partner = _store.getPartner(idPartner);
-
-    Batch batch = new Batch(product, partner, price, stock);
-    product.addBatch(batch);
-    partner.addBatch(batch);
-
   }
 
   // BATCH_M|idProduto|idParceiro|prec

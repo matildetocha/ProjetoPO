@@ -7,7 +7,6 @@ import ggc.core.WarehouseManager;
 import ggc.core.Date;
 import ggc.core.exception.BadEntryException;
 
-
 /**
  * Advance current date.
  */
@@ -16,21 +15,15 @@ class DoAdvanceDate extends Command<WarehouseManager> {
   DoAdvanceDate(WarehouseManager receiver) {
     super(Label.ADVANCE_DATE, receiver);
     addIntegerField("timeAdd", Message.requestDaysToAdvance());
-    //FIXME add command fields
   }
 
   @Override
   protected final void execute() throws CommandException, InvalidDateException {
 
-    try{
-
-    Date.add(integerField("timeAdd"));
-
-    }catch (BadEntryException e){
-
+    try {
+      Date.add(integerField("timeAdd"));
+    } catch (BadEntryException e) {
       throw new InvalidDateException(integerField("timeAdd"));
     }
-    
   }
-
 }
