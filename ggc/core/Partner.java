@@ -2,7 +2,7 @@ package ggc.core;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.lang.Math;
 public class Partner {
     private static final String NORMAL = "Normal";
     private static final String SELECTION = "Selection";
@@ -46,9 +46,23 @@ public class Partner {
         return _batches;
     }
 
+ 
+    boolean equals(Partner partner){
+
+        if(_id.length() != partner.getId().length())
+            return false;
+        else{
+            for(int i = 0; i<_id.length(); i++)
+                if(_id.charAt(i) != partner.getId().charAt(i))
+                    return false;
+        }   
+        return true;
+    }
+
     public String toString() {
         return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  _points + 
-            "|" + _valueAcquisitions + "|" + _valueSales + "|" + _valuePaidSales; 
+            "|" + Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + 
+            "|" + Math.round(_valuePaidSales); 
     }
 
 }   
