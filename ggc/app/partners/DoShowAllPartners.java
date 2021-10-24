@@ -1,9 +1,7 @@
 package ggc.app.partners;
 
 import pt.tecnico.uilib.menus.Command;
-
-import java.util.Iterator;
-import java.util.Set;
+import pt.tecnico.uilib.menus.CommandException;
 
 import ggc.core.WarehouseManager;
 
@@ -17,11 +15,7 @@ class DoShowAllPartners extends Command<WarehouseManager> {
   }
 
   @Override
-  public void execute() {
-    Set<String> keys = _receiver.getPartners().keySet();
-		Iterator<String> iterator = keys.iterator();
-
-		while (iterator.hasNext()) 
-      _display.popup(_receiver.getPartners().get(iterator.next()));
+  public void execute() throws CommandException {
+    _display.popup(_receiver.getPartners().values());
   }
 }
