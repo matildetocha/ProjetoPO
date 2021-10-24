@@ -1,9 +1,8 @@
 package ggc.core;
 
-import ggc.core.Partner;
-import ggc.core.Product;
-
-public class AggregateProduct extends Product{
+public class AggregateProduct extends Product {
+    private Recipe _recipe;
+    
     AggregateProduct(String id) {
         super(id);
     }
@@ -13,6 +12,10 @@ public class AggregateProduct extends Product{
 
     }
 
-   // public String toString(){}
+    public String toString() {
+        return super.getId() + "|" + super.getMaxPrice() + 
+            "|" + "stock-atual-total" + "|" + "receita";  // ! método para ver o stock-atual-total  
+                                                          // ! método para ver a receita do produto
+    }
     
 }
