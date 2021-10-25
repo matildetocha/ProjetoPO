@@ -38,7 +38,7 @@ public class Parser {
       break;
 
     case "BATCH_M":
-      // parseAggregateProduct(components, line);
+      parseAggregateProduct(components, line);
       break;
 
     default:

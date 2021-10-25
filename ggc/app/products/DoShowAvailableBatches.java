@@ -25,14 +25,8 @@ class DoShowAvailableBatches extends Command<WarehouseManager> {
   @Override
   public final void execute() throws CommandException {
     //FIXME implement command
-
-
-    //for(Partner part : _receiver.getPartners())
-      //orderedBatches.add(_receiver.getBatchesByPartner(part.getId()));
-
-
-
-
+    _display.popup(_receiver.getAllBatches());
+    
   }
 }
 
