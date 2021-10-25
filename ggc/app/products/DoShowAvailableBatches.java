@@ -6,9 +6,12 @@ import pt.tecnico.uilib.menus.CommandException;
 import java.util.ArrayList;
 import java.util.List;
 import ggc.core.Batch;
+import ggc.core.BatchComparator;
 import ggc.core.Partner;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ggc.core.WarehouseManager;
 //FIXME import classes
@@ -26,7 +29,7 @@ class DoShowAvailableBatches extends Command<WarehouseManager> {
   public final void execute() throws CommandException {
     //FIXME implement command
     _display.popup(_receiver.getAllBatches());
-    
+    Collections.sort(_receiver.getAllBatches(), new BatchComparator());
   }
 }
 

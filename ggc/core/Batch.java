@@ -1,6 +1,7 @@
 package ggc.core;
 
-public class Batch {
+
+public class Batch{
     private double _price;
     private int _quantity;
     private Product _product;
@@ -17,6 +18,11 @@ public class Batch {
         return _partner.getId() + "|" + _product.getId() + "|" + _price + "|" + _quantity;
     }
 
+    public double getPrice(){
+        return _price;
+    }
+
+ 
     //Batch makeCopy(){}
     
 }
