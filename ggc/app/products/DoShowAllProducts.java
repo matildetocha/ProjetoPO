@@ -3,6 +3,8 @@ package ggc.app.products;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
+
+
 import ggc.core.WarehouseManager;
 
 /**

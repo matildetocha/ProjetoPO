@@ -1,5 +1,5 @@
 *** tests/A-01-04-M-ok.out	2021-10-10 16:58:56.000000000 +0100
---- tests/A-01-04-M-ok.outhyp	2021-10-26 21:26:21.003051189 +0100
+--- tests/A-01-04-M-ok.outhyp	2021-10-26 21:46:34.641307526 +0100
 ***************
 *** 15,30 ****
   3 - Visualizar lotes fornecidos por parceiro
@@ -57,28 +57,22 @@
   1 - Mostrar parceiro
   2 - Mostrar parceiros
 ***************
-*** 72,78 ****
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-! Escolha uma opção: Ficheiro sem nome. Guardar ficheiro como: Menu Principal
+*** 65,81 ****
   1 - Abrir
   2 - Guardar
   3 - Mostrar Data
---- 72,78 ----
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-! Escolha uma opção: Menu Principal
-  1 - Abrir
-  2 - Guardar
-  3 - Mostrar Data
-***************
-*** 83,86 ****
---- 83,87 ----
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-+ Escolha uma opção: Número inválido!
-  Escolha uma opção: 
-\ No newline at end of file
+- 4 - Avançar Data
+- 5 - Gestão de Produtos
+- 6 - Gestão de Parceiros
+- 7 - Gestão de Transacções
+- 8 - Menu de Consultas
+- 9 - Ver Saldo Global
+- 0 - Sair
+- Escolha uma opção: Ficheiro sem nome. Guardar ficheiro como: Menu Principal
+- 1 - Abrir
+- 2 - Guardar
+- 3 - Mostrar Data
+  4 - Avançar Data
+  5 - Gestão de Produtos
+  6 - Gestão de Parceiros
+--- 65,70 ----

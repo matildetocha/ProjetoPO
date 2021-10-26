@@ -4,10 +4,15 @@ import java.io.Serializable;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.HashMap;
 
@@ -85,31 +90,23 @@ public class Warehouse implements Serializable {
 	}
 
 	List<Batch> getAllBatches() {
-
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
 		Set<String> keys = this.getPartners().keySet();
 		Iterator<String> iterator = keys.iterator();
 
 		while (iterator.hasNext()) {
-
-			// List<Batch> newList = new ArrayList<Batch>();
 			orderedBatches.addAll(this.getPartners().get(iterator.next()).getBatches());
 		}
-
+		Collections.sort(orderedBatches, new BatchComparator());
 		return orderedBatches;
-
 	}
 
-	public void saveObject(String file, Object obj) throws IOException {
-		ObjectOutputStream obOut = null;
-		try {
-			obOut = new ObjectOutputStream(new FileOutputStream(file));
-			obOut.writeObject(obj);
-		} finally {
-			if (obOut != null)
-				obOut.close();
-		}
+	List<Product> getAllProducts() {
+		List<Product> productsByKey = new ArrayList<Product>(_products.values());
+		Collections.sort(productsByKey, new ProductComparator());
+
+		return productsByKey;
 	}
 
 	/**
@@ -123,3 +120,39 @@ public class Warehouse implements Serializable {
 	}
 
 }
+
+
+
+
+
+
+// Set set2 = map.entrySet();  
+// Iterator iterator2 = set2.iterator();  
+// while(iterator2.hasNext())   
+// {  
+// Map.Entry me2 = (Map.Entry)iterator2.next();  
+// System.out.println("Roll no:  "+me2.getKey()+"     Name:   "+me2.getValue());  
+// }  
+
+// //method to sort values  
+// private static HashMap sortValues(HashMap map)   
+// {   
+// List list = new LinkedList(map.entrySet());  
+// //Custom Comparator  
+// Collections.sort(list, new Comparator()   
+// {  
+// public int compare(Object o1, Object o2)   
+// {  
+// return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());  
+// }  
+// });  
+// //copying the sorted list in HashMap to preserve the iteration order  
+// HashMap sortedHashMap = new LinkedHashMap();  
+// for (Iterator it = list.iterator(); it.hasNext();)   
+// {  
+//  Map.Entry entry = (Map.Entry) it.next();  
+// sortedHashMap.put(entry.getKey(), entry.getValue());  
+// }   
+// return sortedHashMap;  
+// }  
+// }  

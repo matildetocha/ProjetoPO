@@ -28,13 +28,15 @@ class DoSaveFile extends Command<WarehouseManager> {
   @Override
   public final void execute() throws CommandException {
     try {
-    _receiver.save();
-    } catch (MissingFileAssociationException | IOException ufe) {
-    try {
-    addStringField("filename", Message.newSaveAs());
-    _receiver.saveAs(stringField("filename"));
-    } catch (MissingFileAssociationException | FileNotFoundException e) {
-      
+      _receiver.save();
+
+    } catch (FileNotFoundException e) {
+      addStringField("filename", Message.newSaveAs());
+      _display.popup(Message.saveAs());
+      _receiver.saveAs(stringField("filename"));
+
+    } catch (MissingFileAssociationException | IOException ex) {
+      throw new FileOpenFailedException(stringField("filename"));
     }
   }
 }
