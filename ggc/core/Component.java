@@ -8,6 +8,7 @@ public class Component {
         _quantity = quantity;
         _product = product;
     }
+    
    // public type method(type){}
     
 }

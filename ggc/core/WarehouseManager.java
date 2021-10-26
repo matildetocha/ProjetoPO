@@ -10,7 +10,11 @@ import ggc.core.exception.BadEntryException;
 
 import java.io.Serializable;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +50,7 @@ public class WarehouseManager {
   public Map<String, Product> getProducts() {
     return _warehouse.getProducts();
   }
+
   public void registerProduct(Product product) throws BadEntryException {
     _warehouse.registerProduct(product);
   }
@@ -58,17 +63,18 @@ public class WarehouseManager {
     return _warehouse.getBatchesByProduct(id);
   }
 
-  public List<Batch> getAllBatches(){
+  public List<Batch> getAllBatches() {
 
     return _warehouse.getAllBatches();
   }
+
   /**
    * @@throws IOException
    * @@throws FileNotFoundException
    * @@throws MissingFileAssociationException
    */
   public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
-    //FIXME implement serialization method
+
   }
 
   /**
@@ -78,16 +84,37 @@ public class WarehouseManager {
    * @@throws FileNotFoundException
    */
   public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
-    _filename = filename;
-    save();
+    ObjectInputStream obIn = null;
+    try {
+      FileInputStream fpin = new FileInputStream(inputFilename);
+      InflaterInputStream inflateIn = new InflaterInputStream(fpin);
+      obIn = new ObjectInputStream(inflateIn);
+      Object anObject = obIn.readObject();
+      return anObject;
+    } finally {
+      if (obIn != null)
+        obIn.close();
+    }
+  }_filename = filename;
+
+  save();
+
   }
 
   /**
    * @@param filename
    * @@throws UnavailableFileException
    */
-  public void load(String filename) throws UnavailableFileException, ClassNotFoundException  {
-    //FIXME implement serialization method
+  public void load(String filename) throws UnavailableFileException, ClassNotFoundException {
+    ObjectInputStream objIn = null;
+    try {
+      objIn = new ObjectInputStream(new FileInputStream(filename));
+      Object anObject = objIn.readObject();
+      // !!!
+    } finally {
+      if (objIn != null)
+        objIn.close();
+    }
   }
 
   /**

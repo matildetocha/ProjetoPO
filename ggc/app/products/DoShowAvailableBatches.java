@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import ggc.core.WarehouseManager;
-//FIXME import classes
 
 /**
  * Show available batches.
@@ -27,7 +26,6 @@ class DoShowAvailableBatches extends Command<WarehouseManager> {
 
   @Override
   public final void execute() throws CommandException {
-    //FIXME implement command
     _display.popup(_receiver.getAllBatches());
     Collections.sort(_receiver.getAllBatches(), new BatchComparator());
   }

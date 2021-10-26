@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Iterator;
-
 import java.util.HashMap;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
@@ -31,6 +30,7 @@ public class Warehouse implements Serializable {
 
 	Warehouse() {
 		_partners = new HashMap<>();
+		_products = new HashMap<>();
 	}
 
 	Map<String, Partner> getPartners() {

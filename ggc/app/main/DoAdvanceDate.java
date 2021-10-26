@@ -18,7 +18,7 @@ class DoAdvanceDate extends Command<WarehouseManager> {
   }
 
   @Override
-  protected final void execute() throws CommandException, InvalidDateException {
+  public final void execute() throws CommandException, InvalidDateException {
 
     try {
       Date.add(integerField("timeAdd"));

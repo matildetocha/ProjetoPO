@@ -21,7 +21,7 @@ class DoOpenFile extends Command<WarehouseManager> {
   }
 
   @Override
-  protected final void execute() throws CommandException {
+  public final void execute() throws CommandException {
     
   //   try {
 
