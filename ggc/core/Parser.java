@@ -117,8 +117,8 @@ public class Parser {
     for (String component : components[6].split("#")) {
       String[] recipeComponent = component.split(":");
       // add code here to
-      AggregateProduct product = new AggregateProduct("id")
-      _store.getProducts().add(//Criar produto)
+      AggregateProduct product = new AggregateProduct(recipeComponent[0]);
+      _store.getProducts().
       // products.add(get Product with id recipeComponent[0]);
       quantities.add(Integer.parseInt(recipeComponent[1]));
     }
