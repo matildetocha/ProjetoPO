@@ -1,8 +1,9 @@
 package ggc.core;
 
 import java.io.Serializable;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -98,6 +99,16 @@ public class Warehouse implements Serializable {
 		return orderedBatches;
 
 	}
+	public void saveObject(String file, Object obj) throws IOException {
+		ObjectOutputStream obOut = null;
+		try {
+			obOut = new ObjectOutputStream(new FileOutputStream(file));
+			obOut.writeObject(obj);
+		} finally {
+		if (obOut != null)
+			obOut.close();
+		}
+		}
 	/**
 	 * @param txtfile filename to be loaded.
 	 * @throws IOException

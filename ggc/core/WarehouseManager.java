@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import java.util.List;
@@ -84,37 +85,27 @@ public class WarehouseManager {
    * @@throws FileNotFoundException
    */
   public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
-    ObjectInputStream obIn = null;
-    try {
-      FileInputStream fpin = new FileInputStream(inputFilename);
-      InflaterInputStream inflateIn = new InflaterInputStream(fpin);
-      obIn = new ObjectInputStream(inflateIn);
-      Object anObject = obIn.readObject();
-      return anObject;
-    } finally {
-      if (obIn != null)
-        obIn.close();
-    }
-  }_filename = filename;
-
-  save();
-
+    _filename = filename;
+    save();
   }
 
   /**
    * @@param filename
    * @@throws UnavailableFileException
    */
-  public void load(String filename) throws UnavailableFileException, ClassNotFoundException {
-    ObjectInputStream objIn = null;
+  public void load(String filename) throws UnavailableFileException, ClassNotFoundException, IOException {
+    ObjectInputStream obIn = null;
     try {
-      objIn = new ObjectInputStream(new FileInputStream(filename));
-      Object anObject = objIn.readObject();
-      // !!!
+      FileInputStream fpin = new FileInputStream(filename);
+      ObjectInputStream objIn = new ObjectInputStream(fpin);
+      obIn = new ObjectInputStream(objIn);
+    Object anObject = obIn.readObject();
+
     } finally {
-      if (objIn != null)
-        objIn.close();
+    if (obIn != null)
+    obIn.close();
     }
+    
   }
 
   /**
