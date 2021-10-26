@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterOutputStream;
 
 /** Facade for access. */
 public class WarehouseManager {
@@ -75,7 +76,16 @@ public class WarehouseManager {
    * @@throws MissingFileAssociationException
    */
   public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
-
+    ObjectOutputStream obOut = null;
+    try {
+      FileOutputStream fpout = new FileOutputStream(_filename);
+      DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
+      obOut = new ObjectOutputStream(dOut);
+      obOut.writeObject(_warehouse);
+    } finally {
+      if (obOut != null)
+        obOut.close();
+    }
   }
 
   /**
@@ -99,13 +109,14 @@ public class WarehouseManager {
       FileInputStream fpin = new FileInputStream(filename);
       ObjectInputStream objIn = new ObjectInputStream(fpin);
       obIn = new ObjectInputStream(objIn);
-    Object anObject = obIn.readObject();
+      Object anObject = obIn.readObject();
+      _warehouse = (Warehouse) anObject;
 
     } finally {
-    if (obIn != null)
-    obIn.close();
+      if (obIn != null)
+        obIn.close();
     }
-    
+
   }
 
   /**
