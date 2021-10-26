@@ -19,6 +19,7 @@ import ggc.core.Warehouse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterOutputStream;
 
 /** Facade for access. */
 public class WarehouseManager {
@@ -75,7 +76,18 @@ public class WarehouseManager {
    * @@throws FileNotFoundException
    * @@throws MissingFileAssociationException
    */
-  public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
+  public void save(String filename) throws IOException, FileNotFoundException, MissingFileAssociationException {
+    ObjectOutputStream obOut = null;
+    try {
+      FileOutputStream fpout = new FileOutputStream(filename);
+      DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
+      obOut = new ObjectOutputStream(dOut);
+      obOut.writeObject(_warehouse);
+
+    } finally {
+      if (obOut != null)
+        obOut.close();
+    }
 
   }
 
@@ -87,7 +99,7 @@ public class WarehouseManager {
    */
   public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
     _filename = filename;
-    save();
+    save(_filename);
   }
 
   /**

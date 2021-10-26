@@ -24,7 +24,7 @@ class DoOpenFile extends Command<WarehouseManager> {
   }
 
   @Override
-  public final void execute() throws CommandException {
+  public final void execute() throws CommandException, FileOpenFailedException {
     
   try {  
         _receiver.load(stringField("filename"));
