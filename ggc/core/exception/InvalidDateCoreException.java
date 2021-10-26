@@ -6,7 +6,7 @@ import pt.tecnico.uilib.menus.CommandException;
 public class InvalidDateCoreException extends CommandException {
 
 
-  public InvalidDateCoreException(String key) {
+  public InvalidDateCoreException() {
     super("Data inválida!");
   }
 

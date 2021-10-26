@@ -8,7 +8,15 @@ import java.io.Reader;
 
 import java.util.ArrayList;
 
+import ggc.core.exception.DuplicatePartnerCoreException;
+import ggc.core.exception.ImportFileException;
+import ggc.core.exception.MissingFileAssociationException;
+import ggc.core.exception.UnavailableFileException;
+import ggc.core.exception.UnknownUserCoreException;
+import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.BadEntryException;
+
+import ggc.core.Product;
 
 public class Parser {
   private WarehouseManager _store;
@@ -54,31 +62,42 @@ public class Parser {
     String id = components[1];
     String name = components[2];
     String address = components[3];
-
-    _store.registerPartner(name, id, address);
+    try {
+      _store.registerPartner(name, id, address);
+    } catch (DuplicatePartnerCoreException e) {
+        throw new BadEntryException("");
+    }
   }
 
   // BATCH_S|idProduto|idParceiro|preço|stock-actual
   private void parseSimpleProduct(String[] components, String line) throws BadEntryException {
-    if (components.length != 5)
-      throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
+    try {
+      if (components.length != 5)
+        throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
 
-    String idProduct = components[1];
-    String idPartner = components[2];
-    double price = Double.parseDouble(components[3]);
-    int stock = Integer.parseInt(components[4]);
+      String idProduct = components[1];
+      String idPartner = components[2];
+      double price = Double.parseDouble(components[3]);
+      int stock = Integer.parseInt(components[4]);
 
-    if (!_store.getProducts().containsKey(idProduct)) {
-      SimpleProduct simpleProduct = new SimpleProduct(idProduct);
-      _store.registerProduct(simpleProduct);
+      if (!_store.getProducts().containsKey(idProduct)) {
+        SimpleProduct simpleProduct = new SimpleProduct(idProduct);
+        _store.registerProduct(simpleProduct);
 
-      Product product = _store.getProduct(idProduct);
-      Partner partner = _store.getPartner(idPartner);
+        Product product = _store.getProduct(idProduct);
+        Partner partner = _store.getPartner(idPartner);
 
-      Batch batch = new Batch(product, partner, price, stock);
-      product.addBatch(batch);
-      partner.addBatch(batch);
-    }
+        Batch batch = new Batch(product, partner, price, stock);
+        product.addBatch(batch);
+        partner.addBatch(batch);
+      }
+      } catch (UnknownUserCoreException e) {
+        throw new BadEntryException("");
+      } catch (UnknownProductCoreException e) {
+        throw new BadEntryException("");
+      }
+
+
   }
 
   // BATCH_M|idProduto|idParceiro|prec
@@ -98,6 +117,8 @@ public class Parser {
     for (String component : components[6].split("#")) {
       String[] recipeComponent = component.split(":");
       // add code here to
+      AggregateProduct product = new AggregateProduct("id")
+      _store.getProducts().add(//Criar produto)
       // products.add(get Product with id recipeComponent[0]);
       quantities.add(Integer.parseInt(recipeComponent[1]));
     }

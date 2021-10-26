@@ -39,7 +39,7 @@ public class Warehouse implements Serializable {
 
 	Partner getPartner(String id) throws UnknownUserCoreException {
 		if (!_partners.containsKey(id))
-			throw new UnknownUserCoreException(id);
+			throw new UnknownUserCoreException();
 
 		return _partners.get(id);
 	}
@@ -47,7 +47,7 @@ public class Warehouse implements Serializable {
 	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
 		Partner partner = new Partner(name, id, address);
 		if (_partners.containsKey(id))
-			throw new DuplicatePartnerCoreException(partner.getId());
+			throw new DuplicatePartnerCoreException();
 
 		_partners.put(partner.getId(), partner);
 	}
@@ -58,7 +58,7 @@ public class Warehouse implements Serializable {
 
 	Product getProduct(String id) throws UnknownProductCoreException {
 		if (!_products.containsKey(id))
-			throw new UnknownProductCoreException(id);
+			throw new UnknownProductCoreException();
 
 		return _products.get(id);
 	}
@@ -72,13 +72,13 @@ public class Warehouse implements Serializable {
 
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
 		if (!_partners.containsKey(id))
-			throw new UnknownUserCoreException(id);
+			throw new UnknownUserCoreException();
 		return _partners.get(id).getBatches();
 	}
 
 	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
 		if (!_products.containsKey(id))
-			throw new UnknownProductCoreException(id);
+			throw new UnknownProductCoreException();
 		return _products.get(id).getBatches();
 	}
 

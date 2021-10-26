@@ -2,7 +2,6 @@ package ggc.core;
 
 import java.lang.Math;
 
-import ggc.core.exception.BadEntryException;
 import ggc.core.exception.InvalidDateCoreException;
 //Adada
 public class Date {
@@ -10,7 +9,7 @@ public class Date {
 
     public static void add(int days) throws InvalidDateCoreException{
         if(days < 0 ){ 
-            throw new InvalidDateCoreException("days");
+            throw new InvalidDateCoreException();
 
         }
         _days += days;

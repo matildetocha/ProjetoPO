@@ -6,7 +6,7 @@ import pt.tecnico.uilib.menus.CommandException;
 public class UnknownUserCoreException extends CommandException {
 
 
-  public UnknownUserCoreException(String key) {
+  public UnknownUserCoreException() {
     super("User Desconhecido.");
   }
 
