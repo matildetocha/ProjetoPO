@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import ggc.core.Warehouse;
 
 import java.util.List;
 import java.util.Map;
@@ -75,13 +76,14 @@ public class WarehouseManager {
    * @@throws FileNotFoundException
    * @@throws MissingFileAssociationException
    */
-  public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
+  public void save(String filename) throws IOException, FileNotFoundException, MissingFileAssociationException {
     ObjectOutputStream obOut = null;
     try {
-      FileOutputStream fpout = new FileOutputStream(_filename);
+      FileOutputStream fpout = new FileOutputStream(filename);
       DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
       obOut = new ObjectOutputStream(dOut);
       obOut.writeObject(_warehouse);
+
     } finally {
       if (obOut != null)
         obOut.close();
@@ -96,7 +98,7 @@ public class WarehouseManager {
    */
   public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
     _filename = filename;
-    save();
+    save(_filename);
   }
 
   /**
