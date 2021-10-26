@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import ggc.core.Warehouse;
 
 import java.util.List;
 import java.util.Map;
@@ -99,7 +100,7 @@ public class WarehouseManager {
       FileInputStream fpin = new FileInputStream(filename);
       ObjectInputStream objIn = new ObjectInputStream(fpin);
       obIn = new ObjectInputStream(objIn);
-    Object anObject = obIn.readObject();
+    _warehouse = (Warehouse) objIn.readObject();
 
     } finally {
     if (obIn != null)

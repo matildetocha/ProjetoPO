@@ -24,6 +24,7 @@ public class Warehouse implements Serializable {
 	/** Serial number for serialization. */
 	private static final long serialVersionUID = 202109192006L;
 
+	private WarehouseManager _warehouseManager;
 	private Date _date;
 	private int _nextTransactionId;
 	private Map<String, Partner> _partners;
@@ -116,6 +117,8 @@ public class Warehouse implements Serializable {
 	 */
 	void importFile(String txtfile) throws IOException, BadEntryException /* FIXME maybe other exceptions */ {
 		// FIXME implement method
+		Parser parser = new Parser(_warehouseManager);
+		parser.parseFile(txtfile);
 	}
 
 }
