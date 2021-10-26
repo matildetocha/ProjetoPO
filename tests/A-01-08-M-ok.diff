@@ -1,5 +1,5 @@
 *** tests/A-01-08-M-ok.out	2021-10-10 19:32:06.000000000 +0100
---- tests/A-01-08-M-ok.outhyp	2021-10-26 12:13:44.193181965 +0100
+--- tests/A-01-08-M-ok.outhyp	2021-10-26 21:26:21.451052471 +0100
 ***************
 *** 9,15 ****
   8 - Menu de Consultas
@@ -9,24 +9,15 @@
   1 - Abrir
   2 - Guardar
   3 - Mostrar Data
---- 9,15 ----
+--- 9,16 ----
   8 - Menu de Consultas
   9 - Ver Saldo Global
   0 - Sair
-! Escolha uma opção: Menu Principal
+! Escolha uma opção: Ficheiro a abrir: Abrir: Operação inválida: Problema ao abrir 'app03.dat'.
+! Menu Principal
   1 - Abrir
   2 - Guardar
   3 - Mostrar Data
-***************
-*** 20,25 ****
---- 20,26 ----
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-+ Escolha uma opção: Número inválido!
-  Escolha uma opção: Gestão de Parceiros
-  1 - Mostrar parceiro
-  2 - Mostrar parceiros
 ***************
 *** 28,38 ****
   5 - Mostrar compras com parceiro

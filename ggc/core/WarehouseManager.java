@@ -113,12 +113,10 @@ public class WarehouseManager {
       obIn = new ObjectInputStream(objIn);
       Object anObject = obIn.readObject();
       _warehouse = (Warehouse) anObject;
-
     } finally {
       if (obIn != null)
         obIn.close();
     }
-
   }
 
   /**
@@ -128,7 +126,7 @@ public class WarehouseManager {
   public void importFile(String textfile) throws ImportFileException {
     try {
       _warehouse.importFile(textfile);
-    } catch (IOException | BadEntryException /* FIXME maybe other exceptions */ e) {
+    } catch (IOException | BadEntryException e) { /* FIXME maybe other exceptions */
       throw new ImportFileException(textfile, e);
     }
   }

@@ -1,5 +1,5 @@
 *** tests/A-07-02-M-ok.out	2021-10-16 19:18:14.000000000 +0100
---- tests/A-07-02-M-ok.outhyp	2021-10-26 12:13:45.301186066 +0100
+--- tests/A-07-02-M-ok.outhyp	2021-10-26 21:26:22.987056866 +0100
 ***************
 *** 34,40 ****
   5 - Mostrar compras com parceiro
@@ -13,7 +13,7 @@
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Mostrar parceiro: Operação inválida: O parceiro 'MmMmAa1' não existe.
+! Escolha uma opção: Identificador do parceiro: MmMmAa1|Rohit Figueiredo|New Delhi, India|Normal|0.0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros

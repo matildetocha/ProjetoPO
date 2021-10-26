@@ -1,5 +1,5 @@
 *** tests/A-07-01-M-ok.out	2021-10-16 19:15:30.000000000 +0100
---- tests/A-07-01-M-ok.outhyp	2021-10-26 12:13:45.213185741 +0100
+--- tests/A-07-01-M-ok.outhyp	2021-10-26 21:26:22.859056500 +0100
 ***************
 *** 17,23 ****
   5 - Mostrar compras com parceiro
@@ -13,7 +13,7 @@
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Mostrar parceiro: Operação inválida: O parceiro 'M1' não existe.
+! Escolha uma opção: Identificador do parceiro: M1|Rohit Figueiredo|New Delhi, India|Normal|0.0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
@@ -30,7 +30,7 @@
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Mostrar parceiro: Operação inválida: O parceiro 'P1' não existe.
+! Escolha uma opção: Identificador do parceiro: P1|Lages do Chão|Lisboa, Portugal|Normal|0.0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
@@ -47,7 +47,7 @@
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Mostrar parceiro: Operação inválida: O parceiro 'W2' não existe.
+! Escolha uma opção: Identificador do parceiro: W2|Pedraria Fonseca|Oeiras, Portugal|Normal|0.0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros

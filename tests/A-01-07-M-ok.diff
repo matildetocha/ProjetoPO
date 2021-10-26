@@ -1,5 +1,5 @@
 *** tests/A-01-07-M-ok.out	2021-10-10 19:30:14.000000000 +0100
---- tests/A-01-07-M-ok.outhyp	2021-10-26 12:13:44.105181639 +0100
+--- tests/A-01-07-M-ok.outhyp	2021-10-26 21:26:21.347052173 +0100
 ***************
 *** 9,15 ****
   8 - Menu de Consultas
@@ -39,11 +39,14 @@
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
---- 56,62 ----
+--- 56,65 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: XXXXXXXXXXXXXXXXXX|nome|endere|Normal|0.0|0|0|0
+! Escolha uma opção: MM|John Figueiredo|Wellington, New Zealand|Normal|0.0|0|0|0
+! P1|Lages do ChC#o|Lisboa, Portugal|Normal|0.0|0|0|0
+! XXXXXXXXXXXXXXXXXX|nome|endere|Normal|0.0|0|0|0
+! S1|Toshiba|Tokyo, Japan|Normal|0.0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros

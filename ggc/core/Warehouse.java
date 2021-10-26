@@ -16,6 +16,7 @@ import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.BadEntryException;
+
 /**
  * TESTE TESTE no windows Class Warehouse implements a warehouse.
  */
@@ -83,40 +84,41 @@ public class Warehouse implements Serializable {
 		return _products.get(id).getBatches();
 	}
 
-	List<Batch> getAllBatches(){	    
+	List<Batch> getAllBatches() {
 
 		List<Batch> orderedBatches = new ArrayList<Batch>();
-		
+
 		Set<String> keys = this.getPartners().keySet();
-			Iterator<String> iterator = keys.iterator();
+		Iterator<String> iterator = keys.iterator();
 
-		while (iterator.hasNext()) {		
+		while (iterator.hasNext()) {
 
-			//List<Batch> newList = new ArrayList<Batch>();
-			orderedBatches.addAll(this.getPartners().get(iterator.next()).getBatches() );
+			// List<Batch> newList = new ArrayList<Batch>();
+			orderedBatches.addAll(this.getPartners().get(iterator.next()).getBatches());
 		}
 
 		return orderedBatches;
 
 	}
+
 	public void saveObject(String file, Object obj) throws IOException {
 		ObjectOutputStream obOut = null;
 		try {
 			obOut = new ObjectOutputStream(new FileOutputStream(file));
 			obOut.writeObject(obj);
 		} finally {
-		if (obOut != null)
-			obOut.close();
+			if (obOut != null)
+				obOut.close();
 		}
-		}
+	}
+
 	/**
 	 * @param txtfile filename to be loaded.
 	 * @throws IOException
 	 * @throws BadEntryException
 	 */
-	void importFile(String txtfile) throws IOException, BadEntryException /* FIXME maybe other exceptions */ {
-		// FIXME implement method
-		Parser parser = new Parser(_warehouseManager);
+	void importFile(String txtfile) throws IOException, BadEntryException { /* FIXME maybe other exceptions */
+		Parser parser = new Parser(this);
 		parser.parseFile(txtfile);
 	}
 

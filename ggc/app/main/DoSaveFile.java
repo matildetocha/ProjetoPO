@@ -2,9 +2,11 @@ package ggc.app.main;
 
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+
 import ggc.app.exception.FileOpenFailedException;
 import ggc.core.WarehouseManager;
 import ggc.core.exception.MissingFileAssociationException;
+
 import java.io.FileNotFoundException;
 
 import java.io.BufferedWriter;
@@ -12,8 +14,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileReader;
-
-//FIXME import classes
 
 /**
  * Save current state to file under current name (if unnamed, query for name).
@@ -26,18 +26,15 @@ class DoSaveFile extends Command<WarehouseManager> {
   }
 
   @Override
-  public final void execute() throws CommandException, FileOpenFailedException  {
-    try {  
-      _receiver.save();
-
- 
-//     //FIXME implement command      
-
-} catch (MissingFileAssociationException | IOException |FileNotFoundException ufe) {
-    try{
-      addStringField("filename", Message.openFile());
-      _receiver.saveAs(stringField("filename"));
-    }catch(****)
-
-
+  public final void execute() throws CommandException {
+    try {
+    _receiver.save();
+    } catch (MissingFileAssociationException | IOException ufe) {
+    try {
+    addStringField("filename", Message.newSaveAs());
+    _receiver.saveAs(stringField("filename"));
+    } catch (MissingFileAssociationException | FileNotFoundException e) {
+      
+    }
+  }
 }

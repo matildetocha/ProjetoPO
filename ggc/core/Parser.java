@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.Reader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.ImportFileException;
@@ -17,12 +16,10 @@ import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.BadEntryException;
 
-import ggc.core.Product;
-
 public class Parser {
-  private WarehouseManager _store;
+  private Warehouse _store;
 
-  public Parser(WarehouseManager w) {
+  public Parser(Warehouse w) {
     _store = w;
   }
 
@@ -84,24 +81,20 @@ public class Parser {
       if (!_store.getProducts().containsKey(idProduct)) {
         Product simpleProduct = new SimpleProduct(idProduct);
         _store.registerProduct(simpleProduct);
-
-        Product product = _store.getProduct(idProduct);
-        Partner partner = _store.getPartner(idPartner);
-
-        Batch batch = new Batch(product, partner, price, stock);
-        product.addBatch(batch);
-        partner.addBatch(batch);
       }
-    } catch (UnknownUserCoreException e) {
-      throw new BadEntryException("");
-    } catch (UnknownProductCoreException e) {
+      Product product = _store.getProduct(idProduct);
+      Partner partner = _store.getPartner(idPartner);
+
+      Batch batch = new Batch(product, partner, price, stock);
+      product.addBatch(batch);
+      partner.addBatch(batch);
+
+    } catch (UnknownUserCoreException | UnknownProductCoreException e) {
       throw new BadEntryException("");
     }
-
   }
 
-  // BATCH_M|idProduto|idParceiro|preço
-  // |stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
+  // BATCH_M|idProduto|idParceiro|preço|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
   private void parseAggregateProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 7)
       throw new BadEntryException("Invalid number of fields (7) in aggregate batch description: " + line);
@@ -114,40 +107,33 @@ public class Parser {
 
     try {
       if (!_store.getProducts().containsKey(idProduct)) {
-        ArrayList<Product> products = new ArrayList<>(); // ? wtf is thes
+        ArrayList<Product> products = new ArrayList<>(); // ? wtf is this
         ArrayList<Integer> quantities = new ArrayList<>(); // ? wtf is this
-        Recipe recipe;
+        Recipe recipe = new Recipe(aggravation);
 
         for (String componentString : components[6].split("#")) {
           String[] recipeComponent = componentString.split(":");
 
-          quantities.add(Integer.parseInt(recipeComponent[1]));
+          // quantities.add(Integer.parseInt(recipeComponent[1]));
 
-          Product aggregateProduct = new AggregateProduct(idProduct);
-          Component component = new Component(Integer.parseInt(recipeComponent[1]), aggregateProduct);
-          recipe = new Recipe(aggregateProduct, aggravation);
+          if (!_store.getProducts().containsKey(recipeComponent[0]))
+            throw new UnknownProductCoreException();
+
+          Component component = new Component(Integer.parseInt(recipeComponent[1]),
+              _store.getProduct(recipeComponent[0]));
           recipe.addComponent(component);
-
-          Partner partner = _store.getPartner(idPartner);
-
-          Batch batch = new Batch(aggregateProduct, partner, price, stock);
-
-          aggregateProduct.addBatch(batch);
-          partner.addBatch(batch);
         }
+        Product aggregateProduct = new AggregateProduct(idProduct, recipe);
+        _store.registerProduct(aggregateProduct);
       }
-    } catch (UnknownUserCoreException e) {
+      Product product = _store.getProduct(idProduct);
+      Partner partner = _store.getPartner(idPartner);
+      Batch batch = new Batch(product, partner, price, stock);
+
+      product.addBatch(batch);
+      partner.addBatch(batch);
+    } catch (UnknownUserCoreException | UnknownProductCoreException e) {
       throw new BadEntryException("");
     }
-    // add code here to
-    // register in _store aggregate product with idProduct,
-
-    // and recipe given by products and quantities);
   }
-  // add code here to
-  // Product product = get Product in _store with productId;
-  // Partner partner = get Partner in _store with partnerId;
-
-  // add code here to
-  // add batch with price, stock and partner to product
 }

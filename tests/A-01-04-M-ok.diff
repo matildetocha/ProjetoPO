@@ -1,13 +1,13 @@
 *** tests/A-01-04-M-ok.out	2021-10-10 16:58:56.000000000 +0100
---- tests/A-01-04-M-ok.outhyp	2021-10-26 12:13:43.869180765 +0100
+--- tests/A-01-04-M-ok.outhyp	2021-10-26 21:26:21.003051189 +0100
 ***************
-*** 15,31 ****
+*** 15,30 ****
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
 ! Escolha uma opção: HIDROGENIO|200|5000
 ! OXIGENIO|1200|2500
-! Gestão de Produtos
+  Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
   3 - Visualizar lotes fornecidos por parceiro
@@ -15,44 +15,47 @@
   0 - Sair
 ! Escolha uma opção: HIDROGENIO|S1|200|5000
 ! OXIGENIO|P1|1200|2500
-! Gestão de Produtos
+  Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
-  3 - Visualizar lotes fornecidos por parceiro
---- 15,27 ----
+--- 15,30 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: Gestão de Produtos
+! Escolha uma opção: HIDROGENIO|0.0|stock-atual-total
+! OXIGENIO|0.0|stock-atual-total
+  Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: Gestão de Produtos
+! Escolha uma opção: P1|OXIGENIO|1200.0|2500
+! S1|HIDROGENIO|200.0|5000
+  Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
-  3 - Visualizar lotes fornecidos por parceiro
 ***************
-*** 50,59 ****
+*** 50,58 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
 ! Escolha uma opção: MM|John Figueiredo|Wellington, New Zealand|NORMAL|0|0|0|0
 ! P1|Lages do ChC#o|Lisboa, Portugal|NORMAL|0|0|0|0
 ! S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
-! Gestão de Parceiros
+  Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
-  3 - Registar parceiro
---- 46,52 ----
+--- 50,58 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Gestão de Parceiros
+! Escolha uma opção: MM|John Figueiredo|Wellington, New Zealand|Normal|0.0|0|0|0
+! P1|Lages do ChC#o|Lisboa, Portugal|Normal|0.0|0|0|0
+! S1|Toshiba|Tokyo, Japan|Normal|0.0|0|0|0
+  Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
-  3 - Registar parceiro
 ***************
 *** 72,78 ****
   8 - Menu de Consultas
@@ -62,7 +65,7 @@
   1 - Abrir
   2 - Guardar
   3 - Mostrar Data
---- 65,71 ----
+--- 72,78 ----
   8 - Menu de Consultas
   9 - Ver Saldo Global
   0 - Sair
@@ -72,7 +75,7 @@
   3 - Mostrar Data
 ***************
 *** 83,86 ****
---- 76,80 ----
+--- 83,87 ----
   8 - Menu de Consultas
   9 - Ver Saldo Global
   0 - Sair

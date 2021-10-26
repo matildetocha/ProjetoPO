@@ -3,6 +3,7 @@ package ggc.app.main;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import ggc.core.WarehouseManager;
+import ggc.core.exception.ImportFileException;
 import ggc.core.exception.UnavailableFileException;
 import ggc.app.exception.FileOpenFailedException;
 
@@ -19,24 +20,18 @@ class DoOpenFile extends Command<WarehouseManager> {
   /** @param receiver */
   DoOpenFile(WarehouseManager receiver) {
     super(Label.OPEN, receiver);
-    //FIXME maybe add command fields
-    addStringField("filename", Message.openFile());
+    addStringField("textfile", Message.openFile());
   }
 
   @Override
   public final void execute() throws CommandException, FileOpenFailedException {
-    
-  try {  
-        _receiver.load(stringField("filename"));
-  //     //FIXME implement command      
-
-  } catch (UnavailableFileException | IOException ufe) {
-         throw new FileOpenFailedException(stringField("filename"));
-  } catch (ClassNotFoundException e) {
-         e.printStackTrace();  
+    try {
+      _receiver.load(stringField("textfile"));
+    } catch (UnavailableFileException | IOException ufe) {
+      throw new FileOpenFailedException(stringField("textfile"));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
-  }
-    
-  
 
 }
