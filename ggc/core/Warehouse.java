@@ -102,6 +102,13 @@ public class Warehouse implements Serializable {
 		return orderedBatches;
 	}
 
+	List<Partner> getSortedPartners() {
+		List<Partner> partnersByKey = new ArrayList<Partner>(_partners.values());
+		Collections.sort(partnersByKey, new PartnerComparator());
+
+		return partnersByKey;
+	}
+
 	List<Product> getAllProducts() {
 		List<Product> productsByKey = new ArrayList<Product>(_products.values());
 		Collections.sort(productsByKey, new ProductComparator());

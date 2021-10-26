@@ -30,6 +30,10 @@ public class WarehouseManager {
   /** The wharehouse itself. */
   private Warehouse _warehouse = new Warehouse();
 
+  public String getFilename() {
+    return _filename;
+  }
+
   public Warehouse getWarehouse() {
     return _warehouse;
   }
@@ -67,8 +71,11 @@ public class WarehouseManager {
   }
 
   public List<Batch> getAllBatches() {
-
     return _warehouse.getAllBatches();
+  }
+
+  public List<Partner> getSortedPartners() {
+    return _warehouse.getSortedPartners();
   }
 
   /**

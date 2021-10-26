@@ -8,7 +8,7 @@ import ggc.core.Date;
 import ggc.core.exception.InvalidDateCoreException;
 
 /**
- * Advance current date.
+ * Advance current date.ewe
  */
 class DoAdvanceDate extends Command<WarehouseManager> {
 

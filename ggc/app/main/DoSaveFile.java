@@ -23,6 +23,8 @@ class DoSaveFile extends Command<WarehouseManager> {
   /** @param receiver */
   DoSaveFile(WarehouseManager receiver) {
     super(Label.SAVE, receiver);
+    if (_receiver.getFilename() == "")
+      addStringField("filename", Message.newSaveAs());
   }
 
   @Override
@@ -31,13 +33,10 @@ class DoSaveFile extends Command<WarehouseManager> {
       _receiver.save();
 
     } catch (FileNotFoundException e) {
-      addStringField("filename", Message.newSaveAs());
-      _display.popup(Message.saveAs());
-
       try {
         _receiver.saveAs(stringField("filename"));
       } catch (MissingFileAssociationException | IOException ex) {
-        throw new FileOpenFailedException(stringField("filename")); 
+        
       }
       
     } catch (MissingFileAssociationException | IOException ex) {

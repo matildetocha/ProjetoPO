@@ -19,11 +19,6 @@ class DoShowAllPartners extends Command<WarehouseManager> {
 
   @Override
   public void execute() throws CommandException {
-    Set<String> keys = _receiver.getPartners().keySet();
-    Iterator<String> iterator = keys.iterator();
-
-    while (iterator.hasNext())
-      _display.popup(_receiver.getPartners().get(iterator.next()));
+    _display.popup(_receiver.getSortedPartners());
   }
-
 }
