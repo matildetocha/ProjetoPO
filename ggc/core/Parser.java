@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.Reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.ImportFileException;
@@ -65,23 +66,23 @@ public class Parser {
     try {
       _store.registerPartner(name, id, address);
     } catch (DuplicatePartnerCoreException e) {
-        throw new BadEntryException("");
+      throw new BadEntryException("");
     }
   }
 
   // BATCH_S|idProduto|idParceiro|preço|stock-actual
   private void parseSimpleProduct(String[] components, String line) throws BadEntryException {
+    if (components.length != 5)
+      throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
+
+    String idProduct = components[1];
+    String idPartner = components[2];
+    double price = Double.parseDouble(components[3]);
+    int stock = Integer.parseInt(components[4]);
+
     try {
-      if (components.length != 5)
-        throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
-
-      String idProduct = components[1];
-      String idPartner = components[2];
-      double price = Double.parseDouble(components[3]);
-      int stock = Integer.parseInt(components[4]);
-
       if (!_store.getProducts().containsKey(idProduct)) {
-        SimpleProduct simpleProduct = new SimpleProduct(idProduct);
+        Product simpleProduct = new SimpleProduct(idProduct);
         _store.registerProduct(simpleProduct);
 
         Product product = _store.getProduct(idProduct);
@@ -91,49 +92,62 @@ public class Parser {
         product.addBatch(batch);
         partner.addBatch(batch);
       }
-      } catch (UnknownUserCoreException e) {
-        throw new BadEntryException("");
-      } catch (UnknownProductCoreException e) {
-        throw new BadEntryException("");
-      }
-
+    } catch (UnknownUserCoreException e) {
+      throw new BadEntryException("");
+    } catch (UnknownProductCoreException e) {
+      throw new BadEntryException("");
+    }
 
   }
 
-  // BATCH_M|idProduto|idParceiro|prec
-  // ̧o|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
+  // BATCH_M|idProduto|idParceiro|preço
+  // |stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
   private void parseAggregateProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 7)
       throw new BadEntryException("Invalid number of fields (7) in aggregate batch description: " + line);
 
     String idProduct = components[1];
     String idPartner = components[2];
+    double price = Double.parseDouble(components[3]);
+    int stock = Integer.parseInt(components[4]);
+    double aggravation = Double.parseDouble(components[5]);
 
-    // add code here to do the following
-    // if (!_store does not have product with idProduct) {
-    ArrayList<Product> products = new ArrayList<>();
-    ArrayList<Integer> quantities = new ArrayList<>();
+    try {
+      if (!_store.getProducts().containsKey(idProduct)) {
+        ArrayList<Product> products = new ArrayList<>(); // ? wtf is thes
+        ArrayList<Integer> quantities = new ArrayList<>(); // ? wtf is this
+        Recipe recipe;
 
-    for (String component : components[6].split("#")) {
-      String[] recipeComponent = component.split(":");
-      // add code here to
-      AggregateProduct product = new AggregateProduct(recipeComponent[0]);
-      _store.getProducts().
-      // products.add(get Product with id recipeComponent[0]);
-      quantities.add(Integer.parseInt(recipeComponent[1]));
+        for (String componentString : components[6].split("#")) {
+          String[] recipeComponent = componentString.split(":");
+
+          quantities.add(Integer.parseInt(recipeComponent[1]));
+
+          Product aggregateProduct = new AggregateProduct(idProduct);
+          Component component = new Component(Integer.parseInt(recipeComponent[1]), aggregateProduct);
+          recipe = new Recipe(aggregateProduct, aggravation);
+          recipe.addComponent(component);
+
+          Partner partner = _store.getPartner(idPartner);
+
+          Batch batch = new Batch(aggregateProduct, partner, price, stock);
+
+          aggregateProduct.addBatch(batch);
+          partner.addBatch(batch);
+        }
+      }
+    } catch (UnknownUserCoreException e) {
+      throw new BadEntryException("");
     }
-
     // add code here to
     // register in _store aggregate product with idProduct,
-    // aggravation=Double.parseDouble(components[5])
+
     // and recipe given by products and quantities);
   }
-
   // add code here to
   // Product product = get Product in _store with productId;
   // Partner partner = get Partner in _store with partnerId;
-  // double price = Double.parseDouble(components[3]);
-  // int stock = Integer.parseInt(components[4]);
+
   // add code here to
   // add batch with price, stock and partner to product
 }
