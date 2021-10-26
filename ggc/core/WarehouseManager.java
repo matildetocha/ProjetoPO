@@ -76,10 +76,10 @@ public class WarehouseManager {
    * @@throws FileNotFoundException
    * @@throws MissingFileAssociationException
    */
-  public void save(String filename) throws IOException, FileNotFoundException, MissingFileAssociationException {
+  public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
     ObjectOutputStream obOut = null;
     try {
-      FileOutputStream fpout = new FileOutputStream(filename);
+      FileOutputStream fpout = new FileOutputStream(_filename);
       DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
       obOut = new ObjectOutputStream(dOut);
       obOut.writeObject(_warehouse);
@@ -99,7 +99,7 @@ public class WarehouseManager {
    */
   public void saveAs(String filename) throws MissingFileAssociationException, FileNotFoundException, IOException {
     _filename = filename;
-    save(_filename);
+    save();
   }
 
   /**
