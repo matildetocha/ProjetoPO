@@ -5,7 +5,7 @@ import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.InvalidDateException;
 import ggc.core.WarehouseManager;
 import ggc.core.Date;
-import ggc.core.exception.BadEntryException;
+import ggc.core.exception.InvalidDateCoreException;
 
 /**
  * Advance current date.
@@ -22,7 +22,7 @@ class DoAdvanceDate extends Command<WarehouseManager> {
 
     try {
       Date.add(integerField("timeAdd"));
-    } catch (BadEntryException e) {
+    } catch (InvalidDateCoreException e) {
       throw new InvalidDateException(integerField("timeAdd"));
     }
   }

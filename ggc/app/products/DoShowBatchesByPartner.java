@@ -6,7 +6,7 @@ import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.UnknownPartnerKeyException;
 
 import ggc.core.WarehouseManager;
-import ggc.core.exception.BadEntryException;
+import ggc.core.exception.UnknownUserCoreException;
 
 /**
  * Show batches supplied by partner.
@@ -22,7 +22,7 @@ class DoShowBatchesByPartner extends Command<WarehouseManager> {
   public final void execute() throws CommandException {
     try {
       _display.popup(_receiver.getBatchesByPartner(stringField("id")));
-    } catch (BadEntryException e) {
+    } catch (UnknownUserCoreException e) {
       throw new UnknownPartnerKeyException(stringField("id"));
     }
   }

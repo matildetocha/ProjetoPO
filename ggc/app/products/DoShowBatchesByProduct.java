@@ -7,6 +7,7 @@ import ggc.app.exception.UnknownPartnerKeyException;
 
 import ggc.core.WarehouseManager;
 import ggc.core.exception.BadEntryException;
+import ggc.core.exception.UnknownProductCoreException;
 
 /**
  * Show all products.
@@ -22,7 +23,7 @@ class DoShowBatchesByProduct extends Command<WarehouseManager> {
   public final void execute() throws CommandException {
     try {
       _display.popup(_receiver.getBatchesByProduct(stringField("id")));
-    } catch (BadEntryException e) {
+    } catch (UnknownProductCoreException e) {
       throw new UnknownPartnerKeyException(stringField("id"));
     }
   }

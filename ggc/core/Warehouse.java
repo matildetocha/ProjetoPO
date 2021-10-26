@@ -11,8 +11,11 @@ import java.util.Iterator;
 
 import java.util.HashMap;
 
+import ggc.core.exception.DuplicatePartnerCoreException;
+import ggc.core.exception.UnknownUserCoreException;
+import ggc.core.exception.UnknownProductCoreException;
+import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.BadEntryException;
-
 /**
  * TESTE TESTE no windows Class Warehouse implements a warehouse.
  */
@@ -34,17 +37,17 @@ public class Warehouse implements Serializable {
 		return _partners;
 	}
 
-	Partner getPartner(String id) throws BadEntryException {
+	Partner getPartner(String id) throws UnknownUserCoreException {
 		if (!_partners.containsKey(id))
-			throw new BadEntryException(id);
+			throw new UnknownUserCoreException(id);
 
 		return _partners.get(id);
 	}
 
-	void registerPartner(String name, String id, String address) throws BadEntryException {
+	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
 		Partner partner = new Partner(name, id, address);
 		if (_partners.containsKey(id))
-			throw new BadEntryException(partner.getId());
+			throw new DuplicatePartnerCoreException(partner.getId());
 
 		_partners.put(partner.getId(), partner);
 	}
@@ -53,9 +56,9 @@ public class Warehouse implements Serializable {
 		return _products;
 	}
 
-	Product getProduct(String id) throws BadEntryException {
+	Product getProduct(String id) throws UnknownProductCoreException {
 		if (!_products.containsKey(id))
-			throw new BadEntryException(id);
+			throw new UnknownProductCoreException(id);
 
 		return _products.get(id);
 	}
@@ -67,15 +70,15 @@ public class Warehouse implements Serializable {
 		_products.put(product.getId(), product);
 	}
 
-	List<Batch> getBatchesByPartner(String id) throws BadEntryException {
+	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
 		if (!_partners.containsKey(id))
-			throw new BadEntryException(id);
+			throw new UnknownUserCoreException(id);
 		return _partners.get(id).getBatches();
 	}
 
-	List<Batch> getBatchesByProduct(String id) throws BadEntryException {
+	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
 		if (!_products.containsKey(id))
-			throw new BadEntryException(id);
+			throw new UnknownProductCoreException(id);
 		return _products.get(id).getBatches();
 	}
 

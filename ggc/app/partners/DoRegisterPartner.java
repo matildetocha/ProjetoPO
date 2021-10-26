@@ -6,8 +6,7 @@ import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.DuplicatePartnerKeyException;
 
 import ggc.core.WarehouseManager;
-import ggc.core.exception.BadEntryException;
-
+import ggc.core.exception.DuplicatePartnerCoreException;
 /**
  * Register new partner.
  */
@@ -25,7 +24,7 @@ class DoRegisterPartner extends Command<WarehouseManager> {
   public void execute() throws CommandException {
     try {
       _receiver.registerPartner(stringField("name"), stringField("id"), stringField("address"));
-    } catch (BadEntryException e) {
+    } catch (DuplicatePartnerCoreException e) {
 
       throw new DuplicatePartnerKeyException(stringField("id"));
     }

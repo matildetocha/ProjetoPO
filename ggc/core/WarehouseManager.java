@@ -1,9 +1,12 @@
 package ggc.core;
 
-import ggc.core.exception.BadEntryException;
+import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.ImportFileException;
 import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
+import ggc.core.exception.UnknownUserCoreException;
+import ggc.core.exception.UnknownProductCoreException;
+import ggc.core.exception.BadEntryException;
 
 import java.io.Serializable;
 import java.io.IOException;
@@ -24,7 +27,7 @@ public class WarehouseManager {
     return _warehouse;
   }
 
-  public Partner getPartner(String id) throws BadEntryException {
+  public Partner getPartner(String id) throws UnknownUserCoreException {
     return _warehouse.getPartner(id);
   }
 
@@ -32,11 +35,11 @@ public class WarehouseManager {
     return _warehouse.getPartners();
   }
 
-  public void registerPartner(String name, String id, String address) throws BadEntryException {
+  public void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
     _warehouse.registerPartner(name, id, address);
   }
 
-  public Product getProduct(String id) throws BadEntryException {
+  public Product getProduct(String id) throws UnknownProductCoreException {
     return _warehouse.getProduct(id);
   }
 
@@ -47,11 +50,11 @@ public class WarehouseManager {
     _warehouse.registerProduct(product);
   }
 
-  public List<Batch> getBatchesByPartner(String id) throws BadEntryException {
+  public List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
     return _warehouse.getBatchesByPartner(id);
   }
 
-  public List<Batch> getBatchesByProduct(String id) throws BadEntryException {
+  public List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
     return _warehouse.getBatchesByProduct(id);
   }
 
