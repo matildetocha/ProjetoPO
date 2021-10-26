@@ -33,8 +33,13 @@ class DoSaveFile extends Command<WarehouseManager> {
     } catch (FileNotFoundException e) {
       addStringField("filename", Message.newSaveAs());
       _display.popup(Message.saveAs());
-      _receiver.saveAs(stringField("filename"));
 
+      try {
+        _receiver.saveAs(stringField("filename"));
+      } catch (MissingFileAssociationException | IOException ex) {
+        throw new FileOpenFailedException(stringField("filename")); 
+      }
+      
     } catch (MissingFileAssociationException | IOException ex) {
       throw new FileOpenFailedException(stringField("filename"));
     }
