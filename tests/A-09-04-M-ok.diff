@@ -1,0 +1,44 @@
+*** tests/A-09-04-M-ok.out	2021-10-17 13:13:27.000000000 +0100
+--- tests/A-09-04-M-ok.outhyp	2021-10-26 12:13:45.749187724 +0100
+***************
+*** 51,58 ****
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: Identificador do parceiro: Nome do parceiro: Endereço do parceiro: Registar parceiro: Operação inválida: O parceiro 'CCCCCCCCP1' já existe.
+! Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+  3 - Registar parceiro
+--- 51,57 ----
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: Identificador do parceiro: Nome do parceiro: Endereço do parceiro: Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+  3 - Registar parceiro
+***************
+*** 60,72 ****
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
+! BBBBW2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0
+! CCCCCCCCP1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0
+! DDDDDDP3|ObBrian Rocks|Koln, Germany|NORMAL|0|0|0|0
+! EEEEEER2|Jorge Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+! EFFFFF4|Filomena Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+! YYYYYYYY|wer|rwer|NORMAL|0|0|0|0
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+--- 59,66 ----
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: YYYYYYYY|wer|rwer|Normal|0.0|0|0|0
+! CCCCCCCCP1|nome|endere|Normal|0.0|0|0|0
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
