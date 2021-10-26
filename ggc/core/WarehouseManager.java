@@ -88,7 +88,6 @@ public class WarehouseManager {
       if (obOut != null)
         obOut.close();
     }
-
   }
 
   /**
@@ -112,13 +111,14 @@ public class WarehouseManager {
       FileInputStream fpin = new FileInputStream(filename);
       ObjectInputStream objIn = new ObjectInputStream(fpin);
       obIn = new ObjectInputStream(objIn);
-    _warehouse = (Warehouse) objIn.readObject();
+      Object anObject = obIn.readObject();
+      _warehouse = (Warehouse) anObject;
 
     } finally {
-    if (obIn != null)
-    obIn.close();
+      if (obIn != null)
+        obIn.close();
     }
-    
+
   }
 
   /**
