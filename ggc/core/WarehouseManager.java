@@ -86,15 +86,12 @@ public class WarehouseManager {
   public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
     ObjectOutputStream obOut = null;
     try {
-      if(_filename == ""){ //if file has no name
-        throw new FileNotFoundException();
-      }
 
       FileOutputStream fpout = new FileOutputStream(_filename);
       DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
       obOut = new ObjectOutputStream(dOut);
       obOut.writeObject(_warehouse);
-
+      
     } finally {
       if (obOut != null)
         obOut.close();
@@ -119,11 +116,13 @@ public class WarehouseManager {
   public void load(String filename) throws UnavailableFileException, ClassNotFoundException, IOException {
     ObjectInputStream obIn = null;
     try {
+
       FileInputStream fpin = new FileInputStream(filename);
       ObjectInputStream objIn = new ObjectInputStream(fpin);
       obIn = new ObjectInputStream(objIn);
       Object anObject = obIn.readObject();
       _warehouse = (Warehouse) anObject;
+      
     } finally {
       if (obIn != null)
         obIn.close();
