@@ -38,11 +38,12 @@ class DoSaveFile extends Command<WarehouseManager> {
       }
         
       _receiver.save();
+    } catch (MissingFileAssociationException e) {
+      e.printStackTrace();
     }catch (FileNotFoundException e){
       e.printStackTrace();
     
-      } catch (MissingFileAssociationException e) {
-        e.printStackTrace();
+
       }catch (IOException e) {
         e.printStackTrace();
 
