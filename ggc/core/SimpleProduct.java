@@ -1,5 +1,7 @@
 package ggc.core;
 
+import java.lang.Math;
+
 class SimpleProduct extends Product{
     SimpleProduct(String id) {
         super(id);
@@ -11,6 +13,16 @@ class SimpleProduct extends Product{
     }
 
     public String toString() {
-        return super.getId() + "|" + super.getMaxPrice() + "|" + "stock-atual-total";  // ! método para ver o stock-atual-total  
+        return getId() + "|" + Math.round(getPrice()) + "|" + checkQuantity();  // ! método para ver o stock-atual-total  
     }
+
+    public double getPrice(){
+		double res = 0;
+		for(Batch batch : this.getBatches()){
+			res += batch.getPrice();
+			if(batch.getPrice() > res)
+				res = batch.getPrice();
+		}
+		return res;
+	}
 }

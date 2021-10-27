@@ -24,7 +24,8 @@ class DoSaveFile extends Command<WarehouseManager> {
   /** @param receiver */
   DoSaveFile(WarehouseManager receiver) {
     super(Label.SAVE, receiver);
-
+    addStringField("filename", Message.newSaveAs());
+  
   }
 
   @Override
@@ -33,10 +34,9 @@ class DoSaveFile extends Command<WarehouseManager> {
  
       if ((_receiver.getFilename()).equals(""))
         {
-          addStringField("filename", Message.newSaveAs());
         _receiver.saveAs(stringField("filename"));
       }
-        
+      else
       _receiver.save();
     } catch (MissingFileAssociationException e) {
       e.printStackTrace();

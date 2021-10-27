@@ -31,4 +31,15 @@ public abstract class Product {
 		return _batches;
 	}
 
+	int checkQuantity(){
+		int res = 0;
+		for(Batch batch : _batches){
+			res += batch.getQuantity();
+		}
+		return res;
+	}
+
+	abstract double getPrice();
+
+
 }

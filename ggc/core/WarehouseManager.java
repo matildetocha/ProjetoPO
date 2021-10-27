@@ -86,7 +86,9 @@ public class WarehouseManager {
   public void save() throws IOException, FileNotFoundException, MissingFileAssociationException {
     ObjectOutputStream obOut = null;
     try {
-
+      if(_filename == ""){ //if file has no name
+        throw new FileNotFoundException();
+      }
       FileOutputStream fpout = new FileOutputStream(_filename);
       DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
       obOut = new ObjectOutputStream(dOut);

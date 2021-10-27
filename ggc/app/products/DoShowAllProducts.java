@@ -18,6 +18,7 @@ class DoShowAllProducts extends Command<WarehouseManager> {
 
   @Override
   public final void execute() throws CommandException {
-    _display.popup(_receiver.getProducts().values());
+    _display.popup(_receiver.getProducts());
+    
   }
 }

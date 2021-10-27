@@ -45,9 +45,8 @@ public class Warehouse implements Serializable {
 	}
 
 	Partner getPartner(String id) throws UnknownUserCoreException {
-		if (!_partners.containsKey(id))
+		if (!_partners.containsKey(id)) //mudar
 			throw new UnknownUserCoreException();
-
 		return _partners.get(id);
 	}
 

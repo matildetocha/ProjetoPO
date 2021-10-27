@@ -18,9 +18,19 @@ public class AggregateProduct extends Product {
     }
 
     public String toString() {
-        return super.getId() + "|" + super.getMaxPrice() + 
-            "|" + "stock-atual-total" + "|" + "receita";  // ! método para ver o stock-atual-total  
+        return super.getId() + "|" + Math.round(getPrice()) + 
+            "|" + checkQuantity() + "|" + getRecipe();  // ! método para ver o stock-atual-total  
                                                           // ! método para ver a receita do produto
     }
+
+    public double getPrice(){
+		double res = 0;
+		for(Batch batch : this.getBatches()){
+			res += batch.getPrice();
+			if(batch.getPrice() > res)
+				res = batch.getPrice();
+		}
+		return res;
+	}
     
 }

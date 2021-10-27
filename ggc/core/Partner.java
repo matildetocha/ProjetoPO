@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math;
 public class Partner {
-    private static final String NORMAL = "Normal";
-    private static final String SELECTION = "Selection";
-    private static final String ELITE = "Elite";
+    private static final String NORMAL = "NORMAL";
+    private static final String SELECTION = "SELECTION";
+    private static final String ELITE = "ELITE";
 
     private String _id;
     private String _name;
@@ -50,17 +50,21 @@ public class Partner {
     boolean equals(Partner partner){
 
         if(_id.length() != partner.getId().length())
+        
             return false;
         else{
-            for(int i = 0; i<_id.length(); i++)
-                if(_id.charAt(i) != partner.getId().charAt(i))
-                    return false;
+            // for(int i = 0; i<_id.length(); i++)
+            //     if(Character.toUpperCase(_id.charAt(i)) != Character.toUpperCase(partner.getId().charAt(i)))
+            //         return false;
+            if(!_id.equalsIgnoreCase(partner.getId())){
+                return true;
+            }
         }   
         return true;
     }
 
     public String toString() {
-        return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  _points + 
+        return _id + "|" + _name + "|" + _address + "|" + _status + "|" +  Math.round(_points) + 
             "|" + Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + 
             "|" + Math.round(_valuePaidSales); 
     }

@@ -73,6 +73,7 @@ public class Parser {
       throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
 
     String idProduct = components[1];
+    
     String idPartner = components[2];
     double price = Double.parseDouble(components[3]);
     int stock = Integer.parseInt(components[4]);
@@ -84,8 +85,9 @@ public class Parser {
       }
       Product product = _store.getProduct(idProduct);
       Partner partner = _store.getPartner(idPartner);
-
+      
       Batch batch = new Batch(product, partner, price, stock);
+      
       product.addBatch(batch);
       partner.addBatch(batch);
 

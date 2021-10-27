@@ -22,6 +22,9 @@ public class Batch{
         return _price;
     }
 
+    public int getQuantity(){
+        return _quantity;
+    }
  
     //Batch makeCopy(){}
     
