@@ -73,24 +73,20 @@ public class Parser {
       throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
 
     String idProduct = components[1];
-    
     String idPartner = components[2];
     double price = Double.parseDouble(components[3]);
     int stock = Integer.parseInt(components[4]);
 
     try {
-      if (!_store.getProducts().containsKey(idProduct)) {
-        Product simpleProduct = new SimpleProduct(idProduct);
+      Product simpleProduct = new SimpleProduct(idProduct);
+      if (!_store.getProducts().containsValue(simpleProduct)) {
         _store.registerProduct(simpleProduct);
       }
       Product product = _store.getProduct(idProduct);
       Partner partner = _store.getPartner(idPartner);
-      
-      Batch batch = new Batch(product, partner, price, stock);
-      
-      product.addBatch(batch);
-      partner.addBatch(batch);
 
+      Batch batch = new Batch(product, partner, price, stock);
+      _store.registerBatch(batch);
     } catch (UnknownUserCoreException | UnknownProductCoreException e) {
       throw new BadEntryException("");
     }
@@ -130,10 +126,9 @@ public class Parser {
       }
       Product product = _store.getProduct(idProduct);
       Partner partner = _store.getPartner(idPartner);
-      Batch batch = new Batch(product, partner, price, stock);
 
-      product.addBatch(batch);
-      partner.addBatch(batch);
+      Batch batch = new Batch(product, partner, price, stock);
+      _store.registerBatch(batch);
     } catch (UnknownUserCoreException | UnknownProductCoreException e) {
       throw new BadEntryException("");
     }

@@ -45,17 +45,17 @@ public class Warehouse implements Serializable {
 	}
 
 	Partner getPartner(String id) throws UnknownUserCoreException {
-		if (!_partners.containsKey(id)) //mudar
+		if (!_partners.containsKey(id.toLowerCase()))
 			throw new UnknownUserCoreException();
-		return _partners.get(id);
+		return _partners.get(id.toLowerCase());
 	}
 
 	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
 		Partner partner = new Partner(name, id, address);
-		if (_partners.containsKey(id))
+		if (_partners.containsKey(id.toLowerCase()))
 			throw new DuplicatePartnerCoreException();
 
-		_partners.put(partner.getId(), partner);
+		_partners.put(partner.getId().toLowerCase(), partner);
 	}
 
 	Map<String, Product> getProducts() {
@@ -69,11 +69,16 @@ public class Warehouse implements Serializable {
 		return _products.get(id);
 	}
 
-	void registerProduct(Product product) throws BadEntryException {
-		if (_products.containsKey(product.getId()))
-			throw new BadEntryException(product.getId());
+	void registerProduct(Product product) throws UnknownProductCoreException {
+		if (_products.containsValue(product))
+			throw new UnknownProductCoreException();
 
-		_products.put(product.getId(), product);
+		_products.put(product.getId().toLowerCase(), product);
+	}
+
+	void registerBatch(Batch batch) {
+		Product product = batch.getProduct();
+		product.addBatch(batch);
 	}
 
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -88,14 +93,14 @@ public class Warehouse implements Serializable {
 		return _products.get(id).getBatches();
 	}
 
-	List<Batch> getAllBatches() {
+	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
-		Set<String> keys = this.getPartners().keySet();
+		Set<String> keys = _partners.keySet();
 		Iterator<String> iterator = keys.iterator();
 
 		while (iterator.hasNext()) {
-			orderedBatches.addAll(this.getPartners().get(iterator.next()).getBatches());
+			orderedBatches.addAll(_partners.get(iterator.next()).getBatches());
 		}
 		Collections.sort(orderedBatches, new BatchComparator());
 		return orderedBatches;
@@ -108,7 +113,7 @@ public class Warehouse implements Serializable {
 		return partnersByKey;
 	}
 
-	List<Product> getAllProducts() {
+	List<Product> getSortedProducts() {
 		List<Product> productsByKey = new ArrayList<Product>(_products.values());
 		Collections.sort(productsByKey, new ProductComparator());
 
@@ -124,41 +129,4 @@ public class Warehouse implements Serializable {
 		Parser parser = new Parser(this);
 		parser.parseFile(txtfile);
 	}
-
 }
-
-
-
-
-
-
-// Set set2 = map.entrySet();  
-// Iterator iterator2 = set2.iterator();  
-// while(iterator2.hasNext())   
-// {  
-// Map.Entry me2 = (Map.Entry)iterator2.next();  
-// System.out.println("Roll no:  "+me2.getKey()+"     Name:   "+me2.getValue());  
-// }  
-
-// //method to sort values  
-// private static HashMap sortValues(HashMap map)   
-// {   
-// List list = new LinkedList(map.entrySet());  
-// //Custom Comparator  
-// Collections.sort(list, new Comparator()   
-// {  
-// public int compare(Object o1, Object o2)   
-// {  
-// return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());  
-// }  
-// });  
-// //copying the sorted list in HashMap to preserve the iteration order  
-// HashMap sortedHashMap = new LinkedHashMap();  
-// for (Iterator it = list.iterator(); it.hasNext();)   
-// {  
-//  Map.Entry entry = (Map.Entry) it.next();  
-// sortedHashMap.put(entry.getKey(), entry.getValue());  
-// }   
-// return sortedHashMap;  
-// }  
-// }  

@@ -1,5 +1,5 @@
 *** tests/A-01-08-M-ok.out	2021-10-25 09:43:44.150005695 +0100
---- tests/A-01-08-M-ok.outhyp	2021-10-27 11:27:07.105439766 +0100
+--- tests/A-01-08-M-ok.outhyp	2021-10-27 18:46:57.942455170 +0100
 ***************
 *** 9,15 ****
   8 - Menu de Consultas
@@ -40,22 +40,31 @@
   2 - Mostrar parceiros
   3 - Registar parceiro
 ***************
-*** 55,71 ****
+*** 62,68 ****
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: Menu Principal
   1 - Abrir
   2 - Guardar
   3 - Mostrar Data
-- 4 - Avançar Data
-- 5 - Gestão de Produtos
-- 6 - Gestão de Parceiros
-- 7 - Gestão de Transacções
-- 8 - Menu de Consultas
-- 9 - Ver Saldo Global
-- 0 - Sair
-- Escolha uma opção: Menu Principal
-- 1 - Abrir
-- 2 - Guardar
-- 3 - Mostrar Data
-  4 - Avançar Data
-  5 - Gestão de Produtos
-  6 - Gestão de Parceiros
---- 52,57 ----
+--- 59,65 ----
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: Ficheiro sem nome. Guardar ficheiro como: Menu Principal
+  1 - Abrir
+  2 - Guardar
+  3 - Mostrar Data
+***************
+*** 73,76 ****
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: 
+\ No newline at end of file
+--- 70,73 ----
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: Fim de entrada de dados (R-EOF): pt.tecnico.uilib.text.RuntimeEOFException: Fim do fluxo de dados de entrada

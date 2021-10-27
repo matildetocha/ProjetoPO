@@ -18,12 +18,16 @@ public class Batch{
         return _partner.getId() + "|" + _product.getId() + "|" + _price + "|" + _quantity;
     }
 
-    public double getPrice(){
+    double getPrice(){
         return _price;
     }
 
-    public int getQuantity(){
+    int getQuantity(){
         return _quantity;
+    }
+
+    Product getProduct() {
+        return _product;
     }
  
     //Batch makeCopy(){}

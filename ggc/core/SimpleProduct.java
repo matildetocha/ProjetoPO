@@ -2,27 +2,24 @@ package ggc.core;
 
 import java.lang.Math;
 
-class SimpleProduct extends Product{
+class SimpleProduct extends Product {
     SimpleProduct(String id) {
         super(id);
     }
 
-    @Override
-    void checkQuantity(int quantity, Partner p) {
-    
-    }
-
     public String toString() {
-        return getId() + "|" + Math.round(getPrice()) + "|" + checkQuantity();  // ! método para ver o stock-atual-total  
+        return super.getId() + "|" +Math.round(getPrice()) + "|" + checkQuantity();
     }
 
-    public double getPrice(){
-		double res = 0;
-		for(Batch batch : this.getBatches()){
-			res += batch.getPrice();
-			if(batch.getPrice() > res)
-				res = batch.getPrice();
-		}
-		return res;
-	}
+    double getPrice() {
+        double maxPrice = 0;
+    
+        for (Batch batch : super.getBatches()) {
+            if (maxPrice < batch.getPrice())
+                maxPrice = batch.getPrice();
+        }
+        super.changeMaxPrice(maxPrice);
+        return super.getMaxPrice();
+
+    }
 }

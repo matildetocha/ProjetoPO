@@ -58,8 +58,12 @@ public class WarehouseManager {
     return _warehouse.getProducts();
   }
 
-  public void registerProduct(Product product) throws BadEntryException {
+  public void registerProduct(Product product) throws UnknownProductCoreException {
     _warehouse.registerProduct(product);
+  }
+
+  public void registerBatch(Batch batch) {
+    _warehouse.registerBatch(batch);
   }
 
   public List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -70,12 +74,16 @@ public class WarehouseManager {
     return _warehouse.getBatchesByProduct(id);
   }
 
-  public List<Batch> getAllBatches() {
-    return _warehouse.getAllBatches();
+  public List<Batch> getSortedBatches() {
+    return _warehouse.getSortedBatches();
   }
 
   public List<Partner> getSortedPartners() {
     return _warehouse.getSortedPartners();
+  }
+
+  public List<Product> getSortedProducts() {
+    return _warehouse.getSortedProducts();
   }
 
   /**

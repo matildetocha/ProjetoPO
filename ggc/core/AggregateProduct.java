@@ -11,11 +11,6 @@ public class AggregateProduct extends Product {
     Recipe getRecipe() {
         return _recipe;
     }
-    
-    @Override
-    void checkQuantity(int quantity, Partner p) {
-
-    }
 
     public String toString() {
         return super.getId() + "|" + Math.round(getPrice()) + 

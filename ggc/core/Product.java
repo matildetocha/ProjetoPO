@@ -13,17 +13,19 @@ public abstract class Product {
 		_batches = new ArrayList<>();
 	}
 
-	abstract void checkQuantity(int quantity, Partner p);
-
 	String getId() {
 		return _id;
 	}
 
-	double getMaxPrice() {
+	public double getMaxPrice() {
 		return _maxPrice;
 	}
 
-	void addBatch(Batch batch) {
+	void changeMaxPrice(double maxPrice) {
+		_maxPrice = maxPrice;
+	}
+
+	public void addBatch(Batch batch) {
 		_batches.add(batch);
 	}
 
@@ -31,15 +33,13 @@ public abstract class Product {
 		return _batches;
 	}
 
-	int checkQuantity(){
-		int res = 0;
-		for(Batch batch : _batches){
-			res += batch.getQuantity();
-		}
-		return res;
-	}
+	public int checkQuantity() {
+        int res = 0;
+        for (Batch batch : _batches) {
+            res += batch.getQuantity();
+        }
+        return res;
+    }
 
 	abstract double getPrice();
-
-
 }

@@ -20,6 +20,13 @@ public class Recipe {
         _components.add(component);
     }
 
+    public String toString(){
+        String res = "";
+        for(Component component : _components){
+            res += component.toString();
+        }
+        return res;
+    }
 
     //public String toString(){}
 }
