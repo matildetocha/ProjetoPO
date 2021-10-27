@@ -1,7 +1,7 @@
-*** tests/A-01-04-M-ok.out	2021-10-10 16:58:56.000000000 +0100
---- tests/A-01-04-M-ok.outhyp	2021-10-26 21:46:34.641307526 +0100
+*** tests/A-01-04-M-ok.out	2021-10-25 09:43:44.150005695 +0100
+--- tests/A-01-04-M-ok.outhyp	2021-10-27 11:27:06.441430434 +0100
 ***************
-*** 15,30 ****
+*** 15,31 ****
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
@@ -15,10 +15,11 @@
   0 - Sair
 ! Escolha uma opção: HIDROGENIO|S1|200|5000
 ! OXIGENIO|P1|1200|2500
-  Gestão de Produtos
+! Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
---- 15,30 ----
+  3 - Visualizar lotes fornecidos por parceiro
+--- 15,29 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
@@ -30,11 +31,10 @@
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: P1|OXIGENIO|1200.0|2500
-! S1|HIDROGENIO|200.0|5000
-  Gestão de Produtos
+! Escolha uma opção: Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
+  3 - Visualizar lotes fornecidos por parceiro
 ***************
 *** 50,58 ****
   5 - Mostrar compras com parceiro
@@ -46,7 +46,7 @@
   Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
---- 50,58 ----
+--- 48,56 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
@@ -75,4 +75,4 @@
   4 - Avançar Data
   5 - Gestão de Produtos
   6 - Gestão de Parceiros
---- 65,70 ----
+--- 63,68 ----

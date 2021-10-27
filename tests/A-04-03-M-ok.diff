@@ -1,7 +1,7 @@
-*** tests/A-04-03-M-ok.out	2021-10-15 19:48:01.000000000 +0100
---- tests/A-04-03-M-ok.outhyp	2021-10-26 21:46:36.169140187 +0100
+*** tests/A-04-03-M-ok.out	2021-10-25 09:43:44.150005695 +0100
+--- tests/A-04-03-M-ok.outhyp	2021-10-27 11:27:08.673461857 +0100
 ***************
-*** 15,24 ****
+*** 15,25 ****
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
@@ -9,17 +9,15 @@
 ! ROLHA|S1|100|100
 ! ROLHA|S2|1000|100
 ! ROLHA|S3|5000|100
-  Gestão de Produtos
+! Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
---- 15,24 ----
+  3 - Visualizar lotes fornecidos por parceiro
+--- 15,21 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: S3|ROLHA|5000.0|100
-! M1|ROLHA|2000.0|500
-! S1|ROLHA|100.0|100
-! S2|ROLHA|1000.0|100
-  Gestão de Produtos
+! Escolha uma opção: Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
+  3 - Visualizar lotes fornecidos por parceiro

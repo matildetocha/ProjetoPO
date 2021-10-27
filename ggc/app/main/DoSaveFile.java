@@ -10,6 +10,7 @@ import ggc.core.exception.MissingFileAssociationException;
 import java.io.FileNotFoundException;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileWriter;
@@ -23,24 +24,31 @@ class DoSaveFile extends Command<WarehouseManager> {
   /** @param receiver */
   DoSaveFile(WarehouseManager receiver) {
     super(Label.SAVE, receiver);
-    if (_receiver.getFilename() == "")
-      addStringField("filename", Message.newSaveAs());
+
   }
 
   @Override
   public final void execute() throws CommandException {
     try {
-      _receiver.save();
-
-    } catch (FileNotFoundException e) {
-      try {
+ 
+      if ((_receiver.getFilename()).equals(""))
+        {
+          addStringField("filename", Message.newSaveAs());
         _receiver.saveAs(stringField("filename"));
-      } catch (MissingFileAssociationException | IOException ex) {
-        
       }
-      
-    } catch (MissingFileAssociationException | IOException ex) {
-      throw new FileOpenFailedException(stringField("filename"));
+        
+      _receiver.save();
+    }catch (FileNotFoundException e){
+      e.printStackTrace();
+    
+      } catch (MissingFileAssociationException e) {
+        e.printStackTrace();
+      }catch (IOException e) {
+        e.printStackTrace();
+
     }
+
+
   }
+
 }

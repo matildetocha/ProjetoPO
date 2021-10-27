@@ -1,7 +1,7 @@
-*** tests/A-04-04-M-ok.out	2021-10-17 13:13:24.000000000 +0100
---- tests/A-04-04-M-ok.outhyp	2021-10-26 21:46:36.289127229 +0100
+*** tests/A-04-04-M-ok.out	2021-10-25 09:43:44.150005695 +0100
+--- tests/A-04-04-M-ok.outhyp	2021-10-27 11:27:08.809463775 +0100
 ***************
-*** 15,30 ****
+*** 15,31 ****
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
@@ -15,23 +15,15 @@
 ! TRALHA|S1|100|100
 ! TRALHA|S2|100|100
 ! TRALHA|S3|50|100
-  Gestão de Produtos
+! Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
---- 15,30 ----
+  3 - Visualizar lotes fornecidos por parceiro
+--- 15,21 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: S3|ROLHA|500.0|100
-! S3|TRALHA|50.0|100
-! M1|ROLHA|2000.0|500
-! M1|TRALHA|2000.0|500
-! M1|TRALHA|200.0|500
-! M1|TRALHA|20.0|5000
-! S1|ROLHA|100.0|100
-! S1|TRALHA|100.0|100
-! S2|ROLHA|1000.0|100
-! S2|TRALHA|100.0|100
-  Gestão de Produtos
+! Escolha uma opção: Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
+  3 - Visualizar lotes fornecidos por parceiro
