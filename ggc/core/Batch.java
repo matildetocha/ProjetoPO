@@ -1,7 +1,10 @@
 package ggc.core;
 
+import java.io.Serializable;
 
-public class Batch{
+public class Batch implements Serializable {
+    private static final long serialVersionUID = 202109192006L;
+    
     private double _price;
     private int _quantity;
     private Product _product;

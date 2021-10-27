@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.HashMap;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
+import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
@@ -45,16 +46,16 @@ public class Warehouse implements Serializable {
 	}
 
 	Partner getPartner(String id) throws UnknownUserCoreException {
-		if (!_partners.containsKey(id.toLowerCase()))
+		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
 		return _partners.get(id.toLowerCase());
 	}
 
 	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
-		Partner partner = new Partner(name, id, address);
-		if (_partners.containsKey(id.toLowerCase()))
+		if (_partners.get(id.toLowerCase()) != null)
 			throw new DuplicatePartnerCoreException();
 
+		Partner partner = new Partner(name, id, address);
 		_partners.put(partner.getId().toLowerCase(), partner);
 	}
 
@@ -63,15 +64,15 @@ public class Warehouse implements Serializable {
 	}
 
 	Product getProduct(String id) throws UnknownProductCoreException {
-		if (!_products.containsKey(id))
+		if (_products.get(id.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
 
-		return _products.get(id);
+		return _products.get(id.toLowerCase());
 	}
 
-	void registerProduct(Product product) throws UnknownProductCoreException {
-		if (_products.containsValue(product))
-			throw new UnknownProductCoreException();
+	void registerProduct(Product product) throws DuplicateProductCoreException {
+		if (_products.get(product.getId().toLowerCase()) != null)
+			throw new DuplicateProductCoreException();
 
 		_products.put(product.getId().toLowerCase(), product);
 	}
@@ -82,13 +83,13 @@ public class Warehouse implements Serializable {
 	}
 
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
-		if (!_partners.containsKey(id))
+		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
 		return _partners.get(id).getBatches();
 	}
 
 	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
-		if (!_products.containsKey(id))
+		if (_products.get(id.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
 		return _products.get(id).getBatches();
 	}
@@ -102,6 +103,7 @@ public class Warehouse implements Serializable {
 		while (iterator.hasNext()) {
 			orderedBatches.addAll(_partners.get(iterator.next()).getBatches());
 		}
+		
 		Collections.sort(orderedBatches, new BatchComparator());
 		return orderedBatches;
 	}

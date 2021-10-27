@@ -2,8 +2,14 @@ package ggc.core;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.io.Serializable;
+
 import java.lang.Math;
-public class Partner {
+
+public class Partner implements Serializable {
+    private static final long serialVersionUID = 202109192006L;
+    
     private static final String NORMAL = "NORMAL";
     private static final String SELECTION = "SELECTION";
     private static final String ELITE = "ELITE";
@@ -27,6 +33,16 @@ public class Partner {
         _valueAcquisitions = _valueSales = _valuePaidSales = 0;
         _batches = new ArrayList<>();
     }
+
+    @Override
+	public int hashCode() {
+		return _id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Product && ((Partner) obj)._id.equals(_id);
+	}
 
     String getId(){
         return _id;

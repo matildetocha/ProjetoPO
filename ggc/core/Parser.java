@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
+import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.ImportFileException;
 import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
@@ -63,7 +64,7 @@ public class Parser {
     try {
       _store.registerPartner(name, id, address);
     } catch (DuplicatePartnerCoreException e) {
-      throw new BadEntryException("");
+      throw new BadEntryException("", e);
     }
   }
 
@@ -78,8 +79,8 @@ public class Parser {
     int stock = Integer.parseInt(components[4]);
 
     try {
-      Product simpleProduct = new SimpleProduct(idProduct);
-      if (!_store.getProducts().containsValue(simpleProduct)) {
+      if (_store.getProducts().get(idProduct.toLowerCase()) == null) {
+        Product simpleProduct = new SimpleProduct(idProduct);
         _store.registerProduct(simpleProduct);
       }
       Product product = _store.getProduct(idProduct);
@@ -87,8 +88,8 @@ public class Parser {
 
       Batch batch = new Batch(product, partner, price, stock);
       _store.registerBatch(batch);
-    } catch (UnknownUserCoreException | UnknownProductCoreException e) {
-      throw new BadEntryException("");
+    } catch (UnknownUserCoreException | UnknownProductCoreException | DuplicateProductCoreException e) {
+      throw new BadEntryException("", e);
     }
   }
 
@@ -129,8 +130,8 @@ public class Parser {
 
       Batch batch = new Batch(product, partner, price, stock);
       _store.registerBatch(batch);
-    } catch (UnknownUserCoreException | UnknownProductCoreException e) {
-      throw new BadEntryException("");
+    } catch (UnknownUserCoreException | UnknownProductCoreException | DuplicateProductCoreException e) {
+      throw new BadEntryException("", e);
     }
   }
 }

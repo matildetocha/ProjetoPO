@@ -8,18 +8,18 @@ class SimpleProduct extends Product {
     }
 
     public String toString() {
-        return super.getId() + "|" +Math.round(getPrice()) + "|" + checkQuantity();
+        return getId() + "|" + Math.round(getPrice()) + "|" + checkQuantity();
     }
 
     double getPrice() {
         double maxPrice = 0;
     
-        for (Batch batch : super.getBatches()) {
+        for (Batch batch : getBatches()) {
             if (maxPrice < batch.getPrice())
                 maxPrice = batch.getPrice();
         }
-        super.changeMaxPrice(maxPrice);
-        return super.getMaxPrice();
+        changeMaxPrice(maxPrice);
+        return getMaxPrice();
 
     }
 }

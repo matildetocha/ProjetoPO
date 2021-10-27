@@ -1,6 +1,7 @@
 package ggc.core;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
+import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.ImportFileException;
 import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
@@ -15,7 +16,6 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import ggc.core.Warehouse;
 
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class WarehouseManager {
     return _warehouse.getProducts();
   }
 
-  public void registerProduct(Product product) throws UnknownProductCoreException {
+  public void registerProduct(Product product) throws DuplicateProductCoreException {
     _warehouse.registerProduct(product);
   }
 

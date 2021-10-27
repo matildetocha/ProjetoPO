@@ -1,9 +1,13 @@
 package ggc.core;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
+    private static final long serialVersionUID = 202109192006L;
+    
     private double _aggravation;
     private Product _aggregateProduct;
     private List<Component> _components;
