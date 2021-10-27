@@ -18,7 +18,7 @@ public class Batch implements Serializable {
     }
 
     public String toString(){
-        return _partner.getId() + "|" + _product.getId() + "|" + _price + "|" + _quantity;
+        return _product.getId() + "|" + _partner.getId() + "|"  + Math.round(_price) + "|" + _quantity;
     }
 
     double getPrice(){
@@ -31,6 +31,10 @@ public class Batch implements Serializable {
 
     Product getProduct() {
         return _product;
+    }
+
+    Partner getPartner() {
+        return _partner;
     }
  
     //Batch makeCopy(){}

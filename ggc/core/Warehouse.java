@@ -97,11 +97,11 @@ public class Warehouse implements Serializable {
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
-		Set<String> keys = _partners.keySet();
+		Set<String> keys = _products.keySet();
 		Iterator<String> iterator = keys.iterator();
 
 		while (iterator.hasNext()) {
-			orderedBatches.addAll(_partners.get(iterator.next()).getBatches());
+			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
 		}
 		
 		Collections.sort(orderedBatches, new BatchComparator());
