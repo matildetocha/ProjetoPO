@@ -1,7 +1,5 @@
 package ggc.core; 
 
-import java.lang.Math;
-
 import ggc.core.exception.InvalidDateCoreException;
 //Adada
 public class Date {

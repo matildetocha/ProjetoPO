@@ -106,8 +106,9 @@ public class Parser {
 
     try {
       if (!_store.getProducts().containsKey(idProduct)) {
-        ArrayList<Product> products = new ArrayList<>(); // ? wtf is this
-        ArrayList<Integer> quantities = new ArrayList<>(); // ? wtf is this
+       //  ArrayList<Product> products = new ArrayList<>(); 
+       //  ArrayList<Integer> quantities = new ArrayList<>(); 
+       
         Recipe recipe = new Recipe(aggravation);
 
         for (String componentString : components[6].split("#")) {

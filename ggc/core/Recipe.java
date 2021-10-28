@@ -32,5 +32,9 @@ public class Recipe implements Serializable {
         return res;
     }
 
+    double getAlpha(){
+        return _aggravation;
+    }
+
     //public String toString(){}
 }

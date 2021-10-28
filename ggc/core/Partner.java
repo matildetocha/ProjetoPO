@@ -5,8 +5,6 @@ import java.util.List;
 
 import java.io.Serializable;
 
-import java.lang.Math;
-
 public class Partner implements Serializable {
     private static final long serialVersionUID = 202109192006L;
     
