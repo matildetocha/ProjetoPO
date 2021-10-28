@@ -98,7 +98,7 @@ public class WarehouseManager {
         throw new FileNotFoundException();
       }
       FileOutputStream fpout = new FileOutputStream(_filename);
-      DeflaterOutputStream dOut = new DeflaterOutputStream(fpout);
+      ObjectOutputStream dOut = new ObjectOutputStream(fpout);
       obOut = new ObjectOutputStream(dOut);
       obOut.writeObject(_warehouse);
       

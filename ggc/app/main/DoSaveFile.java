@@ -24,7 +24,10 @@ class DoSaveFile extends Command<WarehouseManager> {
   /** @param receiver */
   DoSaveFile(WarehouseManager receiver) {
     super(Label.SAVE, receiver);
+    if ((_receiver.getFilename()).equals(""))
+    {
     addStringField("filename", Message.newSaveAs());
+  }
   
   }
 
@@ -42,8 +45,6 @@ class DoSaveFile extends Command<WarehouseManager> {
       e.printStackTrace();
     }catch (FileNotFoundException e){
       e.printStackTrace();
-    
-
       }catch (IOException e) {
         e.printStackTrace();
 

@@ -1,23 +1,5 @@
 *** tests/A-01-09-M-ok.out	2021-10-25 09:43:44.150005695 +0100
---- tests/A-01-09-M-ok.outhyp	2021-10-28 11:13:55.495531326 +0100
-***************
-*** 9,15 ****
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-! Escolha uma opção: Ficheiro a abrir: Menu Principal
-  1 - Abrir
-  2 - Guardar
-  3 - Mostrar Data
---- 9,16 ----
-  8 - Menu de Consultas
-  9 - Ver Saldo Global
-  0 - Sair
-! Escolha uma opção: Ficheiro a abrir: Abrir: Operação inválida: Problema ao abrir 'app03.dat'.
-! Menu Principal
-  1 - Abrir
-  2 - Guardar
-  3 - Mostrar Data
+--- tests/A-01-09-M-ok.outhyp	2021-10-28 12:57:26.001882038 +0100
 ***************
 *** 20,26 ****
   8 - Menu de Consultas
@@ -27,7 +9,7 @@
   Menu Principal
   1 - Abrir
   2 - Guardar
---- 21,27 ----
+--- 20,26 ----
   8 - Menu de Consultas
   9 - Ver Saldo Global
   0 - Sair
