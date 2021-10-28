@@ -28,6 +28,7 @@ public class Recipe implements Serializable {
   double getAlpha() {
     return _aggravation;
   }
+  
 
   @Override
   public String toString() {
