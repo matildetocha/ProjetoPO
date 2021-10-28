@@ -1,26 +1,22 @@
 package ggc.core;
 
 import java.io.Serializable;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.HashMap;
 
 import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.DuplicateProductCoreException;
+import ggc.core.exception.InvalidDateCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
-import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.BadEntryException;
 
 /**
@@ -39,10 +35,18 @@ public class Warehouse implements Serializable {
 	Warehouse() {
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
+		_date = new Date();
 	}
 
-	Map<String, Partner> getPartners() {
-		return _partners;
+	Collection<Partner> getPartners() {
+		return Collections.unmodifiableCollection(_partners.values());
+	}
+
+	List<Partner> getSortedPartners() {
+		List<Partner> partnersByKey = new ArrayList<Partner>(_partners.values());
+		Collections.sort(partnersByKey, new PartnerComparator());
+
+		return partnersByKey;
 	}
 
 	Partner getPartner(String id) throws UnknownUserCoreException {
@@ -59,8 +63,15 @@ public class Warehouse implements Serializable {
 		_partners.put(partner.getId().toLowerCase(), partner);
 	}
 
-	Map<String, Product> getProducts() {
-		return _products;
+	Collection<Product> getProducts() {
+		return Collections.unmodifiableCollection(_products.values());
+	}
+
+	List<Product> getSortedProducts() {
+		List<Product> productsByKey = new ArrayList<Product>(_products.values());
+		Collections.sort(productsByKey, new ProductComparator());
+
+		return productsByKey;
 	}
 
 	Product getProduct(String id) throws UnknownProductCoreException {
@@ -77,9 +88,18 @@ public class Warehouse implements Serializable {
 		_products.put(product.getId().toLowerCase(), product);
 	}
 
-	void registerBatch(Batch batch) {
-		Product product = batch.getProduct();
-		product.addBatch(batch);
+	List<Batch> getSortedBatches() {
+		List<Batch> orderedBatches = new ArrayList<Batch>();
+
+		Set<String> keys = _products.keySet();
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
+		}
+
+		Collections.sort(orderedBatches, new BatchComparator());
+		return orderedBatches;
 	}
 
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -94,32 +114,17 @@ public class Warehouse implements Serializable {
 		return _products.get(id).getBatches();
 	}
 
-	List<Batch> getSortedBatches() {
-		List<Batch> orderedBatches = new ArrayList<Batch>();
-
-		Set<String> keys = _products.keySet();
-		Iterator<String> iterator = keys.iterator();
-
-		while (iterator.hasNext()) {
-			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
-		}
-		
-		Collections.sort(orderedBatches, new BatchComparator());
-		return orderedBatches;
+	void registerBatch(Batch batch) {
+		Product product = batch.getProduct();
+		product.addBatch(batch);
 	}
 
-	List<Partner> getSortedPartners() {
-		List<Partner> partnersByKey = new ArrayList<Partner>(_partners.values());
-		Collections.sort(partnersByKey, new PartnerComparator());
-
-		return partnersByKey;
+	int displayDate() {
+		return _date.now();
 	}
 
-	List<Product> getSortedProducts() {
-		List<Product> productsByKey = new ArrayList<Product>(_products.values());
-		Collections.sort(productsByKey, new ProductComparator());
-
-		return productsByKey;
+	int advanceDate(int days) throws InvalidDateCoreException {
+		return _date.add(days);
 	}
 
 	/**
@@ -127,7 +132,7 @@ public class Warehouse implements Serializable {
 	 * @throws IOException
 	 * @throws BadEntryException
 	 */
-	void importFile(String txtfile) throws IOException, BadEntryException { /* FIXME maybe other exceptions */
+	void importFile(String txtfile) throws IOException, BadEntryException {
 		Parser parser = new Parser(this);
 		parser.parseFile(txtfile);
 	}

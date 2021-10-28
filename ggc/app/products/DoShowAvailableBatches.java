@@ -29,4 +29,3 @@ class DoShowAvailableBatches extends Command<WarehouseManager> {
     _display.popup(_receiver.getSortedBatches());
   }
 }
-

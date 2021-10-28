@@ -26,5 +26,4 @@ class DoShowBatchesByPartner extends Command<WarehouseManager> {
       throw new UnknownPartnerKeyException(stringField("id"));
     }
   }
-
 }

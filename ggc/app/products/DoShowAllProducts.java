@@ -3,8 +3,6 @@ package ggc.app.products;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
-
-
 import ggc.core.WarehouseManager;
 
 /**
@@ -19,6 +17,5 @@ class DoShowAllProducts extends Command<WarehouseManager> {
   @Override
   public final void execute() throws CommandException {
     _display.popup(_receiver.getSortedProducts());
-    
   }
 }

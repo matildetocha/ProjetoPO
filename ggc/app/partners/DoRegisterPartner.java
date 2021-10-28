@@ -7,6 +7,7 @@ import ggc.app.exception.DuplicatePartnerKeyException;
 
 import ggc.core.WarehouseManager;
 import ggc.core.exception.DuplicatePartnerCoreException;
+
 /**
  * Register new partner.
  */

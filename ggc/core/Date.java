@@ -1,22 +1,30 @@
-package ggc.core; 
+package ggc.core;
+
+import java.io.Serializable;
 
 import ggc.core.exception.InvalidDateCoreException;
-//Adada
-public class Date {
-    private static int _days;
 
-    public static void add(int days) throws InvalidDateCoreException{
-        if(days < 0 ){ 
-            throw new InvalidDateCoreException();
+public class Date implements Serializable {
+	private static final long serialVersionUID = 200149174056L;
 
-        }
-        _days += days;
-    }
-    public int difference(Date other){
-        return Math.abs(Date.now() - other.now());
-    }
+	private int _days;
 
-    public static int now(){
-        return _days; }
+	Date() {
+	}
 
+	int add(int days) throws InvalidDateCoreException {
+		if (days < 0) {
+			throw new InvalidDateCoreException();
+		}
+		_days += days;
+		return _days;
+	}
+
+	int difference(Date other) {
+		return Math.abs(now() - other.now());
+	}
+
+	int now() {
+		return _days;
+	}
 }

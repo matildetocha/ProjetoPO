@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Product implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
-	
+
 	private double _maxPrice;
 	private String _id;
 	private List<Batch> _batches;
@@ -48,12 +48,12 @@ public abstract class Product implements Serializable {
 	}
 
 	public int checkQuantity() {
-        int res = 0;
-        for (Batch batch : _batches) {
-            res += batch.getQuantity();
-        }
-        return res;
-    }
+		int res = 0;
+		for (Batch batch : _batches) {
+			res += batch.getQuantity();
+		}
+		return res;
+	}
 
 	abstract double getPrice();
 }

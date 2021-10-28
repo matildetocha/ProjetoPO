@@ -6,13 +6,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.Reader;
 
-import java.util.ArrayList;
-
 import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.DuplicateProductCoreException;
-import ggc.core.exception.ImportFileException;
-import ggc.core.exception.MissingFileAssociationException;
-import ggc.core.exception.UnavailableFileException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.BadEntryException;
@@ -61,6 +56,7 @@ public class Parser {
     String id = components[1];
     String name = components[2];
     String address = components[3];
+    
     try {
       _store.registerPartner(name, id, address);
     } catch (DuplicatePartnerCoreException e) {
@@ -79,7 +75,9 @@ public class Parser {
     int stock = Integer.parseInt(components[4]);
 
     try {
-      if (_store.getProducts().get(idProduct.toLowerCase()) == null) {
+      try {
+        _store.getProduct(idProduct);
+      } catch (UnknownProductCoreException ue) {
         Product simpleProduct = new SimpleProduct(idProduct);
         _store.registerProduct(simpleProduct);
       }
@@ -105,18 +103,15 @@ public class Parser {
     double aggravation = Double.parseDouble(components[5]);
 
     try {
-      if (!_store.getProducts().containsKey(idProduct)) {
-       //  ArrayList<Product> products = new ArrayList<>(); 
-       //  ArrayList<Integer> quantities = new ArrayList<>(); 
-       
+      try {
+        _store.getProduct(idProduct);
+      } catch (UnknownProductCoreException ue) {
         Recipe recipe = new Recipe(aggravation);
 
         for (String componentString : components[6].split("#")) {
           String[] recipeComponent = componentString.split(":");
 
-          // quantities.add(Integer.parseInt(recipeComponent[1]));
-
-          if (!_store.getProducts().containsKey(recipeComponent[0]))
+          if (_store.getProduct(recipeComponent[0]) == null)
             throw new UnknownProductCoreException();
 
           Component component = new Component(Integer.parseInt(recipeComponent[1]),

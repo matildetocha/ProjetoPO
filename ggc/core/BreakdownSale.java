@@ -1,8 +1,10 @@
 package ggc.core;
 
-public class BreakdownSale extends Sale{
-    
-    //BreakdownSale(Produt p, Partner intPart){}
+public class BreakdownSale extends Sale {
 
-   // public String toString(){}
+	BreakdownSale(Product product, int quantity, Partner partner) {
+		super(product, quantity, partner);
+	}
+
+	// public String toString(){}
 }

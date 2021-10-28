@@ -6,35 +6,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe implements Serializable {
-    private static final long serialVersionUID = 202109192006L;
-    
-    private double _aggravation;
-    private Product _aggregateProduct;
-    private List<Component> _components;
-    
-    Recipe(double aggravation) {
-        _aggravation = aggravation;
-    }
+  private static final long serialVersionUID = 400109132706L;
 
-    void addAggregateProduct(Product aggregateProduct) {
-        _aggregateProduct = aggregateProduct;
-    }
+  private double _aggravation;
+  private Product _aggregateProduct;
+  private List<Component> _components;
 
-    void addComponent(Component component) {
-        _components.add(component);
-    }
+  Recipe(double aggravation) {
+    _aggravation = aggravation;
+    _components = new ArrayList<>();
+  }
 
-    public String toString(){
-        String res = "";
-        for(Component component : _components){
-            res += component.toString();
-        }
-        return res;
-    }
+  void addAggregateProduct(Product aggregateProduct) {
+    _aggregateProduct = aggregateProduct;
+  }
 
-    double getAlpha(){
-        return _aggravation;
-    }
+  void addComponent(Component component) {
+    _components.add(component);
+  }
 
-    //public String toString(){}
+  double getAlpha() {
+    return _aggravation;
+  }
+
+  @Override
+  public String toString() {
+    String string = "";
+    for (Component component : _components) {
+      string += component;
+    }
+    return string;
+  }
 }
