@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Product implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
 
-	/** A Product has a maxPrice defined that can be changed. ???*/
+	/** A Product has a maxPrice defined that can be changed. */
 	private double _maxPrice;
 
 	/** A Product has an Id that is used to distinguish it from another Product. */
