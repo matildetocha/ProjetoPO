@@ -6,7 +6,6 @@ import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.UnknownPartnerKeyException;
 
 import ggc.core.WarehouseManager;
-import ggc.core.exception.BadEntryException;
 import ggc.core.exception.UnknownUserCoreException;
 
 /**

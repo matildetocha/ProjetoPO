@@ -101,8 +101,7 @@ public abstract class Product implements Serializable {
 	 */
 	public double getPrice() {
         double res = 0;
-        for (Batch batch : this.getBatches()) {
-            res += batch.getPrice();
+        for (Batch batch : _batches) {
             if (batch.getPrice() > res)
                 res = batch.getPrice();
         }

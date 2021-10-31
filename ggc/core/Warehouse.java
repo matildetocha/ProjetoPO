@@ -17,9 +17,9 @@ import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.InvalidDateCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
-import ggc.app.exception.UnavailableProductException;
-import ggc.app.exception.UnknownProductKeyException;
 import ggc.core.exception.BadEntryException;
+
+import ggc.app.exception.UnavailableProductException; // ! não podemos dar import destas exceções
 
 /**
  * TESTE TESTE no windows Class Warehouse implements a warehouse.

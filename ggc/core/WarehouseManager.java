@@ -19,8 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.zip.DeflaterOutputStream;
+
 
 /** Facade for access. */
 public class WarehouseManager {
