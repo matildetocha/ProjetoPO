@@ -4,7 +4,7 @@ public class Acquisition extends Transaction {
 
 	// void Acquisition(Product p,Partner Part);
 	Acquisition(int id, Partner partner, Product product, int paymentDate, int baseValue, int quantity) {
-		super(id, partner, product, paymentDate, baseValue, quantity);
+		super(id, partner, product, 0, baseValue, quantity);
 	}
 	
 	public String toString(){

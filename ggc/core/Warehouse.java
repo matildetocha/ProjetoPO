@@ -149,6 +149,7 @@ public class Warehouse implements Serializable {
 
 		Sale sale = new SaleByCredit(1, partner, product, 1, 1, quantity, deadline);
 		
+		partner.addSale(sale);
 		_transactions.put(1, sale);
 		//id += 1 ;
 		return sale;
@@ -159,6 +160,17 @@ public class Warehouse implements Serializable {
 		return product.checkQuantity();
 	}
 
+	void registerAcquisiton(String partnerId, String productId, double price, int quantity){
+		
+		Product product = _products.get(productId);
+		//se produto for desconhecido pedir receita, com Message.requestRecipe(), requestComponent e requestAlpha
+		Partner partner = _partners.get(partnerId);
+
+		Transaction acquisition = new Acquisition(1, partner, product, 0, 1, quantity); //deadline de aquisitions é 0
+
+		partner.addAcquisition(acquisition);
+		_transactions.put(1, acquisition);
+	}
 	/**
 	 * @param txtfile filename to be loaded.
 	 * @throws IOException

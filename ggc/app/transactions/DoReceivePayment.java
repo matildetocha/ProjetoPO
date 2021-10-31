@@ -13,6 +13,7 @@ public class DoReceivePayment extends Command<WarehouseManager> {
   public DoReceivePayment(WarehouseManager receiver) {
     super(Label.RECEIVE_PAYMENT, receiver);
     //FIXME add command fields
+    addIntegerField("TransactionId", Message.requestTransactionKey());
   }
 
   @Override

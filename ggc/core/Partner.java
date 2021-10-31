@@ -21,6 +21,8 @@ public class Partner implements Serializable {
 	private double _valueSales;
 	private double _valuePaidSales;
 	private List<Batch> _batches;
+	private List<Transaction> _acquisitions;
+	private List<Transaction> _sales;
 
 	Partner(String name, String id, String address) {
 		_name = name;
@@ -30,6 +32,8 @@ public class Partner implements Serializable {
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
+		_sales = new ArrayList<>();
+		_acquisitions = new ArrayList<>();
 	}
 
 	String getId() {
@@ -38,6 +42,14 @@ public class Partner implements Serializable {
 
 	List<Batch> getBatches() {
 		return _batches;
+	}
+
+	List<Transaction> getAcquistions() {
+		return _acquisitions;
+	}
+
+	List<Transaction> getSales() {
+		return _sales;
 	}
 
 	void setStatus() {
@@ -51,6 +63,14 @@ public class Partner implements Serializable {
 
 	void addBatch(Batch batch) {
 		_batches.add(batch);
+	}
+
+	void addAcquisition(Transaction transaction) {
+		_acquisitions.add(transaction);
+	}
+
+	void addSale(Transaction transaction) {
+		_sales.add(transaction);
 	}
 
 	@Override

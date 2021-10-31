@@ -103,6 +103,10 @@ public class WarehouseManager {
 	public int getAvailableStock(String productId){
 		return _warehouse.getAvailableStock(productId);
 	}
+
+	public void registerAcquisiton(String partnerId, String productId, double price, int quantity){
+		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);
+	}
 	/**
 	 * 
 	 * @param days
