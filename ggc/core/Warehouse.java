@@ -17,6 +17,8 @@ import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.InvalidDateCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
+import ggc.app.exception.UnavailableProductException;
+import ggc.app.exception.UnknownProductKeyException;
 import ggc.core.exception.BadEntryException;
 
 /**
@@ -31,10 +33,12 @@ public class Warehouse implements Serializable {
 	private int _nextTransactionId;
 	private Map<String, Partner> _partners;
 	private Map<String, Product> _products;
+	private Map<Integer, Transaction> _transactions;
 
 	Warehouse() {
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
+		_transactions = new HashMap<>();
 		_date = new Date();
 	}
 
@@ -125,6 +129,34 @@ public class Warehouse implements Serializable {
 
 	int advanceDate(int days) throws InvalidDateCoreException {
 		return _date.add(days);
+	}
+
+	Collection<Transaction> getTransactions() {
+		return Collections.unmodifiableCollection(_transactions.values());
+	}
+
+	Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException{
+
+		Product product = _products.get(productId);
+		if(product.checkQuantity() < quantity){
+			throw new UnavailableProductException(productId, quantity, product.checkQuantity());
+		}
+		Partner partner = _partners.get(partnerId);
+		
+		//calcular base value
+		// payment date??? como e q sabemos qnd e q ele paga? hmmm
+		// o id seria um static que é igual por todo o programa? visto que é o numero de transacoes 
+
+		Sale sale = new SaleByCredit(1, partner, product, 1, 1, quantity, deadline);
+		
+		_transactions.put(1, sale);
+		//id += 1 ;
+		return sale;
+	}
+
+	int getAvailableStock(String productId){
+		Product product = _products.get(productId);
+		return product.checkQuantity();
 	}
 
 	/**

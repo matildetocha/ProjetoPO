@@ -8,6 +8,7 @@ import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
+import ggc.app.exception.UnavailableProductException;
 import ggc.core.exception.BadEntryException;
 
 import java.io.IOException;
@@ -95,6 +96,13 @@ public class WarehouseManager {
 		return _warehouse.displayDate();
 	}
 
+	public Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException{
+		return _warehouse.registerSale(quantity, productId, partnerId, deadline);
+	}
+
+	public int getAvailableStock(String productId){
+		return _warehouse.getAvailableStock(productId);
+	}
 	/**
 	 * 
 	 * @param days
