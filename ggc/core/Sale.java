@@ -6,14 +6,10 @@ abstract class Sale extends Transaction {
 	private Partner _partner;
 	private int _quantity;
 
-	Sale(Product product, int quantity, Partner partner) {
-		_product = product;
-		_quantity = quantity;
-		_partner = partner;
+	Sale(int id, Partner partner, Product product, int paymentDate, int baseValue, int quantity) {
+		super(id, partner, product, paymentDate, baseValue, quantity);
 	}
+	
+	
 
-	@Override
-	public String toString() {
-		return "|" + _partner.getId() + "|" + _product.getId() + "|" + _quantity + "|";
-	}
 }
