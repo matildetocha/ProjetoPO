@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public abstract class Transaction {
 
-	private int _id;
+	static int _id = 0;
 	private int _paymentDate;
 	private int _baseValue;
 	private int _quantity;

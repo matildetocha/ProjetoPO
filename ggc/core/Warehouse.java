@@ -145,13 +145,15 @@ public class Warehouse implements Serializable {
 		
 		//calcular base value
 		// payment date??? como e q sabemos qnd e q ele paga? hmmm
-		// o id seria um static que é igual por todo o programa? visto que é o numero de transacoes 
+		// o num de transacoes aumenta
 
-		Sale sale = new SaleByCredit(1, partner, product, 1, 1, quantity, deadline);
+		Transaction._id += 1;
+
+		Sale sale = new SaleByCredit(Transaction._id, partner, product, 1, 1, quantity, deadline);
 		
 		partner.addSale(sale);
-		_transactions.put(1, sale);
-		//id += 1 ;
+		_transactions.put(Transaction._id, sale);
+
 		return sale;
 	}
 
@@ -166,10 +168,12 @@ public class Warehouse implements Serializable {
 		//se produto for desconhecido pedir receita, com Message.requestRecipe(), requestComponent e requestAlpha
 		Partner partner = _partners.get(partnerId);
 
-		Transaction acquisition = new Acquisition(1, partner, product, 0, 1, quantity); //deadline de aquisitions é 0
+		Transaction._id += 1;
+
+		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, 1, quantity); //deadline de aquisitions é 0
 
 		partner.addAcquisition(acquisition);
-		_transactions.put(1, acquisition);
+		_transactions.put(Transaction._id, acquisition);
 	}
 	/**
 	 * @param txtfile filename to be loaded.
