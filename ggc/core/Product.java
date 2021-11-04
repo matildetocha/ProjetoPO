@@ -105,6 +105,7 @@ public abstract class Product implements Serializable {
             if (batch.getPrice() > res)
                 res = batch.getPrice();
         }
+				_maxPrice = res;
         return res;
     }
 }

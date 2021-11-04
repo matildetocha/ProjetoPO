@@ -176,19 +176,38 @@ public class Warehouse implements Serializable {
 		return product.checkQuantity();
 	}
 
-	void registerAcquisiton(String partnerId, String productId, double price, int quantity){
-		
-		Product product = _products.get(productId);
+	void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException{
+			
 		//se produto for desconhecido pedir receita, com Message.requestRecipe(), requestComponent e requestAlpha
+		if (_products.get(productId) == null)
+			throw new UnknownProductCoreException();
+			
+		Product product = _products.get(productId);
+
 		Partner partner = _partners.get(partnerId);
 
+		double baseValue = product.getPrice() * quantity;
 		Transaction._id += 1;
 
-		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, 1, quantity); //deadline de aquisitions é 0
+		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, baseValue, quantity); //deadline de aquisitions é 0
 
 		partner.addAcquisition(acquisition);
 		_transactions.put(Transaction._id, acquisition);
 	}
+
+	void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId){
+
+		Partner partner = _partners.get(partnerId);
+
+		for(String productId : productIds && Integer quantity : quantitys){
+			Product product = _products.get(productId);
+			partner.getBatchesByProduct(product).changeQuantity(quantity);
+			// conseguir a batch do produto que se quer e retirar quantidade para fazer o agregado
+		}
+			
+	}
+
+
 	/**
 	 * @param txtfile filename to be loaded.
 	 * @throws IOException

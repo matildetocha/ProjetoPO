@@ -14,19 +14,19 @@ public class DoReceivePayment extends Command<WarehouseManager> {
 
   public DoReceivePayment(WarehouseManager receiver) {
     super(Label.RECEIVE_PAYMENT, receiver);
-    //FIXME add command fields
+    // FIXME add command fields
     addIntegerField("TransactionId", Message.requestTransactionKey());
   }
 
   @Override
   public final void execute() throws CommandException {
-    //FIXME implement command
-    try{
-    _receiver.getTransaction(integerField("TransactionId")).pay();
-    }catch(UnknownTransactionCoreException e){
+    // FIXME implement command
+    try {
+      _receiver.getTransaction(integerField("TransactionId")).pay();
+    } catch (UnknownTransactionCoreException e) {
       throw new UnknownTransactionKeyException(integerField("TransactionId"));
     }
-    
+
   }
 
 }

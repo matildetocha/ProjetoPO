@@ -104,13 +104,19 @@ public class WarehouseManager {
 		return _warehouse.getAvailableStock(productId);
 	}
 
-	public void registerAcquisiton(String partnerId, String productId, double price, int quantity){
+	public void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException{
 		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);
 	}
 
 	public Transaction getTransaction(int id) throws UnknownTransactionCoreException{
 		return _warehouse.getTransaction(id);
 	}
+
+	public void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId){
+		_warehouse.aggregateProducts(productIds, quantitys, partnerId);
+
+	}
+
 	/**
 	 * 
 	 * @param days
@@ -151,6 +157,8 @@ public class WarehouseManager {
 		_filename = filename;
 		save();
 	}
+
+
 
 	/**
 	 * @@param filename

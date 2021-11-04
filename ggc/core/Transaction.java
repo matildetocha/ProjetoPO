@@ -1,7 +1,5 @@
 package ggc.core;
 
-import java.sql.Date;
-
 public abstract class Transaction {
 
 	static int _id = 0;
@@ -16,7 +14,7 @@ public abstract class Transaction {
 		_id = id;
 		_partner = partner;
 		_product = product;
-		_paymentDate = 0; //por ser definida
+		_paymentDate = 0; // por ser definida
 		_baseValue = baseValue;
 		_quantity = quantity;
 
@@ -25,7 +23,8 @@ public abstract class Transaction {
 	public boolean isPaid() {
 		return _isPaid;
 	}
-	public void pay(){
+
+	void pay() {
 		_isPaid = true;
 	}
 
@@ -33,25 +32,24 @@ public abstract class Transaction {
 		return _paymentDate;
 	}
 
-	public int getId(){
+	int getId() {
 		return _id;
 	}
 
-	public double getBaseValue(){
+	double getBaseValue() {
 		return _baseValue;
 	}
 
-	public int getQuantity(){
+	int getQuantity() {
 		return _quantity;
 	}
 
-	public Partner getPartner(){
+	Partner getPartner() {
 		return _partner;
 	}
-	
-	public Product getProduct(){
+
+	Product getProduct() {
 		return _product;
 	}
-
 
 }
