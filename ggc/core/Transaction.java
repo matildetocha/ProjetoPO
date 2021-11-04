@@ -10,6 +10,7 @@ public abstract class Transaction {
 	private int _quantity;
 	private Partner _partner;
 	private Product _product;
+	private boolean _isPaid;
 
 	Transaction(int id, Partner partner, Product product, int paymentDate, int baseValue, int quantity) {
 		_id = id;
@@ -22,7 +23,10 @@ public abstract class Transaction {
 	}
 
 	public boolean isPaid() {
-		return true;
+		return _isPaid;
+	}
+	public void pay(){
+		_isPaid = true;
 	}
 
 	public int getPaymentDate() {

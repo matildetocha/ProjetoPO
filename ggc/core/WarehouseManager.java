@@ -8,6 +8,7 @@ import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
+import ggc.core.exception.UnknownTransactionCoreException;
 import ggc.app.exception.UnavailableProductException;
 import ggc.core.exception.BadEntryException;
 
@@ -105,6 +106,10 @@ public class WarehouseManager {
 
 	public void registerAcquisiton(String partnerId, String productId, double price, int quantity){
 		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);
+	}
+
+	public Transaction getTransaction(int id) throws UnknownTransactionCoreException{
+		return _warehouse.getTransaction(id);
 	}
 	/**
 	 * 

@@ -17,6 +17,7 @@ import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.InvalidDateCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
+import ggc.core.exception.UnknownTransactionCoreException;
 import ggc.core.exception.BadEntryException;
 
 import ggc.app.exception.UnavailableProductException; // ! não podemos dar import destas exceções
@@ -155,6 +156,13 @@ public class Warehouse implements Serializable {
 		_transactions.put(Transaction._id, sale);
 
 		return sale;
+	}
+
+	Transaction getTransaction(int id) throws UnknownTransactionCoreException{
+		if (_transactions.get(id) == null)
+			throw new UnknownTransactionCoreException();
+
+	return _transactions.get(id);
 	}
 
 	int getAvailableStock(String productId){
