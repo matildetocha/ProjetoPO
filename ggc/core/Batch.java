@@ -44,7 +44,9 @@ public class Batch implements Serializable {
 	 * @return The Batche's current price
 	 */
 	double getPrice() {
+		_price = _product.getPrice() * _quantity; 
 		return _price;
+		//return _price;
 	}
 
 	/**

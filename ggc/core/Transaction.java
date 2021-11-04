@@ -6,17 +6,17 @@ public abstract class Transaction {
 
 	static int _id = 0;
 	private int _paymentDate;
-	private int _baseValue;
+	private double _baseValue;
 	private int _quantity;
 	private Partner _partner;
 	private Product _product;
 	private boolean _isPaid;
 
-	Transaction(int id, Partner partner, Product product, int paymentDate, int baseValue, int quantity) {
+	Transaction(int id, Partner partner, Product product, double baseValue, int quantity) {
 		_id = id;
 		_partner = partner;
 		_product = product;
-		_paymentDate = paymentDate;
+		_paymentDate = 0; //por ser definida
 		_baseValue = baseValue;
 		_quantity = quantity;
 
@@ -37,7 +37,7 @@ public abstract class Transaction {
 		return _id;
 	}
 
-	public int getBaseValue(){
+	public double getBaseValue(){
 		return _baseValue;
 	}
 

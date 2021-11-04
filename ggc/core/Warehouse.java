@@ -145,12 +145,14 @@ public class Warehouse implements Serializable {
 		Partner partner = _partners.get(partnerId);
 		
 		//calcular base value
+		double baseValue = product.getPrice() * quantity;
 		// payment date??? como e q sabemos qnd e q ele paga? hmmm
 		// o num de transacoes aumenta
 
 		Transaction._id += 1;
 
-		Sale sale = new SaleByCredit(Transaction._id, partner, product, 1, 1, quantity, deadline);
+		Sale sale = new SaleByCredit(Transaction._id, partner, product, deadline, baseValue, quantity);
+		// payment date é uma variavel que depois fica definida
 		
 		partner.addSale(sale);
 		_transactions.put(Transaction._id, sale);
@@ -162,7 +164,11 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(id) == null)
 			throw new UnknownTransactionCoreException();
 
-	return _transactions.get(id);
+		return _transactions.get(id);
+	}
+
+	double getBaseValue(Batch batch){
+		return batch.getPrice();
 	}
 
 	int getAvailableStock(String productId){

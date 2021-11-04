@@ -6,8 +6,8 @@ abstract class Sale extends Transaction {
 	private Partner _partner;
 	private int _quantity;
 
-	Sale(int id, Partner partner, Product product, int paymentDate, int baseValue, int quantity) {
-		super(id, partner, product, paymentDate, baseValue, quantity);
+	Sale(int id, Partner partner, Product product, double baseValue, int quantity) {
+		super(id, partner, product, baseValue, quantity);
 	}
 	
 	
