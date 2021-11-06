@@ -24,7 +24,7 @@ public abstract class Transaction {
 		return _isPaid;
 	}
 
-	void pay() {
+	public void pay() {
 		_isPaid = true;
 	}
 

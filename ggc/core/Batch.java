@@ -98,4 +98,8 @@ public class Batch implements Serializable {
 		return newBatch;
 	}
 
+	void changeQuantity(int quantity){
+		_quantity -= quantity;
+	}
+
 }

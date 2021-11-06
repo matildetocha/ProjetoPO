@@ -24,6 +24,7 @@ public class DoRegisterSaleTransaction extends Command<WarehouseManager> {
   public final void execute() throws CommandException {
     //FIXME implement command
     try{
+      //_receiver.aggregateProducts(productIds, quantitys, stringField("partnerId"), integerField("numberComponents"));
       _receiver.registerSale(integerField("quantity"), stringField("productId"), stringField("partnerId"), integerField("deadline"));
     }catch(UnavailableProductException e){
       throw new UnavailableProductException(stringField("productId"), integerField("quantity"), _receiver.getAvailableStock(stringField("productId")));

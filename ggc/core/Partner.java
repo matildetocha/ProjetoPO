@@ -89,4 +89,9 @@ public class Partner implements Serializable {
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
 
+	public Batch getBatchesByProduct(Product product) {
+		
+		return null;
+	}
+
 }

@@ -112,8 +112,8 @@ public class WarehouseManager {
 		return _warehouse.getTransaction(id);
 	}
 
-	public void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId){
-		_warehouse.aggregateProducts(productIds, quantitys, partnerId);
+	public void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId, int numComponents){
+		_warehouse.aggregateProducts(productIds, quantitys, partnerId, numComponents);
 
 	}
 

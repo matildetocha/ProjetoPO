@@ -81,6 +81,7 @@ public class Parser {
         Product simpleProduct = new SimpleProduct(idProduct);
         _store.registerProduct(simpleProduct);
       }
+
       Product product = _store.getProduct(idProduct);
       Partner partner = _store.getPartner(idPartner);
 
@@ -89,6 +90,7 @@ public class Parser {
     } catch (UnknownUserCoreException | UnknownProductCoreException | DuplicateProductCoreException e) {
       throw new BadEntryException("", e);
     }
+    
   }
 
   // BATCH_M|idProduto|idParceiro|preço|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
