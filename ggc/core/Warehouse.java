@@ -136,7 +136,7 @@ public class Warehouse implements Serializable {
 		return Collections.unmodifiableCollection(_transactions.values());
 	}
 
-	Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException{
+	Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException {
 
 		Product product = _products.get(productId);
 		if(product.checkQuantity() < quantity){
@@ -160,23 +160,23 @@ public class Warehouse implements Serializable {
 		return sale;
 	}
 
-	Transaction getTransaction(int id) throws UnknownTransactionCoreException{
+	Transaction getTransaction(int id) throws UnknownTransactionCoreException {
 		if (_transactions.get(id) == null)
 			throw new UnknownTransactionCoreException();
 
 		return _transactions.get(id);
 	}
 
-	double getBaseValue(Batch batch){
+	double getBaseValue(Batch batch) {
 		return batch.getPrice();
 	}
 
-	int getAvailableStock(String productId){
+	int getAvailableStock(String productId) {
 		Product product = _products.get(productId);
 		return product.checkQuantity();
 	}
 
-	void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException{
+	void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException {
 			
 		//se produto for desconhecido pedir receita, com Message.requestRecipe(), requestComponent e requestAlpha
 		if (_products.get(productId) == null)
@@ -195,16 +195,26 @@ public class Warehouse implements Serializable {
 		_transactions.put(Transaction._id, acquisition);
 	}
 
-	void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId){
+	void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId, int numComponents) {
 
 		Partner partner = _partners.get(partnerId);
 
-		for(String productId : productIds && Integer quantity : quantitys){
+		for(int i = 0; i < numComponents; i++){
+
+			String productId = productIds.get(i);
+			Integer quantity = quantitys.get(i);
+
 			Product product = _products.get(productId);
+
 			partner.getBatchesByProduct(product).changeQuantity(quantity);
 			// conseguir a batch do produto que se quer e retirar quantidade para fazer o agregado
 		}
 			
+	}
+
+	void updateBatchQuantity(Batch batch, int quantity) {
+
+		batch.changeQuantity(quantity);
 	}
 
 

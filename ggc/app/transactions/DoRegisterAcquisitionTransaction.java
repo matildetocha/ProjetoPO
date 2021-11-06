@@ -13,6 +13,7 @@ import ggc.core.Product;
 import ggc.core.WarehouseManager;
 import ggc.core.exception.UnknownProductCoreException;
 
+
 /**
  * Register order.
  */
@@ -53,10 +54,14 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
           quantitys.add(integerField("quantity"));
 
         }
-        _receiver.aggregateProducts(productIds, quantitys, stringField("partnerId"));
 
-      } else
-        throw new UnknownProductKeyException(stringField("productId"));
+
+      } else {
+
+         Product product = new Product(stringField("productId"));
+        _receiver.registerProduct(product);
+
+      }
     }
   }
 
