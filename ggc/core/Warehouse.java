@@ -101,6 +101,8 @@ public class Warehouse implements Serializable {
 		_products.put(product.getId().toLowerCase(), product);
 	}
 
+
+
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
@@ -176,6 +178,28 @@ public class Warehouse implements Serializable {
 		return product.checkQuantity();
 	}
 
+    public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys, int numComponents) {
+
+		Recipe recipe = new Recipe(alpha);
+		for (int i = 0; i < numComponents; i++) {
+		
+			String prodId = productIds.get(i);
+			Integer componentQuantity = quantitys.get(i);
+
+			Component component = new Component(componentQuantity, _products.get(prodId));
+			recipe.addComponent(component);
+
+		}
+		AggregateProduct product = new AggregateProduct(productId, recipe);
+		_products.put(product.getId().toLowerCase(), product);
+    }
+
+	void registerSimpleProductId(String productId) {
+
+		Product product = new SimpleProduct(productId);
+		_products.put(product.getId().toLowerCase(), product);
+	}
+
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
 
@@ -191,35 +215,10 @@ public class Warehouse implements Serializable {
 		double baseValue = product.getPrice() * quantity;
 		Transaction._id += 1;
 
-		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, baseValue, quantity); // deadline de
-																																																					// aquisitions
-																																																					// é 0
+		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, baseValue, quantity);																																																		// é 0
 
 		partner.addAcquisition(acquisition);
 		_transactions.put(Transaction._id, acquisition);
-	}
-
-	void registerAcquisiton(String partnerId, String aggProductId, double price, int quantity, List<Integer> quantitys,
-			double alpha, List<String> productIds, int numComponents) throws UnknownProductCoreException, DuplicateProductCoreException {
-				Recipe recipe = new Recipe(alpha);
-				Partner partner = _partners.get(partnerId);
-
-				for (int i = 0; i < numComponents; i++) {
-		
-					String productId = productIds.get(i);
-					Integer componentQuantity = quantitys.get(i);
-
-					Component component = new Component(componentQuantity, _products.get(productId));
-					recipe.addComponent(component);
-
-				}
-				Product aggregateProduct = new AggregateProduct(aggProductId, recipe);
-				registerProduct(aggregateProduct);
-				
-
-				//Product product = _products.get(productId);
-	
-				//partner.getBatchesByProduct(productId).changeQuantity(quantity);
 	}
 
 
@@ -237,4 +236,6 @@ public class Warehouse implements Serializable {
 		Parser parser = new Parser(this);
 		parser.parseFile(txtfile);
 	}
+
+
 }

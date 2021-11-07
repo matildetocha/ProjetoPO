@@ -10,6 +10,7 @@ import ggc.app.exception.UnknownProductKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import ggc.core.Product;
+import ggc.core.Recipe;
 import ggc.core.WarehouseManager;
 import ggc.core.exception.UnknownProductCoreException;
 
@@ -31,12 +32,16 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
   public final void execute() throws CommandException {
     // FIXME implement command
     try {
+
       _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
           integerField("quantity"));
+
     } catch (UnknownProductCoreException e) {
+
       addIntegerField("answer", Message.requestAddRecipe());
 
       if (integerField("answer") == 1) {
+
         addIntegerField("numberComponents", Message.requestNumberOfComponents());
         addRealField("alpha", Message.requestAlpha());
 
@@ -54,14 +59,14 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
         }
 
-        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
-            integerField("quantity"), productIds, quantitys, realField("alpha"), integerField("numberComponents"));
-        Recipe recipe = new Recipe();
+        _receiver.registerAggProductId(stringField("productId"),realField("alpha"), productIds, quantitys, integerField("numberComponents"));
+        
+        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"), integerField("quantity"));
+        
 
       } else {
-
-        Product product = new Product(stringField("productId"));
-        _receiver.registerProduct(product);
+        
+        _receiver.registerSimpleProductId(stringField("productId"));
 
       }
     }
