@@ -35,6 +35,10 @@ public class WarehouseManager {
 		return _filename;
 	}
 
+	public double getGlobalBalance(){
+		return _warehouse.getGlobalBalance();
+	}
+
 	public Warehouse getWarehouse() {
 		return _warehouse;
 	}
