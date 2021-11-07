@@ -44,7 +44,7 @@ public class Partner implements Serializable {
 		return _batches;
 	}
 
-	List<Transaction> getAcquistions() {
+	public List<Transaction> getAcquistions() {
 		return _acquisitions;
 	}
 
