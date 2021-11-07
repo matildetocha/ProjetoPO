@@ -222,8 +222,6 @@ public class Warehouse implements Serializable {
 		// se produto for desconhecido pedir receita, com Message.requestRecipe(),
 		// requestComponent e requestAlpha
 
-		int verifier = 0;
-
 		if (_products.get(productId) == null)
 			throw new UnknownProductCoreException();
 
@@ -239,16 +237,7 @@ public class Warehouse implements Serializable {
 		partner.addAcquisition(acquisition);
 		_transactions.put(Transaction._id, acquisition);
 
-		Iterator<Batch> it = _batches.iterator();
-
-		while(it.hasNext()){
-			if(it.next().getProduct().equals(product)){
-				((Batch) it).changeQuantity(quantity);
-				verifier++;
-			}
-		}
-		if(verifier == 0)
-			registerWarehouseBatch(product, partner, price, quantity);
+		registerWarehouseBatch(product, partner, price, quantity);
 		
 	}
 
