@@ -136,10 +136,36 @@ public class Warehouse implements Serializable {
 		return orderedBatches;
 	}
 
+	List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
+		List<Batch> orderedBatches = new ArrayList<Batch>();
+
+		Set<String> keys = _products.keySet();
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
+		}
+
+		//remove os com preco menor que o limite
+		Iterator<Batch> it = orderedBatches.iterator();
+		while (it.hasNext()){
+			if(it.next().getPrice() < priceLimit){
+				orderedBatches.remove(it);
+			}
+		}
+
+		Collections.sort(orderedBatches, new BatchComparator());
+		return orderedBatches;
+	}
+
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
 		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
 		return _partners.get(id).getBatches();
+	}
+
+	List<Transaction> getPayedTransactionsByPartner(String partnerId){
+		return _partners.get(partnerId).getPayedTransactions();
 	}
 
 	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
@@ -226,6 +252,8 @@ public class Warehouse implements Serializable {
 		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity); // é 0
 
 		partner.addAcquisition(acquisition);
+		partner.addTransaction(acquisition);
+		
 		_transactions.put(_nextTransactionId, acquisition);
 
 		registerWarehouseBatch(product, partner, price, quantity);

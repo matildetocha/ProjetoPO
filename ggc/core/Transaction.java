@@ -8,7 +8,7 @@ public abstract class Transaction {
 	private int _quantity;
 	private Partner _partner;
 	private Product _product;
-	private boolean _isPaid;
+	protected boolean _isPaid;
 
 	Transaction(int id, Partner partner, Product product, double baseValue, int quantity) {
 		_id = id;

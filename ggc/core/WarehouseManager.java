@@ -122,6 +122,14 @@ public class WarehouseManager {
 		return _warehouse.getAvailableStock(productId);
 	}
 
+	public List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
+		return _warehouse.getSortedBatchesUnderLimit(priceLimit);
+	}
+
+	public List<Transaction> getPayedTransactionsByPartner(String partnerId) {
+		return _warehouse.getPayedTransactionsByPartner(partnerId);
+	}
+
 	public void registerAcquisiton(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
 		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);

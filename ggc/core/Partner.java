@@ -1,7 +1,10 @@
 package ggc.core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.TransferHandler.TransferSupport;
 
 import java.io.Serializable;
 
@@ -23,6 +26,7 @@ public class Partner implements Serializable {
 	private List<Batch> _batches;
 	private List<Transaction> _acquisitions;
 	private List<Transaction> _sales;
+	private List<Transaction> _transactions;
 
 	Partner(String name, String id, String address) {
 		_name = name;
@@ -34,6 +38,7 @@ public class Partner implements Serializable {
 		_batches = new ArrayList<>();
 		_sales = new ArrayList<>();
 		_acquisitions = new ArrayList<>();
+		_transactions = new ArrayList<>();
 	}
 
 	String getId() {
@@ -42,6 +47,20 @@ public class Partner implements Serializable {
 
 	List<Batch> getBatches() {
 		return _batches;
+	}
+
+	List<Transaction> getPayedTransactions(){
+		Iterator<Transaction> iterator = _transactions.iterator();
+
+		List<Transaction> _payedTransactions = new ArrayList<>();
+
+		while(iterator.hasNext()){
+			if(iterator.next().isPaid()){
+				_payedTransactions.add((Transaction) iterator);
+			}
+		}
+		return _payedTransactions;
+
 	}
 
 	Batch getLowestPriceBatchByProduct(Product product) {
@@ -68,12 +87,16 @@ public class Partner implements Serializable {
 		_sales.add(transaction);
 	}
 
-	List<Transaction> getAcquistions() {
+	public List<Transaction> getAcquistions() {
 		return _acquisitions;
 	}
 
 	void addAcquisition(Transaction transaction) {
 		_acquisitions.add(transaction);
+	}
+
+	void addTransaction(Transaction transaction) {
+		_transactions.add(transaction);
 	}
 
 	void setStatus() {
