@@ -13,7 +13,6 @@ import ggc.core.Product;
 import ggc.core.WarehouseManager;
 import ggc.core.exception.UnknownProductCoreException;
 
-
 /**
  * Register order.
  */
@@ -41,9 +40,9 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         addIntegerField("numberComponents", Message.requestNumberOfComponents());
         addRealField("alpha", Message.requestAlpha());
 
-         List<String> productIds = new ArrayList<>();
-         List<Integer> quantitys = new ArrayList<>();
-        
+        List<String> productIds = new ArrayList<>();
+        List<Integer> quantitys = new ArrayList<>();
+
         for (int i = 0; i < integerField("numberComponents"); i++) {
 
           addIntegerField("quantity", Message.requestAmount());
@@ -55,10 +54,13 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
         }
 
+        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+            integerField("quantity"), productIds, quantitys, realField("alpha"), integerField("numberComponents"));
+        Recipe recipe = new Recipe();
 
       } else {
 
-         Product product = new Product(stringField("productId"));
+        Product product = new Product(stringField("productId"));
         _receiver.registerProduct(product);
 
       }

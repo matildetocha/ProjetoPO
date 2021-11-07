@@ -62,7 +62,7 @@ Escolha uma opção: Número de dias a avançar: Menu Principal
 8 - Menu de Consultas
 9 - Ver Saldo Global
 0 - Sair
-Escolha uma opção: Ficheiro sem nome. Guardar ficheiro como: Menu Principal
+Escolha uma opção: Menu Principal
 1 - Abrir
 2 - Guardar
 3 - Mostrar Data
@@ -73,4 +73,4 @@ Escolha uma opção: Ficheiro sem nome. Guardar ficheiro como: Menu Principal
 8 - Menu de Consultas
 9 - Ver Saldo Global
 0 - Sair
-Escolha uma opção: Fim de entrada de dados (R-EOF): pt.tecnico.uilib.text.RuntimeEOFException: Fim do fluxo de dados de entrada
+Escolha uma opção: 

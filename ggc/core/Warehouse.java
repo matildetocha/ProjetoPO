@@ -43,6 +43,14 @@ public class Warehouse implements Serializable {
 		_date = new Date();
 	}
 
+	int displayDate() {
+		return _date.now();
+	}
+
+	int advanceDate(int days) throws InvalidDateCoreException {
+		return _date.add(days);
+	}
+
 	Collection<Partner> getPartners() {
 		return Collections.unmodifiableCollection(_partners.values());
 	}
@@ -124,14 +132,6 @@ public class Warehouse implements Serializable {
 		product.addBatch(batch);
 	}
 
-	int displayDate() {
-		return _date.now();
-	}
-
-	int advanceDate(int days) throws InvalidDateCoreException {
-		return _date.add(days);
-	}
-
 	Collection<Transaction> getTransactions() {
 		return Collections.unmodifiableCollection(_transactions.values());
 	}
@@ -139,12 +139,12 @@ public class Warehouse implements Serializable {
 	Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException {
 
 		Product product = _products.get(productId);
-		if(product.checkQuantity() < quantity){
+		if (product.checkQuantity() < quantity) {
 			throw new UnavailableProductException(productId, quantity, product.checkQuantity());
 		}
 		Partner partner = _partners.get(partnerId);
-		
-		//calcular base value
+
+		// calcular base value
 		double baseValue = product.getPrice() * quantity;
 		// payment date??? como e q sabemos qnd e q ele paga? hmmm
 		// o num de transacoes aumenta
@@ -153,7 +153,7 @@ public class Warehouse implements Serializable {
 
 		Sale sale = new SaleByCredit(Transaction._id, partner, product, deadline, baseValue, quantity);
 		// payment date é uma variavel que depois fica definida
-		
+
 		partner.addSale(sale);
 		_transactions.put(Transaction._id, sale);
 
@@ -176,12 +176,14 @@ public class Warehouse implements Serializable {
 		return product.checkQuantity();
 	}
 
-	void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException {
-			
-		//se produto for desconhecido pedir receita, com Message.requestRecipe(), requestComponent e requestAlpha
+	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
+			throws UnknownProductCoreException {
+
+		// se produto for desconhecido pedir receita, com Message.requestRecipe(),
+		// requestComponent e requestAlpha
 		if (_products.get(productId) == null)
 			throw new UnknownProductCoreException();
-			
+
 		Product product = _products.get(productId);
 
 		Partner partner = _partners.get(partnerId);
@@ -189,34 +191,42 @@ public class Warehouse implements Serializable {
 		double baseValue = product.getPrice() * quantity;
 		Transaction._id += 1;
 
-		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, baseValue, quantity); //deadline de aquisitions é 0
+		Transaction acquisition = new Acquisition(Transaction._id, partner, product, 0, baseValue, quantity); // deadline de
+																																																					// aquisitions
+																																																					// é 0
 
 		partner.addAcquisition(acquisition);
 		_transactions.put(Transaction._id, acquisition);
 	}
 
-	void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId, int numComponents) {
+	void registerAcquisiton(String partnerId, String aggProductId, double price, int quantity, List<Integer> quantitys,
+			double alpha, List<String> productIds, int numComponents) throws UnknownProductCoreException, DuplicateProductCoreException {
+				Recipe recipe = new Recipe(alpha);
+				Partner partner = _partners.get(partnerId);
 
-		Partner partner = _partners.get(partnerId);
+				for (int i = 0; i < numComponents; i++) {
+		
+					String productId = productIds.get(i);
+					Integer componentQuantity = quantitys.get(i);
 
-		for(int i = 0; i < numComponents; i++){
+					Component component = new Component(componentQuantity, _products.get(productId));
+					recipe.addComponent(component);
 
-			String productId = productIds.get(i);
-			Integer quantity = quantitys.get(i);
+				}
+				Product aggregateProduct = new AggregateProduct(aggProductId, recipe);
+				registerProduct(aggregateProduct);
+				
 
-			Product product = _products.get(productId);
-
-			partner.getBatchesByProduct(product).changeQuantity(quantity);
-			// conseguir a batch do produto que se quer e retirar quantidade para fazer o agregado
-		}
-			
+				//Product product = _products.get(productId);
+	
+				//partner.getBatchesByProduct(productId).changeQuantity(quantity);
 	}
+
 
 	void updateBatchQuantity(Batch batch, int quantity) {
 
 		batch.changeQuantity(quantity);
 	}
-
 
 	/**
 	 * @param txtfile filename to be loaded.
