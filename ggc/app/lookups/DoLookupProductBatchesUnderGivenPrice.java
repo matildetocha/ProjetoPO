@@ -13,6 +13,7 @@ public class DoLookupProductBatchesUnderGivenPrice extends Command<WarehouseMana
   public DoLookupProductBatchesUnderGivenPrice(WarehouseManager receiver) {
     super(Label.PRODUCTS_UNDER_PRICE, receiver);
     //FIXME add command fields
+    addReal
   }
 
   @Override

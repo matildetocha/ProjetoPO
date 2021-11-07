@@ -33,16 +33,15 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
     // FIXME implement command
     try {
 
-      _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
-          integerField("quantity"));
-
       _receiver.changeGlobalBalance(-( realField("price") * integerField("quantity") ));
 
+      _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+          integerField("quantity"));
     } catch (UnknownProductCoreException e) {
 
-      addIntegerField("answer", Message.requestAddRecipe());
+      addStringField("answer", Message.requestAddRecipe());
 
-      if (integerField("answer") == 1) {
+      if (stringField("answer").equals("y")) {
 
         addIntegerField("numberComponents", Message.requestNumberOfComponents());
         addRealField("alpha", Message.requestAlpha());
@@ -66,11 +65,11 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"), integerField("quantity"));
 
       } else {
-        
         _receiver.registerSimpleProductId(stringField("productId"));
-        _receiver.changeGlobalBalance(-( realField("price") * integerField("quantity") ));
+        //adicionar batch de simples
 
       }
+
     }
   }
 

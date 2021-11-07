@@ -44,12 +44,36 @@ public class Partner implements Serializable {
 		return _batches;
 	}
 
-	public List<Transaction> getAcquistions() {
-		return _acquisitions;
+	Batch getLowestPriceBatchByProduct(Product product) {
+		double lowestPrice = 0;
+		Batch lowestPriceBatch;
+
+		for (Batch b: _batches) {
+			if (b.getProduct().equals(product) && b.getPrice() <= lowestPrice)
+				lowestPrice = b.getPrice();
+				lowestPriceBatch = b;
+		}
+		return lowestPriceBatch;
+	}
+
+	void addBatch(Batch batch) {
+		_batches.add(batch);
 	}
 
 	List<Transaction> getSales() {
 		return _sales;
+	}
+
+	void addSale(Transaction transaction) {
+		_sales.add(transaction);
+	}
+
+	List<Transaction> getAcquistions() {
+		return _acquisitions;
+	}
+
+	void addAcquisition(Transaction transaction) {
+		_acquisitions.add(transaction);
 	}
 
 	void setStatus() {
@@ -59,18 +83,6 @@ public class Partner implements Serializable {
 			_status = SELECTION;
 		else if (_points > 25000)
 			_status = ELITE;
-	}
-
-	void addBatch(Batch batch) {
-		_batches.add(batch);
-	}
-
-	void addAcquisition(Transaction transaction) {
-		_acquisitions.add(transaction);
-	}
-
-	void addSale(Transaction transaction) {
-		_sales.add(transaction);
 	}
 
 	@Override
@@ -88,10 +100,4 @@ public class Partner implements Serializable {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
-
-	public Batch getBatchesByProduct(Product product) {
-		
-		return null;
-	}
-
 }

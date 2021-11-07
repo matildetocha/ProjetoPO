@@ -51,5 +51,4 @@ public abstract class Transaction {
 	Product getProduct() {
 		return _product;
 	}
-
 }

@@ -21,7 +21,6 @@ import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.List;
 
-
 /** Facade for access. */
 public class WarehouseManager {
 
@@ -35,12 +34,30 @@ public class WarehouseManager {
 		return _filename;
 	}
 
-	public double getGlobalBalance(){
+	public Warehouse getWarehouse() {
+		return _warehouse;
+	}
+
+	public double getGlobalBalance() {
 		return _warehouse.getGlobalBalance();
 	}
 
-	public Warehouse getWarehouse() {
-		return _warehouse;
+	public void changeGlobalBalance(double price) {
+		_warehouse.changeGlobalBalance(price);
+	}
+
+	public int displayDate() {
+		return _warehouse.displayDate();
+	}
+
+	/**
+	 * 
+	 * @param days
+	 * @return advancedDate
+	 * @throws InvalidDateCoreException
+	 */
+	public int advanceDate(int days) throws InvalidDateCoreException {
+		return _warehouse.advanceDate(days);
 	}
 
 	public Partner getPartner(String id) throws UnknownUserCoreException {
@@ -72,8 +89,8 @@ public class WarehouseManager {
 		_warehouse.registerProduct(product);
 	}
 
-	public void registerBatch(Batch batch) {
-		_warehouse.registerBatch(batch);
+	public List<Batch> getSortedBatches() {
+		return _warehouse.getSortedBatches();
 	}
 
 	public List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -84,8 +101,8 @@ public class WarehouseManager {
 		return _warehouse.getBatchesByProduct(id);
 	}
 
-	public List<Batch> getSortedBatches() {
-		return _warehouse.getSortedBatches();
+	public void registerBatch(Batch batch) {
+		_warehouse.registerBatch(batch);
 	}
 
 	public List<Partner> getSortedPartners() {
@@ -96,23 +113,21 @@ public class WarehouseManager {
 		return _warehouse.getSortedProducts();
 	}
 
-	public int displayDate() {
-		return _warehouse.displayDate();
+	public void registerSale(int quantity, String productId, String partnerId, int deadline)
+			throws UnavailableProductException {
+		_warehouse.registerSale(quantity, productId, partnerId, deadline);
 	}
 
-	public Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException{
-		return _warehouse.registerSale(quantity, productId, partnerId, deadline);
-	}
-
-	public int getAvailableStock(String productId){
+	public int getAvailableStock(String productId) {
 		return _warehouse.getAvailableStock(productId);
 	}
 
-	public void registerAcquisiton(String partnerId, String productId, double price, int quantity) throws UnknownProductCoreException{
+	public void registerAcquisiton(String partnerId, String productId, double price, int quantity)
+			throws UnknownProductCoreException {
 		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);
 	}
 
-	public Transaction getTransaction(int id) throws UnknownTransactionCoreException{
+	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
 		return _warehouse.getTransaction(id);
 	}
 
@@ -120,26 +135,13 @@ public class WarehouseManager {
 		_warehouse.registerSimpleProductId(productId);
 	}
 
-	public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys, int numComponents) {
+	public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
+			int numComponents) {
 		_warehouse.registerAggProductId(productId, alpha, productIds, quantitys, numComponents);
 	}
 
-	public void registerWarehouseBatch(Product product, Partner partner, double price, int quantity){
+	public void registerWarehouseBatch(Product product, Partner partner, double price, int quantity) {
 		_warehouse.registerWarehouseBatch(product, partner, price, quantity);
-	}
-
-	public void changeGlobalBalance(double price){
-		_warehouse.changeGlobalBalance(price);
-	}
-
-	/**
-	 * 
-	 * @param days
-	 * @return advancedDate
-	 * @throws InvalidDateCoreException
-	 */
-	public int advanceDate(int days) throws InvalidDateCoreException {
-		return _warehouse.advanceDate(days);
 	}
 
 	/**
@@ -173,8 +175,6 @@ public class WarehouseManager {
 		save();
 	}
 
-
-
 	/**
 	 * @@param filename
 	 * @@throws UnavailableFileException
@@ -206,7 +206,5 @@ public class WarehouseManager {
 			throw new ImportFileException(textfile, e);
 		}
 	}
-
-
 
 }
