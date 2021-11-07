@@ -36,6 +36,7 @@ public class Warehouse implements Serializable {
 	private Map<String, Product> _products;
 	private Map<Integer, Transaction> _transactions;
 	private List<Batch> _batches;
+	private static double _globalBalance;
 
 	Warehouse() {
 		_partners = new HashMap<>();
@@ -43,6 +44,14 @@ public class Warehouse implements Serializable {
 		_transactions = new HashMap<>();
 		_date = new Date();
 		_batches = new ArrayList<>();
+		_globalBalance = 0;
+	}
+
+	double getGlobalBalance(){
+		return _globalBalance;
+	}
+	void changeGlobalBalance(double price){
+		_globalBalance += price;
 	}
 
 	int displayDate() {
@@ -180,15 +189,23 @@ public class Warehouse implements Serializable {
     public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys, int numComponents) {
 
 		Recipe recipe = new Recipe(alpha);
+
+		double productPrice = 0;
+
 		for (int i = 0; i < numComponents; i++) {
 		
 			String prodId = productIds.get(i);
 			Integer componentQuantity = quantitys.get(i);
+			//subtrai da global balance o preco do component
+			productPrice += (_products.get(prodId).getPrice() * componentQuantity);
 
 			Component component = new Component(componentQuantity, _products.get(prodId));
 			recipe.addComponent(component);
 
 		}
+		productPrice = (1 + alpha) * productPrice;
+		
+		changeGlobalBalance(productPrice);
 		AggregateProduct product = new AggregateProduct(productId, recipe);
 		_products.put(product.getId().toLowerCase(), product);
     }

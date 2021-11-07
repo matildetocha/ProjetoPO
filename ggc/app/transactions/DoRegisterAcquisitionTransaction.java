@@ -58,7 +58,7 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
           quantitys.add(integerField("quantity"));
 
         }
-
+        //subtrai da global balance o preco do agregado criado, mas nao usa o preco pedido? idk
         _receiver.registerAggProductId(stringField("productId"),realField("alpha"), productIds, quantitys, integerField("numberComponents"));
 
         _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"), integerField("quantity"));
@@ -66,6 +66,7 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
       } else {
         
         _receiver.registerSimpleProductId(stringField("productId"));
+        _receiver.changeGlobalBalance(-( realField("price") * integerField("quantity") ));
 
       }
     }

@@ -120,9 +120,14 @@ public class WarehouseManager {
 		_warehouse.registerAggProductId(productId, alpha, productIds, quantitys, numComponents);
 	}
 
-	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity){
+	public void registerWarehouseBatch(Product product, Partner partner, double price, int quantity){
 		_warehouse.registerWarehouseBatch(product, partner, price, quantity);
 	}
+
+	public void changeGlobalBalance(double price){
+		_warehouse.changeGlobalBalance(price);
+	}
+
 	/**
 	 * 
 	 * @param days
