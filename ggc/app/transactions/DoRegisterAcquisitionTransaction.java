@@ -60,9 +60,8 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         }
 
         _receiver.registerAggProductId(stringField("productId"),realField("alpha"), productIds, quantitys, integerField("numberComponents"));
-        
+
         _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"), integerField("quantity"));
-        
 
       } else {
         

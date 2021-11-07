@@ -35,12 +35,14 @@ public class Warehouse implements Serializable {
 	private Map<String, Partner> _partners;
 	private Map<String, Product> _products;
 	private Map<Integer, Transaction> _transactions;
+	private List<Batch> _batches;
 
 	Warehouse() {
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
 		_transactions = new HashMap<>();
 		_date = new Date();
+		_batches = new ArrayList<>();
 	}
 
 	int displayDate() {
@@ -68,12 +70,20 @@ public class Warehouse implements Serializable {
 		return _partners.get(id.toLowerCase());
 	}
 
-	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
-		if (_partners.get(id.toLowerCase()) != null)
-			throw new DuplicatePartnerCoreException();
+	Transaction getTransaction(int id) throws UnknownTransactionCoreException {
+		if (_transactions.get(id) == null)
+			throw new UnknownTransactionCoreException();
 
-		Partner partner = new Partner(name, id, address);
-		_partners.put(partner.getId().toLowerCase(), partner);
+		return _transactions.get(id);
+	}
+
+	double getBaseValue(Batch batch) {
+		return batch.getPrice();
+	}
+
+	int getAvailableStock(String productId) {
+		Product product = _products.get(productId);
+		return product.checkQuantity();
 	}
 
 	Collection<Product> getProducts() {
@@ -94,15 +104,6 @@ public class Warehouse implements Serializable {
 		return _products.get(id.toLowerCase());
 	}
 
-	void registerProduct(Product product) throws DuplicateProductCoreException {
-		if (_products.get(product.getId().toLowerCase()) != null)
-			throw new DuplicateProductCoreException();
-
-		_products.put(product.getId().toLowerCase(), product);
-	}
-
-
-
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
@@ -117,6 +118,9 @@ public class Warehouse implements Serializable {
 		return orderedBatches;
 	}
 
+	Collection<Transaction> getTransactions() {
+		return Collections.unmodifiableCollection(_transactions.values());
+	}
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
 		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
@@ -129,13 +133,16 @@ public class Warehouse implements Serializable {
 		return _products.get(id).getBatches();
 	}
 
+	void registerProduct(Product product) throws DuplicateProductCoreException {
+		if (_products.get(product.getId().toLowerCase()) != null)
+			throw new DuplicateProductCoreException();
+
+		_products.put(product.getId().toLowerCase(), product);
+	}
+
 	void registerBatch(Batch batch) {
 		Product product = batch.getProduct();
 		product.addBatch(batch);
-	}
-
-	Collection<Transaction> getTransactions() {
-		return Collections.unmodifiableCollection(_transactions.values());
 	}
 
 	Sale registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException {
@@ -162,20 +169,12 @@ public class Warehouse implements Serializable {
 		return sale;
 	}
 
-	Transaction getTransaction(int id) throws UnknownTransactionCoreException {
-		if (_transactions.get(id) == null)
-			throw new UnknownTransactionCoreException();
+	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
+		if (_partners.get(id.toLowerCase()) != null)
+			throw new DuplicatePartnerCoreException();
 
-		return _transactions.get(id);
-	}
-
-	double getBaseValue(Batch batch) {
-		return batch.getPrice();
-	}
-
-	int getAvailableStock(String productId) {
-		Product product = _products.get(productId);
-		return product.checkQuantity();
+		Partner partner = new Partner(name, id, address);
+		_partners.put(partner.getId().toLowerCase(), partner);
 	}
 
     public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys, int numComponents) {
@@ -219,8 +218,16 @@ public class Warehouse implements Serializable {
 
 		partner.addAcquisition(acquisition);
 		_transactions.put(Transaction._id, acquisition);
+		
+		registerWarehouseBatch(product, partner, price, quantity);
+		
 	}
 
+	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity){
+		Batch batch = new Batch(product, partner, price, quantity);
+		_batches.add(batch);
+
+	}
 
 	void updateBatchQuantity(Batch batch, int quantity) {
 

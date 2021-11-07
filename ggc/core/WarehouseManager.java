@@ -115,16 +115,14 @@ public class WarehouseManager {
 	public void registerSimpleProductId(String productId) {
 		_warehouse.registerSimpleProductId(productId);
 	}
-	
+
 	public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys, int numComponents) {
 		_warehouse.registerAggProductId(productId, alpha, productIds, quantitys, numComponents);
 	}
 
-//	public void aggregateProducts(List<String> productIds, List<Integer> quantitys, String partnerId, int numComponents){
-//		_warehouse.aggregateProducts(productIds, quantitys, partnerId, numComponents);
-
-//	}
-
+	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity){
+		_warehouse.registerWarehouseBatch(product, partner, price, quantity);
+	}
 	/**
 	 * 
 	 * @param days
