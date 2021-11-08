@@ -30,4 +30,8 @@ public class NormalStatus implements Status{
 
   }
 
+  public String getname(){
+    return "NORMAL";
+  }
+
 }

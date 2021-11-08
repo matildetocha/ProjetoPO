@@ -25,4 +25,8 @@ public class EliteStatus implements Status{
 		}
 
   }
+
+  public String getname(){
+    return "ELITE";
+  }
 }

@@ -39,4 +39,8 @@ public class SelectionStatus implements Status{
 		}
 
   }
+
+  public String getname(){
+    return "SELECTION";
+  }
 }

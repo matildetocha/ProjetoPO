@@ -15,12 +15,10 @@ import java.io.Serializable;
 public class Partner implements Serializable{
 	private static final long serialVersionUID = 209129194076L;
 
-	public enum StatusType {NORMAL, SELECTION, ELITE};
-
 	private String _id;
 	private String _name;
 	private String _address;
-	private StatusType _status;
+	private Status _status;
 	private double _points;
 	private double _valueAcquisitions;
 	private double _valueSales;
@@ -34,7 +32,7 @@ public class Partner implements Serializable{
 		_name = name;
 		_id = id;
 		_address = address;
-		_status = StatusType.NORMAL;
+		_status = new NormalStatus();
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
@@ -84,11 +82,13 @@ public class Partner implements Serializable{
 
 	void setStatus() {
 		if (_points <= 2000)
-			_status = StatusType.NORMAL;
+			_status = new NormalStatus();
+			
 		else if (_points < 25000 && _points > 2000)
-			_status = StatusType.SELECTION;
+			_status = new SelectionStatus();
+
 		else if (_points > 25000)
-			_status = StatusType.ELITE;
+			_status = new EliteStatus();
 	}
 
 	@Override
