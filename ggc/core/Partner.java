@@ -101,16 +101,19 @@ public class Partner implements Serializable{
 		return obj instanceof Product && ((Partner) obj)._id.equals(_id);
 	}
 
+	void changeValueAcquisitions(double price){
+		_valueAcquisitions += price;
+	}
+
 	@Override
 	public String toString() {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
 
-	@Override
-	public double getAmountPaid() {
+	public double getAmountPaid(Date deadline, double price, int n) {
 		// TODO Auto-generated method stub
 
-		return 0;
+		return _status.getAmountPaid(deadline, price, n);
 	}
 }

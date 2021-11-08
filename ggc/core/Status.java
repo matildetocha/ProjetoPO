@@ -1,5 +1,5 @@
 package ggc.core;
 
 public interface Status {
-  double getAmountPaid();
+  double getAmountPaid(Date deadline, double price, int n);
 }

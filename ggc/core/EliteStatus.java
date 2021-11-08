@@ -2,8 +2,8 @@ package ggc.core;
 
 public class EliteStatus implements Status{
 
-  public double getAmountPaid(Date deadline, double price){
-
+  public double getAmountPaid(Date deadline, double price, int n){
+    int i;
     if( (_deadline - Date.now()) >= n){
 
 		return price * 0.9;
@@ -11,27 +11,15 @@ public class EliteStatus implements Status{
 		
 	else if(0 <= _deadline - Date.now() < n){
 
-      return price * ;
+      return price * 0.9;
 		}
 
 	else if(0 < Date.now() - _deadline <= n){
-      if(_deadline - Date.now() <= 1){
-	      return price;
-      }
 
-      else{
-        for(i = 0; i < (Date.now() - _deadline); i++){
-            price = price * 0.95;
-        }
-      }
-
-      return price;
+      return price * 0.95;
 		}
 
 	else if( Date.now() - _deadline > n){
-        for(i = 0; i < (Date.now() - _deadline); i++){
-            price = price * 0.95;
-        }
 
         return price;
 		}

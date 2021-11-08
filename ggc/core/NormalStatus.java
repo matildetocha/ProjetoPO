@@ -1,9 +1,9 @@
 package ggc.core;
 
 public class NormalStatus implements Status{
-
-  public double getAmountPaid(Date deadline, double price){
-
+  
+  public double getAmountPaid(Date deadline, double price, int n){
+    int i;
     if( (_deadline - Date.now()) >= n){
 
 		return price * 0.9;
@@ -29,4 +29,5 @@ public class NormalStatus implements Status{
 		}
 
   }
+
 }
