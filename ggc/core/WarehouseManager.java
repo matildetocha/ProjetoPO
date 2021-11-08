@@ -10,7 +10,6 @@ import ggc.core.exception.UnavailableProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownTransactionCoreException;
-import ggc.app.exception.UnavailableProductException;
 import ggc.core.exception.BadEntryException;
 
 import java.io.IOException;

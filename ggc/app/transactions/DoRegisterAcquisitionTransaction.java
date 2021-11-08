@@ -58,7 +58,7 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         } else
           _receiver.createSimpleProduct(stringField("productId"));
       }
-    } catch (DuplicateProductCoreException e) {
+    } catch (DuplicateProductCoreException | UnknownProductCoreException e) {
       e.printStackTrace();
     }
   }

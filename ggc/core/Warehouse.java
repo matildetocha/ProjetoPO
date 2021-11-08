@@ -120,6 +120,27 @@ public class Warehouse implements Serializable {
 		_products.put(product.getId().toLowerCase(), product);
 	}
 
+	void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantities,
+			int numComponents) throws DuplicateProductCoreException {
+		Recipe recipe = new Recipe(alpha);
+
+		for (int i = 0; i < numComponents; i++) {
+			String prodId = productIds.get(i);
+			Integer componentQuantity = quantities.get(i);
+
+			Component component = new Component(componentQuantity, _products.get(prodId));
+			recipe.addComponent(component);
+		}
+
+		Product product = new AggregateProduct(productId, recipe);
+		registerProduct(product);
+	}
+
+	void createSimpleProduct(String productId) throws DuplicateProductCoreException {
+		Product product = new SimpleProduct(productId);
+		registerProduct(product);
+	}
+
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
@@ -191,7 +212,8 @@ public class Warehouse implements Serializable {
 		return _transactions.get(id);
 	}
 
-	void registerSale(int amount, String productId, String partnerId, int deadline) throws UnavailableProductCoreException {
+	void registerSale(int amount, String productId, String partnerId, int deadline)
+			throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
 
 		if (product.checkQuantity() < amount) {
@@ -207,27 +229,6 @@ public class Warehouse implements Serializable {
 
 		partner.addSale(_nextTransactionId, sale);
 		_transactions.put(_nextTransactionId, sale);
-	}
-
-	void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantities,
-			int numComponents) throws DuplicateProductCoreException {
-		Recipe recipe = new Recipe(alpha);
-
-		for (int i = 0; i < numComponents; i++) {
-			String prodId = productIds.get(i);
-			Integer componentQuantity = quantities.get(i);
-
-			Component component = new Component(componentQuantity, _products.get(prodId));
-			recipe.addComponent(component);
-		}
-
-		Product product = new AggregateProduct(productId, recipe);
-		registerProduct(product);
-	}
-
-	void createSimpleProduct(String productId) throws DuplicateProductCoreException {
-		Product product = new SimpleProduct(productId);
-		registerProduct(product);
 	}
 
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
@@ -246,10 +247,8 @@ public class Warehouse implements Serializable {
 		partner.addAcquisition(_nextTransactionId, acquisition);
 		_transactions.put(_nextTransactionId, acquisition);
 
-		
-
-		// registerWarehouseBatch(product, partner, price, quantity); //! acho que não
-		// vamos precisar disto
+		Batch batch = new Batch(product, partner, baseValue, quantity);
+		registerBatch(batch);
 	}
 
 	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity) {

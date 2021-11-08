@@ -12,17 +12,15 @@ import ggc.core.exception.UnavailableProductCoreException;
 
 import java.io.Serializable;
 
-public class Partner implements Serializable {
+public class Partner implements Serializable{
 	private static final long serialVersionUID = 209129194076L;
 
-	private static final String NORMAL = "NORMAL";
-	private static final String SELECTION = "SELECTION";
-	private static final String ELITE = "ELITE";
+	public enum StatusType {NORMAL, SELECTION, ELITE};
 
 	private String _id;
 	private String _name;
 	private String _address;
-	private String _status;
+	private StatusType _status;
 	private double _points;
 	private double _valueAcquisitions;
 	private double _valueSales;
@@ -36,7 +34,7 @@ public class Partner implements Serializable {
 		_name = name;
 		_id = id;
 		_address = address;
-		_status = NORMAL;
+		_status = StatusType.NORMAL;
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
@@ -86,11 +84,11 @@ public class Partner implements Serializable {
 
 	void setStatus() {
 		if (_points <= 2000)
-			_status = NORMAL;
+			_status = StatusType.NORMAL;
 		else if (_points < 25000 && _points > 2000)
-			_status = SELECTION;
+			_status = StatusType.SELECTION;
 		else if (_points > 25000)
-			_status = ELITE;
+			_status = StatusType.ELITE;
 	}
 
 	@Override
@@ -107,5 +105,12 @@ public class Partner implements Serializable {
 	public String toString() {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
+	}
+
+	@Override
+	public double getAmountPaid() {
+		// TODO Auto-generated method stub
+
+		return 0;
 	}
 }
