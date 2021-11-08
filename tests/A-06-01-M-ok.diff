@@ -1,0 +1,19 @@
+*** tests/A-06-01-M-ok.out	2021-11-07 16:04:59.000000000 +0000
+--- tests/A-06-01-M-ok.outhyp	2021-11-08 00:12:49.722278481 +0000
+***************
+*** 15,21 ****
+  3 - Visualizar lotes fornecidos por parceiro
+  4 - Visualizar lotes de um dado produto
+  0 - Sair
+! Escolha uma opção: Identificador do produto: Visualizar lotes de um dado produto: Operação inválida: O produto 'ROLHA' não existe.
+  Gestão de Produtos
+  1 - Visualizar todos os produtos
+  2 - Visualizar todos os lotes
+--- 15,21 ----
+  3 - Visualizar lotes fornecidos por parceiro
+  4 - Visualizar lotes de um dado produto
+  0 - Sair
+! Escolha uma opção: Identificador do produto: Visualizar lotes de um dado produto: Operação inválida: O parceiro 'ROLHA' não existe.
+  Gestão de Produtos
+  1 - Visualizar todos os produtos
+  2 - Visualizar todos os lotes

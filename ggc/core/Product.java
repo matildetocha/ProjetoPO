@@ -3,6 +3,8 @@ package ggc.core;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Product implements Serializable {
@@ -70,15 +72,6 @@ public abstract class Product implements Serializable {
 	}
 
 	/**
-	 * A product can change it's max price.
-	 * 
-	 * @param maxPrice The product's new max price
-	 */
-	void changeMaxPrice(double maxPrice) {
-		_maxPrice = maxPrice;
-	}
-
-	/**
 	 * A product can add another batch to the list of batches it belongs to.
 	 * 
 	 * @param batch A new batch with a product associated
@@ -96,6 +89,20 @@ public abstract class Product implements Serializable {
 		return _batches;
 	}
 
+	List<Batch> getBatchesToSell(int amount) {
+		List<Batch> batchesToSell = new ArrayList<>();
+		int i = 0;
+
+		Iterator<Batch> iter = _batches.iterator();
+
+		while (i < amount) {
+			batchesToSell.add(iter.next());
+			i++;
+		}
+		
+		return batchesToSell;
+	}
+
 	/**
 	 * By checking every single batch that is associated to the product, the method
 	 * returns the full stock of the product, meaning the sum of the product's stock
@@ -109,6 +116,19 @@ public abstract class Product implements Serializable {
 			res += batch.getQuantity();
 		}
 		return res;
+	}
+
+	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
+		double priceByFractions = 0;
+
+		Collections.sort(batchesToSell, new BatchComparator());
+		
+		Iterator<Batch> iter = batchesToSell.iterator();
+		while (iter.hasNext()) {
+			priceByFractions += iter.next().getPrice();
+		}
+		
+		return priceByFractions;
 	}
 
 	/**

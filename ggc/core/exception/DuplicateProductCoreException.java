@@ -1,8 +1,6 @@
 package ggc.core.exception;
 
-import pt.tecnico.uilib.menus.CommandException;
-
-public class DuplicateProductCoreException extends CommandException {
+public class DuplicateProductCoreException extends Exception {
 	public DuplicateProductCoreException() {
 		super("Produto Duplicado.");
 	}

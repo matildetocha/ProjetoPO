@@ -15,12 +15,11 @@ import java.util.HashMap;
 import ggc.core.exception.DuplicatePartnerCoreException;
 import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.InvalidDateCoreException;
+import ggc.core.exception.UnavailableProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownTransactionCoreException;
 import ggc.core.exception.BadEntryException;
-
-import ggc.app.exception.UnavailableProductException; // ! não podemos dar import destas exceções
 
 /**
  * Class Warehouse implements a warehouse.
@@ -43,7 +42,6 @@ public class Warehouse implements Serializable {
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
 		_transactions = new HashMap<>();
-		_batches = new ArrayList<>();
 		_globalBalance = 0;
 	}
 
@@ -146,10 +144,10 @@ public class Warehouse implements Serializable {
 			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
 		}
 
-		//remove os com preco menor que o limite
+		// remove os com preco menor que o limite
 		Iterator<Batch> it = orderedBatches.iterator();
-		while (it.hasNext()){
-			if(it.next().getPrice() < priceLimit){
+		while (it.hasNext()) {
+			if (it.next().getPrice() < priceLimit) {
 				orderedBatches.remove(it);
 			}
 		}
@@ -164,7 +162,7 @@ public class Warehouse implements Serializable {
 		return _partners.get(id).getBatches();
 	}
 
-	List<Transaction> getPayedTransactionsByPartner(String partnerId){
+	Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
 		return _partners.get(partnerId).getPayedTransactions();
 	}
 
@@ -176,7 +174,10 @@ public class Warehouse implements Serializable {
 
 	void registerBatch(Batch batch) {
 		Product product = batch.getProduct();
+		Partner partner = batch.getPartner();
+
 		product.addBatch(batch);
+		partner.addBatch(batch);
 	}
 
 	Collection<Transaction> getTransactions() {
@@ -190,83 +191,73 @@ public class Warehouse implements Serializable {
 		return _transactions.get(id);
 	}
 
-	void registerSale(int quantity, String productId, String partnerId, int deadline) throws UnavailableProductException {
+	void registerSale(int amount, String productId, String partnerId, int deadline) throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
-		if (product.checkQuantity() < quantity) {
-			throw new UnavailableProductException(productId, quantity, product.checkQuantity());
+
+		if (product.checkQuantity() < amount) {
+			throw new UnavailableProductCoreException();
 		}
 
 		Partner partner = _partners.get(partnerId);
-
-		// calcular base value
-		double baseValue = product.getPrice() * quantity;
-		// payment date??? como e q sabemos qnd e q ele paga? hmmm
-		// o num de transacoes aumenta
-
-		// Transaction._id += 1; //? what is this
+		List<Batch> batchesToSell = product.getBatchesToSell(amount);
+		double baseValue = product.getPriceByFractions(batchesToSell, amount);
 		_nextTransactionId++;
 
-		Sale sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, quantity);
-		// payment date é uma variavel que depois fica definida
+		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, amount);
 
-		partner.addSale(sale);
+		partner.addSale(_nextTransactionId, sale);
 		_transactions.put(_nextTransactionId, sale);
 	}
 
-	public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
-			int numComponents) {
-
+	void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantities,
+			int numComponents) throws DuplicateProductCoreException {
 		Recipe recipe = new Recipe(alpha);
 
 		for (int i = 0; i < numComponents; i++) {
-
 			String prodId = productIds.get(i);
-			Integer componentQuantity = quantitys.get(i);
+			Integer componentQuantity = quantities.get(i);
 
 			Component component = new Component(componentQuantity, _products.get(prodId));
 			recipe.addComponent(component);
 		}
 
-		AggregateProduct product = new AggregateProduct(productId, recipe);
-		_products.put(product.getId().toLowerCase(), product);
+		Product product = new AggregateProduct(productId, recipe);
+		registerProduct(product);
 	}
 
-	void registerSimpleProductId(String productId) {
+	void createSimpleProduct(String productId) throws DuplicateProductCoreException {
 		Product product = new SimpleProduct(productId);
-		_products.put(product.getId().toLowerCase(), product);
+		registerProduct(product);
 	}
 
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
-
 		if (_products.get(productId) == null)
 			throw new UnknownProductCoreException();
 
 		Product product = _products.get(productId);
 		Partner partner = _partners.get(partnerId);
-
 		double baseValue = product.getPrice() * quantity;
-		
-		_nextTransactionId ++; 
 
-		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity); // é 0
+		_nextTransactionId++;
 
-		partner.addAcquisition(acquisition);
-		partner.addTransaction(acquisition);
-		
+		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity);
+
+		partner.addAcquisition(_nextTransactionId, acquisition);
 		_transactions.put(_nextTransactionId, acquisition);
 
-		registerWarehouseBatch(product, partner, price, quantity);
+		
+
+		// registerWarehouseBatch(product, partner, price, quantity); //! acho que não
+		// vamos precisar disto
 	}
 
 	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity) {
 		Batch batch = new Batch(product, partner, price, quantity);
 		_batches.add(batch);
-
 	}
 
 	void updateBatchQuantity(Batch batch, int quantity) {
-
 		batch.changeQuantity(quantity);
 	}
 

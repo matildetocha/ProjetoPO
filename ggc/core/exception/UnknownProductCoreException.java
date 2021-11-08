@@ -1,8 +1,6 @@
 package ggc.core.exception;
 
-import pt.tecnico.uilib.menus.CommandException;
-
-public class UnknownProductCoreException extends CommandException {
+public class UnknownProductCoreException extends Exception {
 
 	public UnknownProductCoreException() {
 		super("Produto Desconhecido.");

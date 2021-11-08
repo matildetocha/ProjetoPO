@@ -3,15 +3,11 @@ package ggc.app.transactions;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.type.UnknownTypeException;
-
-import ggc.app.exception.UnknownProductKeyException;
-
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-import ggc.core.Product;
-import ggc.core.Recipe;
+
 import ggc.core.WarehouseManager;
+import ggc.core.exception.DuplicateProductCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 
 /**
@@ -21,7 +17,7 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
   public DoRegisterAcquisitionTransaction(WarehouseManager receiver) {
     super(Label.REGISTER_ACQUISITION_TRANSACTION, receiver);
-    // FIXME maybe add command fields
+
     addStringField("partnerId", Message.requestPartnerKey());
     addStringField("productId", Message.requestProductKey());
     addRealField("price", Message.requestPrice());
@@ -30,47 +26,40 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
   @Override
   public final void execute() throws CommandException {
-    // FIXME implement command
     try {
+      try {
+        _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
 
-      _receiver.changeGlobalBalance(-( realField("price") * integerField("quantity") ));
+        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+            integerField("quantity"));
+      } catch (UnknownProductCoreException e) {
+        addStringField("answer", Message.requestAddRecipe());
 
-      _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
-          integerField("quantity"));
-    } catch (UnknownProductCoreException e) {
+        if (stringField("answer").equals("y")) {
+          addIntegerField("numberComponents", Message.requestNumberOfComponents());
+          addRealField("alpha", Message.requestAlpha());
 
-      addStringField("answer", Message.requestAddRecipe());
+          List<String> productIds = new ArrayList<>();
+          List<Integer> quantities = new ArrayList<>();
 
-      if (stringField("answer").equals("y")) {
+          for (int i = 0; i < integerField("numberComponents"); i++) {
+            addIntegerField("quantity", Message.requestAmount());
+            addStringField("productId", Message.requestProductKey());
 
-        addIntegerField("numberComponents", Message.requestNumberOfComponents());
-        addRealField("alpha", Message.requestAlpha());
+            productIds.add(stringField("productId"));
+            quantities.add(integerField("quantity"));
+          }
 
-        List<String> productIds = new ArrayList<>();
-        List<Integer> quantitys = new ArrayList<>();
+          _receiver.createAggregateProduct(stringField("productId"), realField("alpha"), productIds, quantities,
+              integerField("numberComponents"));
+          _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+              integerField("quantity"));
 
-        for (int i = 0; i < integerField("numberComponents"); i++) {
-
-          addIntegerField("quantity", Message.requestAmount());
-
-          addStringField("productId", Message.requestProductKey());
-
-          productIds.add(stringField("productId"));
-          quantitys.add(integerField("quantity"));
-
-        }
-        //subtrai da global balance o preco do agregado criado, mas nao usa o preco pedido? idk
-        _receiver.registerAggProductId(stringField("productId"),realField("alpha"), productIds, quantitys, integerField("numberComponents"));
-
-        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"), integerField("quantity"));
-
-      } else {
-        _receiver.registerSimpleProductId(stringField("productId"));
-        //adicionar batch de simples
-
+        } else
+          _receiver.createSimpleProduct(stringField("productId"));
       }
-
+    } catch (DuplicateProductCoreException e) {
+      e.printStackTrace();
     }
   }
-
 }

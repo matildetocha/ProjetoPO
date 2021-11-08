@@ -1,10 +1,14 @@
 package ggc.core;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.TransferHandler.TransferSupport;
+import ggc.core.exception.UnavailableProductCoreException;
 
 import java.io.Serializable;
 
@@ -24,9 +28,9 @@ public class Partner implements Serializable {
 	private double _valueSales;
 	private double _valuePaidSales;
 	private List<Batch> _batches;
-	private List<Transaction> _acquisitions;
-	private List<Transaction> _sales;
-	private List<Transaction> _transactions;
+	private Map<Integer, Transaction> _transactions;
+	private Map<Integer, Transaction> _acquisitions;
+	private Map<Integer, Transaction> _sales;
 
 	Partner(String name, String id, String address) {
 		_name = name;
@@ -36,9 +40,9 @@ public class Partner implements Serializable {
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
-		_sales = new ArrayList<>();
-		_acquisitions = new ArrayList<>();
-		_transactions = new ArrayList<>();
+		_transactions = new HashMap<>();
+		_sales = new HashMap<>();
+		_acquisitions = new HashMap<>();
 	}
 
 	String getId() {
@@ -49,54 +53,35 @@ public class Partner implements Serializable {
 		return _batches;
 	}
 
-	List<Transaction> getPayedTransactions(){
-		Iterator<Transaction> iterator = _transactions.iterator();
+	Collection<Transaction> getPayedTransactions() {
+		Map<Integer, Transaction> _payedTransactions = new HashMap<>();
 
-		List<Transaction> _payedTransactions = new ArrayList<>();
-
-		while(iterator.hasNext()){
-			if(iterator.next().isPaid()){
-				_payedTransactions.add((Transaction) iterator);
-			}
+		for (Transaction t : _transactions.values()) {
+			if (t.isPaid())
+				_payedTransactions.put(t.getId(), t);
 		}
-		return _payedTransactions;
 
-	}
-
-	Batch getLowestPriceBatchByProduct(Product product) {
-		double lowestPrice = 0;
-		Batch lowestPriceBatch;
-
-		for (Batch b: _batches) {
-			if (b.getProduct().equals(product) && b.getPrice() <= lowestPrice)
-				lowestPrice = b.getPrice();
-				lowestPriceBatch = b;
-		}
-		return lowestPriceBatch;
+		return Collections.unmodifiableCollection(_payedTransactions.values());
 	}
 
 	void addBatch(Batch batch) {
 		_batches.add(batch);
 	}
 
-	List<Transaction> getSales() {
-		return _sales;
+	Collection<Transaction> getSales() {
+		return Collections.unmodifiableCollection(_sales.values());
 	}
 
-	void addSale(Transaction transaction) {
-		_sales.add(transaction);
+	void addSale(int id, Transaction transaction) {
+		_sales.put(id, transaction);
 	}
 
-	public List<Transaction> getAcquistions() {
-		return _acquisitions;
+	Collection<Transaction> getAcquistions() {
+		return Collections.unmodifiableCollection(_acquisitions.values());
 	}
 
-	void addAcquisition(Transaction transaction) {
-		_acquisitions.add(transaction);
-	}
-
-	void addTransaction(Transaction transaction) {
-		_transactions.add(transaction);
+	void addAcquisition(int id, Transaction transaction) {
+		_acquisitions.put(id, transaction);
 	}
 
 	void setStatus() {

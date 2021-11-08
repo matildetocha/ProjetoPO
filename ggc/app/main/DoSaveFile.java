@@ -3,7 +3,9 @@ package ggc.app.main;
 import ggc.app.exception.FileOpenFailedException;
 import ggc.core.WarehouseManager;
 import ggc.core.exception.MissingFileAssociationException;
+
 import java.io.IOException;
+
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import pt.tecnico.uilib.forms.Form;
@@ -37,37 +39,3 @@ class DoSaveFile extends Command<WarehouseManager> {
     }
   }
 }
-// class DoSaveFile extends Command<WarehouseManager> {
-//   /** @param receiver */
-//   DoSaveFile(WarehouseManager receiver) {
-//     super(Label.SAVE, receiver);
-//   }
-
-//   @Override
-//   public final void execute() throws CommandException {
-//     try {
-//       if (_receiver.getFilename().equals("")) {
-        
-//         Form form = new Form("File");
-//         String filename = form.requestString(Message.newSaveAs());
-//         _receiver.saveAs(filename);
-//       }catch (MissingFileAssociationException e) {
-//       e.printStackTrace();
-//       }
-//     catch (IOException e) {
-//       throw new FileOpenFailedException(_receiver.getFilename());
-//     }
-  
-//     try{
-//       _receiver.save();
-//     }
-//     catch (MissingFileAssociationException e) {
-//       e.printStackTrace();
-//       }
-//     catch (IOException e) {
-//       throw new FileOpenFailedException(_receiver.getFilename());
-//     }
-//   }
-  
-// }
-// }

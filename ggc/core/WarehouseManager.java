@@ -6,6 +6,7 @@ import ggc.core.exception.ImportFileException;
 import ggc.core.exception.InvalidDateCoreException;
 import ggc.core.exception.MissingFileAssociationException;
 import ggc.core.exception.UnavailableFileException;
+import ggc.core.exception.UnavailableProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownTransactionCoreException;
@@ -89,6 +90,15 @@ public class WarehouseManager {
 		_warehouse.registerProduct(product);
 	}
 
+	public void createSimpleProduct(String productId) throws DuplicateProductCoreException {
+		_warehouse.createSimpleProduct(productId);
+	}
+
+	public void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
+			int numComponents) throws DuplicateProductCoreException {
+		_warehouse.createAggregateProduct(productId, alpha, productIds, quantitys, numComponents);
+	}
+
 	public List<Batch> getSortedBatches() {
 		return _warehouse.getSortedBatches();
 	}
@@ -114,7 +124,7 @@ public class WarehouseManager {
 	}
 
 	public void registerSale(int quantity, String productId, String partnerId, int deadline)
-			throws UnavailableProductException {
+			throws UnavailableProductCoreException {
 		_warehouse.registerSale(quantity, productId, partnerId, deadline);
 	}
 
@@ -126,7 +136,7 @@ public class WarehouseManager {
 		return _warehouse.getSortedBatchesUnderLimit(priceLimit);
 	}
 
-	public List<Transaction> getPayedTransactionsByPartner(String partnerId) {
+	public Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
 		return _warehouse.getPayedTransactionsByPartner(partnerId);
 	}
 
@@ -137,19 +147,6 @@ public class WarehouseManager {
 
 	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
 		return _warehouse.getTransaction(id);
-	}
-
-	public void registerSimpleProductId(String productId) {
-		_warehouse.registerSimpleProductId(productId);
-	}
-
-	public void registerAggProductId(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
-			int numComponents) {
-		_warehouse.registerAggProductId(productId, alpha, productIds, quantitys, numComponents);
-	}
-
-	public void registerWarehouseBatch(Product product, Partner partner, double price, int quantity) {
-		_warehouse.registerWarehouseBatch(product, partner, price, quantity);
 	}
 
 	/**
