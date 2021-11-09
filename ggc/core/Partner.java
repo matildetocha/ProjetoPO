@@ -15,7 +15,8 @@ public class Partner implements Serializable {
 	private String _id;
 	private String _name;
 	private String _address;
-	private String _status;
+	private String _statusName;
+	private Status _status;
 	private double _points;
 	private double _valueAcquisitions;
 	private double _valueSales;
@@ -29,8 +30,8 @@ public class Partner implements Serializable {
 		_name = name;
 		_id = id;
 		_address = address;
-		Status statusType = new NormalStatus();
-		_status = statusType.getName();
+		Status _status = new NormalStatus();
+		_statusName = _status.getName();
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
@@ -84,13 +85,17 @@ public class Partner implements Serializable {
 		Status statusType3 = new EliteStatus();
 
 		if (_points <= 2000)
-			_status = statusType1.getName();
+			_statusName = statusType1.getName();
 
 		else if (_points < 25000 && _points > 2000)
-			_status = statusType2.getName();
+			_statusName = statusType2.getName();
 
 		else if (_points > 25000)
-			_status = statusType3.getName();
+			_statusName = statusType3.getName();
+	}
+
+	String getStatusName(){
+		return _statusName;
 	}
 
 	Status getStatus(){
