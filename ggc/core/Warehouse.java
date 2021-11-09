@@ -212,6 +212,8 @@ public class Warehouse implements Serializable {
 		return _partners.get(partnerId).getPayedTransactions();
 	}
 
+
+	//register sale
 	void registerSale(String productId, String partnerId, int deadline, int quantity)
 			throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
@@ -221,7 +223,9 @@ public class Warehouse implements Serializable {
 		}
 
 		Partner partner = _partners.get(partnerId);
+
 		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
+
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 		_nextTransactionId++;
 
@@ -260,6 +264,14 @@ public class Warehouse implements Serializable {
 		Batch batch = new Batch(product, partner, baseValue, quantity);
 		registerBatch(batch);
 	}
+
+
+	public void payTransaction(int transactionId) {
+		Transaction unpaidTransaction = _transactions.get(transactionId);
+		unpaidTransaction.pay();
+		unpaidTransaction.getPartner().c
+	}
+
 
 	/**
 	 * @param txtfile filename to be loaded.

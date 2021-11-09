@@ -102,6 +102,10 @@ public class Partner implements Serializable{
 		_valueAcquisitions += price;
 	}
 
+	void changeValueSales(double price){
+		_valueSales += price;
+	}
+
 	@Override
 	public String toString() {
 		return _id + "|" + _name + "|" + _address + "|" + _status.getName() + "|" + Math.round(_points) + "|"
