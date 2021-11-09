@@ -1,7 +1,7 @@
 *** tests/A-13-03-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-13-03-M-ok.outhyp	2021-11-08 00:12:53.654796604 +0000
+--- tests/A-13-03-M-ok.outhyp	2021-11-09 15:07:46.220722900 +0000
 ***************
-*** 13,36 ****
+*** 13,24 ****
   1 - Produtos com Preço Abaixo de Limite
   2 - Facturas pagas por parceiro
   0 - Sair
@@ -11,25 +11,14 @@
 ! SAL|S1|1000|500
 ! VIDRO|M1|1000|500
 ! Consultas
-! 1 - Produtos com Preço Abaixo de Limite
-! 2 - Facturas pagas por parceiro
-! 0 - Sair
-! Escolha uma opção: Menu Principal
-! 1 - Abrir
-! 2 - Guardar
-! 3 - Mostrar Data
-! 4 - Avançar Data
-! 5 - Gestão de Produtos
-! 6 - Gestão de Parceiros
-! 7 - Gestão de Transacções
-! 8 - Menu de Consultas
-! 9 - Ver Saldo Global
-! 0 - Sair
-! Escolha uma opção: 
-\ No newline at end of file
---- 13,16 ----
   1 - Produtos com Preço Abaixo de Limite
   2 - Facturas pagas por parceiro
   0 - Sair
-! Escolha uma opção: Preço: 
-\ No newline at end of file
+--- 13,19 ----
+  1 - Produtos com Preço Abaixo de Limite
+  2 - Facturas pagas por parceiro
+  0 - Sair
+! Escolha uma opção: Preço: Consultas
+  1 - Produtos com Preço Abaixo de Limite
+  2 - Facturas pagas por parceiro
+  0 - Sair

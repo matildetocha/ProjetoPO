@@ -9,13 +9,13 @@ import java.util.Map;
 
 import java.io.Serializable;
 
-public class Partner implements Serializable{
+public class Partner implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
 
 	private String _id;
 	private String _name;
 	private String _address;
-	private Status _status;
+	private String _status;
 	private double _points;
 	private double _valueAcquisitions;
 	private double _valueSales;
@@ -29,7 +29,8 @@ public class Partner implements Serializable{
 		_name = name;
 		_id = id;
 		_address = address;
-		_status = new NormalStatus();
+		Status statusType = new NormalStatus();
+		_status = statusType.getName();
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
@@ -78,14 +79,18 @@ public class Partner implements Serializable{
 	}
 
 	void setStatus() {
+		Status statusType1 = new NormalStatus();
+		Status statusType2 = new SelectionStatus();
+		Status statusType3 = new EliteStatus();
+
 		if (_points <= 2000)
-			_status = new NormalStatus();
-			
+			_status = statusType1.getName();
+
 		else if (_points < 25000 && _points > 2000)
-			_status = new SelectionStatus();
+			_status = statusType2.getName();
 
 		else if (_points > 25000)
-			_status = new EliteStatus();
+			_status = statusType3.getName();
 	}
 
 	Status getStatus(){
@@ -110,7 +115,7 @@ public class Partner implements Serializable{
 		return obj instanceof Product && ((Partner) obj)._id.equals(_id);
 	}
 
-	void changeValueAcquisitions(double price){
+	void changeValueAcquisitions(double price) {
 		_valueAcquisitions += price;
 	}
 
@@ -123,12 +128,12 @@ public class Partner implements Serializable{
 
 	@Override
 	public String toString() {
-		return _id + "|" + _name + "|" + _address + "|" + _status.getName() + "|" + Math.round(_points) + "|"
+		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
 
 	// double getAmountPaid(Date deadline, double price, int n) {
 
-	// 	return _status.getAmountPaid(deadline, price, n);
+	// return _status.getAmountPaid(deadline, price, n);
 	// }
 }
