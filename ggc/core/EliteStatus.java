@@ -11,8 +11,11 @@ public class EliteStatus implements Status {
 			partner.setStatus();
     }
 
-    else if (difference <= 0 && difference > n)
+    else if (difference <= 0 && difference > n){
       price *= 0.9;
+      if(difference > 15)
+        partner.changePoints(-(partner.getPoints() * 0.25) );
+    }
 
     else if (difference > 0 && difference <= n)
       price *= 0.95;

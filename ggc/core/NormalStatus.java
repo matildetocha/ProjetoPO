@@ -19,7 +19,9 @@ public class NormalStatus implements Status {
     else if (difference > n) {
       for (i = 0; i < difference; i++) 
         price += price * 0.1;
+      partner.changePoints(-partner.getPoints());
     }
+
     return price;
   }
   

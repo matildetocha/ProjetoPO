@@ -27,8 +27,8 @@ public class SelectionStatus implements Status {
     else if (difference > n) {
       for (i = 0; i < difference; i++)
         price += price * 0.05;
-      if(difference > 15){
-        partner.changePoints(-(partner.getPoints() * 0.25) );
+      if(difference > 2){
+        partner.changePoints(-(partner.getPoints() * 0.1) );
       }
     }
     return price;
