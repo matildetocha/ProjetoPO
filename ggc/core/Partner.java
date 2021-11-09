@@ -88,6 +88,18 @@ public class Partner implements Serializable{
 			_status = new EliteStatus();
 	}
 
+	Status getStatus(){
+		return _status;
+	}
+
+	void changePoints(double points){
+		_points += points;
+	}
+
+	double getPoints(){
+		return _points;
+	}
+
 	@Override
 	public int hashCode() {
 		return _id.hashCode();

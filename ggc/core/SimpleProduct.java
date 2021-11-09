@@ -9,4 +9,8 @@ class SimpleProduct extends Product {
 	public String toString() {
 		return getId() + "|" + Math.round(getPrice()) + "|" + checkQuantity();
 	}
+
+	Recipe getRecipe(){
+		return null;
+	}
 }

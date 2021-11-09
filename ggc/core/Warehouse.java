@@ -272,10 +272,29 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(transactionId) == null)
 			throw new UnknownTransactionCoreException();
 		Transaction unpaidTransaction = _transactions.get(transactionId);
+
+		Partner partner = unpaidTransaction.getPartner();
+		Product product = unpaidTransaction.getProduct();
+		Status status = partner.getStatus();
+		Date currentDate = new Date();
+
+		//Date deadline = unpaidTransaction.getDeadLine();
+		int n = 0;
+
 		double price = unpaidTransaction.getBaseValue();
 
+		if(product.getRecipe() == null){
+			n = 3;
+		}
+		else n = 5;
+
+		Date deadline = new Date();
+
+		price = status.getAmountToPay(partner, currentDate, deadline, price, n);
+
 		unpaidTransaction.pay();
-		unpaidTransaction.getPartner().changeValuePaidSales(price);
+		partner.changeValuePaidSales(price);
+
 	}
 
 

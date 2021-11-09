@@ -2,11 +2,14 @@ package ggc.core;
 
 public class NormalStatus implements Status {
   @Override
-  public double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
+  public double getAmountToPay(Partner partner, Date currentDate, Date deadline, double price, int n) {
     int difference = currentDate.difference(deadline);
     int i;
-    if (difference <= n)
+    if (difference <= n){
       price *= 0.9;
+      partner.changePoints(price*10);
+			partner.setStatus();
+    }
 
     else if (difference > 0 && difference <= n) {
       for (i = 0; i < difference; i++)
