@@ -1,32 +1,24 @@
 package ggc.core;
 
-public class EliteStatus implements Status{
+public class EliteStatus implements Status {
+  @Override
+  public double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
+    int difference = currentDate.difference(deadline);
+    
+    if (difference <= n)
+      price *= 0.9;
 
-  public double getAmountPaid(Date deadline, double price, int n){
-    int i;
-    if( (_deadline - Date.now()) >= n){
+    else if (difference <= 0 && difference > n)
+      price *= 0.9;
 
-		return price * 0.9;
-		}
-		
-	else if(0 <= _deadline - Date.now() < n){
+    else if (difference > 0 && difference <= n)
+      price *= 0.95;
 
-      return price * 0.9;
-		}
-
-	else if(0 < Date.now() - _deadline <= n){
-
-      return price * 0.95;
-		}
-
-	else if( Date.now() - _deadline > n){
-
-        return price;
-		}
-
+    return price;
   }
 
-  public String getname(){
+  @Override
+  public String getName() {
     return "ELITE";
   }
 }

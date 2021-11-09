@@ -1,6 +1,9 @@
 package ggc.core;
 
-public abstract class Transaction {
+import java.io.Serializable;
+
+public abstract class Transaction implements Serializable{
+	private static final long serialVersionUID = 202109192006L;
 
 	static int _id = 0;
 	private int _paymentDate;
@@ -20,15 +23,15 @@ public abstract class Transaction {
 
 	}
 
-	public boolean isPaid() {
+	boolean isPaid() {
 		return _isPaid;
 	}
 
-	public void pay() {
+	void pay() {
 		_isPaid = true;
 	}
 
-	public int getPaymentDate() {
+	int getPaymentDate() {
 		return _paymentDate;
 	}
 

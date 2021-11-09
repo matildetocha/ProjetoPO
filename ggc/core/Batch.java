@@ -3,7 +3,7 @@ package ggc.core;
 import java.io.Serializable;
 
 public class Batch implements Serializable {
-	private static final long serialVersionUID = 252103192986L;
+	private static final long serialVersionUID = 202109192006L;
 
 	/** A Batch has a product's quantity and price defined in it. */
 	private double _price;
@@ -44,9 +44,7 @@ public class Batch implements Serializable {
 	 * @return The Batche's current price
 	 */
 	double getPrice() {
-		_price = _product.getPrice() * _quantity; 
 		return _price;
-		//return _price;
 	}
 
 	/**
@@ -97,9 +95,4 @@ public class Batch implements Serializable {
 		Batch newBatch = new Batch(_product, _partner, _price, _quantity);
 		return newBatch;
 	}
-
-	void changeQuantity(int quantity){
-		_quantity += quantity;
-	}
-
 }

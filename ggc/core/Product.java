@@ -67,7 +67,7 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @return the product's max price
 	 */
-	public double getMaxPrice() {
+	double getMaxPrice() {
 		return _maxPrice;
 	}
 
@@ -76,7 +76,7 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @param batch A new batch with a product associated
 	 */
-	public void addBatch(Batch batch) {
+	void addBatch(Batch batch) {
 		_batches.add(batch);
 	}
 
@@ -86,7 +86,7 @@ public abstract class Product implements Serializable {
 	 * @return the product's list of batches it is associated with
 	 */
 	List<Batch> getBatches() {
-		return _batches;
+		return Collections.unmodifiableList(_batches);
 	}
 
 	List<Batch> getBatchesToSell(int amount) {
@@ -94,9 +94,9 @@ public abstract class Product implements Serializable {
 		List<Batch> batchesToSell = new ArrayList<>();
 		int i = amount;
 
-		batchesByLowestPrice
-		Collections.sort(batchesToSell, new BatchComparator());
-		Iterator<Batch> iter = _batches.iterator();
+		batchesByLowestPrice = _batches;
+		Collections.sort(batchesByLowestPrice, new BatchComparator());
+		Iterator<Batch> iter = batchesByLowestPrice.iterator();
 
 		while (i > 0) {
 			Batch b = iter.next();
@@ -104,7 +104,7 @@ public abstract class Product implements Serializable {
 			i-= b.getQuantity();
 		}
 		
-		return batchesToSell;
+		return Collections.unmodifiableList(batchesToSell);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @return the product's quantity
 	 */
-	public int checkQuantity() {
+	int checkQuantity() {
 		int res = 0;
 		for (Batch batch : _batches) {
 			res += batch.getQuantity();
@@ -124,12 +124,18 @@ public abstract class Product implements Serializable {
 
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
 		double priceByFractions = 0;
+		double lastBatchPrice;
+		int lastBatchAmount;
+		int i;
 
-		Iterator<Batch> iter = batchesToSell.iterator();
-		while (iter.hasNext()) {
-			priceByFractions += iter.next().getPrice();
-		}
+		lastBatchAmount = batchesToSell.get(-1).getQuantity();
+		lastBatchPrice = batchesToSell.get(-1).getPrice();
 
+		for (i = 0; i < batchesToSell.size() - 1; i++)
+			priceByFractions += batchesToSell.get(i).getPrice() * batchesToSell.get(i).getQuantity();
+
+		priceByFractions += lastBatchAmount * lastBatchPrice - (lastBatchAmount - amount) * lastBatchPrice;
+		
 		return priceByFractions;
 	}
 
@@ -139,7 +145,7 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @return the maximum price of the product
 	 */
-	public double getPrice() {
+	double getPrice() {
 		double res = 0;
 		for (Batch batch : _batches) {
 			if (batch.getPrice() > res)

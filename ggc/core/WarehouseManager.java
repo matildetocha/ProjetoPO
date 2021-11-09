@@ -89,13 +89,17 @@ public class WarehouseManager {
 		_warehouse.registerProduct(product);
 	}
 
+	public void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
+			int numComponents) throws DuplicateProductCoreException {
+		_warehouse.createAggregateProduct(productId, alpha, productIds, quantitys, numComponents);
+	}
+
 	public void createSimpleProduct(String productId) throws DuplicateProductCoreException {
 		_warehouse.createSimpleProduct(productId);
 	}
 
-	public void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
-			int numComponents) throws DuplicateProductCoreException {
-		_warehouse.createAggregateProduct(productId, alpha, productIds, quantitys, numComponents);
+	public boolean isAggregateProduct(Object obj) {
+		return isAggregateProduct(obj);
 	}
 
 	public List<Batch> getSortedBatches() {
@@ -122,10 +126,10 @@ public class WarehouseManager {
 		return _warehouse.getSortedProducts();
 	}
 
-	public void registerSale(int quantity, String productId, String partnerId, int deadline)
-			throws UnavailableProductCoreException {
-		_warehouse.registerSale(quantity, productId, partnerId, deadline);
-	}
+	// public void registerSale(int quantity, String productId, String partnerId, int deadline)
+	// 		throws UnavailableProductCoreException {
+	// 	_warehouse.registerSale(quantity, productId, partnerId, deadline);
+	// }
 
 	public int getAvailableStock(String productId) {
 		return _warehouse.getAvailableStock(productId);

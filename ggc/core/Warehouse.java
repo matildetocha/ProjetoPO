@@ -34,7 +34,6 @@ public class Warehouse implements Serializable {
 	private Map<String, Partner> _partners;
 	private Map<String, Product> _products;
 	private Map<Integer, Transaction> _transactions;
-	private List<Batch> _batches;
 	private static double _globalBalance;
 
 	Warehouse() {
@@ -84,10 +83,6 @@ public class Warehouse implements Serializable {
 
 		Partner partner = new Partner(name, id, address);
 		_partners.put(partner.getId().toLowerCase(), partner);
-	}
-
-	double getBaseValue(Batch batch) {
-		return batch.getPrice();
 	}
 
 	int getAvailableStock(String productId) {
@@ -141,6 +136,11 @@ public class Warehouse implements Serializable {
 		registerProduct(product);
 	}
 
+	// FIXME verificar se está correto usar instanceOf
+	boolean isAggregated(String productId) {
+		return _products.get(productId) instanceof AggregateProduct;
+	}
+
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
@@ -169,7 +169,7 @@ public class Warehouse implements Serializable {
 		Iterator<Batch> it = orderedBatches.iterator();
 		while (it.hasNext()) {
 			if (it.next().getPrice() < priceLimit) {
-				orderedBatches.remove(it);
+				it.remove();
 			}
 		}
 
@@ -181,10 +181,6 @@ public class Warehouse implements Serializable {
 		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
 		return _partners.get(id).getBatches();
-	}
-
-	Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
-		return _partners.get(partnerId).getPayedTransactions();
 	}
 
 	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
@@ -212,24 +208,37 @@ public class Warehouse implements Serializable {
 		return _transactions.get(id);
 	}
 
-	void registerSale(int amount, String productId, String partnerId, int deadline)
+	Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
+		return _partners.get(partnerId).getPayedTransactions();
+	}
+
+	void registerSale(String productId, String partnerId, int deadline, int quantity)
 			throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
 
-		if (product.checkQuantity() < amount) {
+		if (product.checkQuantity() < quantity) {
 			throw new UnavailableProductCoreException();
 		}
 
 		Partner partner = _partners.get(partnerId);
-		List<Batch> batchesToSell = product.getBatchesToSell(amount);
-		double baseValue = product.getPriceByFractions(batchesToSell, amount);
+		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
+		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 		_nextTransactionId++;
 
-		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, amount);
+		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, quantity);
 
 		partner.addSale(_nextTransactionId, sale);
 		_transactions.put(_nextTransactionId, sale);
+
+		Batch batch = new Batch(product, partner, baseValue, quantity);
+		registerBatch(batch);
 	}
+
+	// void registerSaleByCredit(String partnerId, String productId, int deadline, int quantity) {
+	// 	AggregateProduct product = (AggregateProduct) _products.get(productId);
+	// 	int amountToCreate = quantity - product.checkQuantity();
+	// 	for (product.getRecipe())//da
+	// }
 
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
@@ -245,20 +254,11 @@ public class Warehouse implements Serializable {
 		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity);
 
 		partner.addAcquisition(_nextTransactionId, acquisition);
-		partner.changeValueAcquisitions( baseValue );
+		partner.changeValueAcquisitions(baseValue);
 		_transactions.put(_nextTransactionId, acquisition);
 
 		Batch batch = new Batch(product, partner, baseValue, quantity);
 		registerBatch(batch);
-	}
-
-	void registerWarehouseBatch(Product product, Partner partner, double price, int quantity) {
-		Batch batch = new Batch(product, partner, price, quantity);
-		_batches.add(batch);
-	}
-
-	void updateBatchQuantity(Batch batch, int quantity) {
-		batch.changeQuantity(quantity);
 	}
 
 	/**

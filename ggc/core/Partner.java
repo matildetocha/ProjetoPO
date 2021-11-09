@@ -4,16 +4,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import ggc.core.exception.UnavailableProductCoreException;
 
 import java.io.Serializable;
 
 public class Partner implements Serializable{
-	private static final long serialVersionUID = 209129194076L;
+	private static final long serialVersionUID = 202109192006L;
 
 	private String _id;
 	private String _name;
@@ -107,13 +104,12 @@ public class Partner implements Serializable{
 
 	@Override
 	public String toString() {
-		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
+		return _id + "|" + _name + "|" + _address + "|" + _status.getName() + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
 
-	public double getAmountPaid(Date deadline, double price, int n) {
-		// TODO Auto-generated method stub
+	// double getAmountPaid(Date deadline, double price, int n) {
 
-		return _status.getAmountPaid(deadline, price, n);
-	}
+	// 	return _status.getAmountPaid(deadline, price, n);
+	// }
 }

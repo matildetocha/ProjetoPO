@@ -3,7 +3,7 @@ package ggc.core;
 import java.io.Serializable;
 
 public class Component implements Serializable {
-	private static final long serialVersionUID = 900129164072L;
+	private static final long serialVersionUID = 202109192006L;
 
 	private int _quantity;
 	private Product _product;
@@ -11,6 +11,14 @@ public class Component implements Serializable {
 	Component(int quantity, Product product) {
 		_quantity = quantity;
 		_product = product;
+	}
+
+	int getQuantity() {
+		return _quantity;
+	}
+
+	Product getProduct(){
+		return _product;
 	}
 
 	@Override

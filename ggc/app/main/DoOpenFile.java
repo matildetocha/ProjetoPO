@@ -27,11 +27,9 @@ class DoOpenFile extends Command<WarehouseManager> {
       _receiver.load(stringField("textfile"));
 
     } catch (UnavailableFileException | IOException ufe) {
-
       throw new FileOpenFailedException(stringField("textfile"));
 
     } catch (ClassNotFoundException e) {
-
       e.printStackTrace();
     }
 

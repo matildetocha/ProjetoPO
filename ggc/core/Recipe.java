@@ -3,10 +3,12 @@ package ggc.core;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Recipe implements Serializable {
-  private static final long serialVersionUID = 400109132706L;
+  private static final long serialVersionUID = 202109192006L;
 
   private double _aggravation;
   private Product _aggregateProduct;
@@ -17,6 +19,10 @@ public class Recipe implements Serializable {
     _components = new ArrayList<>();
   }
 
+  double getAlpha() {
+    return _aggravation;
+  }
+
   void addAggregateProduct(Product aggregateProduct) {
     _aggregateProduct = aggregateProduct;
   }
@@ -25,10 +31,9 @@ public class Recipe implements Serializable {
     _components.add(component);
   }
 
-  double getAlpha() {
-    return _aggravation;
+  List<Component> getComponents() {
+    return Collections.unmodifiableList(_components);
   }
-  
 
   @Override
   public String toString() {

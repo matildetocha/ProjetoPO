@@ -4,8 +4,8 @@ package ggc.app.main;
 interface Message {
 
   /** @return string showing current date. */
-  static String currentDate(int date) {
-    return "Data actual: " + date;
+  static String currentDate(int i) {
+    return "Data actual: " + i;
   }
 
   /**

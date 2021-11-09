@@ -5,8 +5,8 @@ import java.io.Serializable;
 import ggc.core.exception.InvalidDateCoreException;
 
 public class Date implements Serializable {
-	private static final long serialVersionUID = 200149174056L;
-
+	private static final long serialVersionUID = 202109192006L;
+	
 	private int _days;
 
 	Date() {
