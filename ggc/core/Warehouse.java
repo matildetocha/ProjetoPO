@@ -212,9 +212,8 @@ public class Warehouse implements Serializable {
 		return _partners.get(partnerId).getPayedTransactions();
 	}
 
-
-	//register sale
-	void registerSale(String productId, String partnerId, int deadline, int quantity)
+	// register sale
+	void registerSale(String productId, String partnerId, Date deadline, int quantity)
 			throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
 
@@ -229,7 +228,7 @@ public class Warehouse implements Serializable {
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 		_nextTransactionId++;
 
-		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, quantity);
+		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadline);
 
 		partner.addSale(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
@@ -240,10 +239,11 @@ public class Warehouse implements Serializable {
 		registerBatch(batch);
 	}
 
-	// void registerSaleByCredit(String partnerId, String productId, int deadline, int quantity) {
-	// 	AggregateProduct product = (AggregateProduct) _products.get(productId);
-	// 	int amountToCreate = quantity - product.checkQuantity();
-	// 	for (product.getRecipe())//da
+	// void registerSaleByCredit(String partnerId, String productId, int deadline,
+	// int quantity) {
+	// AggregateProduct product = (AggregateProduct) _products.get(productId);
+	// int amountToCreate = quantity - product.checkQuantity();
+	// for (product.getRecipe())//da
 	// }
 
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
@@ -267,36 +267,32 @@ public class Warehouse implements Serializable {
 		registerBatch(batch);
 	}
 
-
-	public void payTransaction(int transactionId) throws UnknownTransactionCoreException{
+	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
 		if (_transactions.get(transactionId) == null)
 			throw new UnknownTransactionCoreException();
-		Transaction unpaidTransaction = _transactions.get(transactionId);
 
+		Date currentDate = new Date();
+		SaleByCredit unpaidTransaction = (SaleByCredit) _transactions.get(transactionId);
+		Date deadline = unpaidTransaction.getDeadline();
 		Partner partner = unpaidTransaction.getPartner();
 		Product product = unpaidTransaction.getProduct();
-		Status status = partner.getStatus();
-		Date currentDate = new Date();
-
-		//Date deadline = unpaidTransaction.getDeadLine();
-		int n = 0;
-
 		double price = unpaidTransaction.getBaseValue();
+		Status status = partner.getStatusType();
+		int n;
 
-		if(product.getRecipe() == null){
+		if (product instanceof AggregateProduct) {
 			n = 3;
-		}
-		else n = 5;
+		} else
+			n = 5;
 
-		Date deadline = new Date();
-
-		price = status.getAmountToPay(partner, currentDate, deadline, price, n);
+		price = partner.getAmountToPay(currentDate, deadline, price, n);
 
 		unpaidTransaction.pay();
 		partner.changeValuePaidSales(price);
+		partner.changePoints(status.getPoints(currentDate, deadline, n));
+		//FIXME ainda temos que mudar o tipo de status
 
 	}
-
 
 	/**
 	 * @param txtfile filename to be loaded.

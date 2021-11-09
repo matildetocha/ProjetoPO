@@ -154,6 +154,4 @@ public abstract class Product implements Serializable {
 		_maxPrice = res;
 		return res;
 	}
-
-	abstract Recipe getRecipe();
 }

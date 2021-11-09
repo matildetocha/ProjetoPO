@@ -152,7 +152,7 @@ public class WarehouseManager {
 		return _warehouse.getTransaction(id);
 	}
 
-	public void registerSale(String productId, String partnerId, int deadline, int quantity) throws UnavailableProductCoreException{
+	public void registerSale(String productId, String partnerId, Date deadline, int quantity) throws UnavailableProductCoreException{
 		_warehouse.registerSale(productId, partnerId, deadline, quantity);
 	}
 

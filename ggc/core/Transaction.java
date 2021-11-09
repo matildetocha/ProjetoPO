@@ -6,7 +6,7 @@ public abstract class Transaction implements Serializable{
 	private static final long serialVersionUID = 202109192006L;
 
 	static int _id = 0;
-	private int _paymentDate;
+	private Date _paymentDate;
 	private double _baseValue;
 	private int _quantity;
 	private Partner _partner;
@@ -17,10 +17,8 @@ public abstract class Transaction implements Serializable{
 		_id = id;
 		_partner = partner;
 		_product = product;
-		_paymentDate = 0; // por ser definida
 		_baseValue = baseValue;
 		_quantity = quantity;
-
 	}
 
 	boolean isPaid() {
@@ -31,7 +29,7 @@ public abstract class Transaction implements Serializable{
 		_isPaid = true;
 	}
 
-	int getPaymentDate() {
+	Date getPaymentDate() {
 		return _paymentDate;
 	}
 

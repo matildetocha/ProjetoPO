@@ -15,8 +15,7 @@ public class Partner implements Serializable {
 	private String _id;
 	private String _name;
 	private String _address;
-	private String _statusName;
-	private Status _status;
+	private String _status;
 	private double _points;
 	private double _valueAcquisitions;
 	private double _valueSales;
@@ -30,8 +29,8 @@ public class Partner implements Serializable {
 		_name = name;
 		_id = id;
 		_address = address;
-		Status _status = new NormalStatus();
-		_statusName = _status.getName();
+		Status _statusType = new NormalStatus();
+		_status = _statusType.getName();
 		_points = 0;
 		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
@@ -80,34 +79,62 @@ public class Partner implements Serializable {
 	}
 
 	void setStatus() {
-		Status statusType1 = new NormalStatus();
-		Status statusType2 = new SelectionStatus();
-		Status statusType3 = new EliteStatus();
+		Status statusNormal = new NormalStatus();
+		Status statusSelection = new SelectionStatus();
+		Status statusElite = new EliteStatus();
 
 		if (_points <= 2000)
-			_statusName = statusType1.getName();
+			_status = statusNormal.getName();
 
 		else if (_points < 25000 && _points > 2000)
-			_statusName = statusType2.getName();
+			_status = statusSelection.getName();
 
 		else if (_points > 25000)
-			_statusName = statusType3.getName();
+			_status = statusElite.getName();
 	}
 
-	String getStatusName(){
-		return _statusName;
-	}
-
-	Status getStatus(){
+	String getStatus() {
 		return _status;
 	}
 
-	void changePoints(double points){
-		_points += points;
+	Status getStatusType() {
+		Status statusNormal = new NormalStatus();
+		Status statusSelection = new SelectionStatus();
+		Status statusElite = new EliteStatus();
+
+		if (_status.equals(statusNormal.getName()))
+			return statusNormal;
+
+		else if (_status.equals(statusSelection.getName()))
+			return statusNormal;
+
+		else 
+			return statusElite;
 	}
 
-	double getPoints(){
+
+	double getPoints() {
 		return _points;
+	}
+
+	void changeValueAcquisitions(double price) {
+		_valueAcquisitions += price;
+	}
+
+	void changeValueSales(double price) {
+		_valueSales += price;
+	}
+
+	void changeValuePaidSales(double price) {
+		_valuePaidSales += price;
+	}
+
+	double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
+		return getStatusType().getAmountToPay(currentDate, deadline, price, n);
+	}
+
+	void changePoints(double points) {
+		_points += points;
 	}
 
 	@Override
@@ -119,26 +146,9 @@ public class Partner implements Serializable {
 	public boolean equals(Object obj) {
 		return obj instanceof Product && ((Partner) obj)._id.equals(_id);
 	}
-
-	void changeValueAcquisitions(double price) {
-		_valueAcquisitions += price;
-	}
-
-	void changeValueSales(double price){
-		_valueSales += price;
-	}
-	void changeValuePaidSales(double price){
-		_valuePaidSales += price;
-	}
-
 	@Override
 	public String toString() {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
-
-	// double getAmountPaid(Date deadline, double price, int n) {
-
-	// return _status.getAmountPaid(deadline, price, n);
-	// }
 }
