@@ -152,6 +152,16 @@ public class WarehouseManager {
 		return _warehouse.getTransaction(id);
 	}
 
+	public void registerSale(String productId, String partnerId, int deadline, int quantity) throws UnavailableProductCoreException{
+		_warehouse.registerSale(productId, partnerId, deadline, quantity);
+	}
+
+	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
+		_warehouse.payTransaction(transactionId);
+	}
+
+
+
 	/**
 	 * @@throws IOException
 	 * @@throws FileNotFoundException
@@ -214,5 +224,7 @@ public class WarehouseManager {
 			throw new ImportFileException(textfile, e);
 		}
 	}
+
+
 
 }
