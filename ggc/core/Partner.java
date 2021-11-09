@@ -105,6 +105,9 @@ public class Partner implements Serializable{
 	void changeValueSales(double price){
 		_valueSales += price;
 	}
+	void changeValuePaidSales(double price){
+		_valuePaidSales += price;
+	}
 
 	@Override
 	public String toString() {

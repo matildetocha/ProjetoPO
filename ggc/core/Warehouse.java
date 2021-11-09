@@ -232,6 +232,8 @@ public class Warehouse implements Serializable {
 		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, deadline, baseValue, quantity);
 
 		partner.addSale(_nextTransactionId, sale);
+		partner.changeValueSales(baseValue);
+
 		_transactions.put(_nextTransactionId, sale);
 
 		Batch batch = new Batch(product, partner, baseValue, quantity);
@@ -266,10 +268,14 @@ public class Warehouse implements Serializable {
 	}
 
 
-	public void payTransaction(int transactionId) {
+	public void payTransaction(int transactionId) throws UnknownTransactionCoreException{
+		if (_transactions.get(transactionId) == null)
+			throw new UnknownTransactionCoreException();
 		Transaction unpaidTransaction = _transactions.get(transactionId);
+		double price = unpaidTransaction.getBaseValue();
+
 		unpaidTransaction.pay();
-		unpaidTransaction.getPartner().c
+		unpaidTransaction.getPartner().changeValuePaidSales(price);
 	}
 
 

@@ -156,7 +156,7 @@ public class WarehouseManager {
 		_warehouse.registerSale(productId, partnerId, deadline, quantity);
 	}
 
-	public void payTransaction(int transactionId) {
+	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
 		_warehouse.payTransaction(transactionId);
 	}
 

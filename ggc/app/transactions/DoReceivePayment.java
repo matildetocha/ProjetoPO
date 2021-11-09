@@ -21,7 +21,8 @@ public class DoReceivePayment extends Command<WarehouseManager> {
   @Override
   public final void execute() throws CommandException {
     try {
-      _receiver.getTransaction(integerField("TransactionId")); //.pay();
+      //_receiver.getTransaction(integerField("TransactionId"));
+      _receiver.payTransaction(integerField("TransactionId")); //.pay();
     } catch (UnknownTransactionCoreException e) {
       throw new UnknownTransactionKeyException(integerField("TransactionId"));
     }
