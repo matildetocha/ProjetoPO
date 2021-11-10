@@ -9,7 +9,8 @@ public class Date implements Serializable {
 	
 	private int _days;
 
-	Date() {
+	Date(int days) {
+		_days = days;
 	}
 
 	int add(int days) throws InvalidDateCoreException {

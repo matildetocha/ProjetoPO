@@ -37,7 +37,7 @@ public class Warehouse implements Serializable {
 	private static double _globalBalance;
 
 	Warehouse() {
-		_date = new Date();
+		_date = new Date(0);
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
 		_transactions = new HashMap<>();
@@ -131,14 +131,14 @@ public class Warehouse implements Serializable {
 		registerProduct(product);
 	}
 
-	void createSimpleProduct(String productId) throws DuplicateProductCoreException {
-		Product product = new SimpleProduct(productId);
+	void createSimpleProduct(String id) throws DuplicateProductCoreException {
+		Product product = new SimpleProduct(id);
 		registerProduct(product);
 	}
 
-	// FIXME verificar se está correto usar instanceOf
-	boolean isAggregated(String productId) {
-		return _products.get(productId) instanceof AggregateProduct;
+	boolean isAggregateProduct(String id) {
+		Product product = _products.get(id);
+		return product.getRecipe() != null;
 	}
 
 	List<Batch> getSortedBatches() {
@@ -152,7 +152,7 @@ public class Warehouse implements Serializable {
 		}
 
 		Collections.sort(orderedBatches, new BatchComparator());
-		return orderedBatches;
+		return Collections.unmodifiableList(orderedBatches);
 	}
 
 	List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
@@ -180,13 +180,14 @@ public class Warehouse implements Serializable {
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
 		if (_partners.get(id.toLowerCase()) == null)
 			throw new UnknownUserCoreException();
-		return _partners.get(id).getBatches();
+
+		return Collections.unmodifiableList(_partners.get(id.toLowerCase()).getBatches());
 	}
 
 	List<Batch> getBatchesByProduct(String id) throws UnknownProductCoreException {
 		if (_products.get(id.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
-		return _products.get(id).getBatches();
+		return Collections.unmodifiableList(_products.get(id.toLowerCase()).getBatches());
 	}
 
 	void registerBatch(Batch batch) {
@@ -205,6 +206,10 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(id) == null)
 			throw new UnknownTransactionCoreException();
 
+		else if (_transactions.get(id) instanceof SaleByCredit) {
+			SaleByCredit sale = (SaleByCredit) _transactions.get(id);
+			sale.getAmountToPay(displayDate());
+		}
 		return _transactions.get(id);
 	}
 
@@ -212,39 +217,65 @@ public class Warehouse implements Serializable {
 		return _partners.get(partnerId).getPayedTransactions();
 	}
 
-	// register sale
-	void registerSale(String productId, String partnerId, Date deadline, int quantity)
+	void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
 			throws UnavailableProductCoreException {
 		Product product = _products.get(productId);
+		Date deadlineDate = new Date(deadline);
 
 		if (product.checkQuantity() < quantity) {
 			throw new UnavailableProductCoreException();
 		}
 
 		Partner partner = _partners.get(partnerId);
-
 		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
 
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 		_nextTransactionId++;
 
-		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadline);
+		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadlineDate);
 
 		partner.addSale(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
 
 		_transactions.put(_nextTransactionId, sale);
 
-		Batch batch = new Batch(product, partner, baseValue, quantity);
-		registerBatch(batch);
+		product.updateBatchStock(batchesToSell, quantity);
 	}
 
-	// void registerSaleByCredit(String partnerId, String productId, int deadline,
-	// int quantity) {
-	// AggregateProduct product = (AggregateProduct) _products.get(productId);
-	// int amountToCreate = quantity - product.checkQuantity();
-	// for (product.getRecipe())//da
-	// }
+	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
+			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
+		AggregateProduct product = (AggregateProduct) _products.get(productId);
+		int amountToCreate = quantity - product.checkQuantity();
+
+		for (Component c : product.getRecipe().getComponents()) {
+			if (c.getQuantity() * amountToCreate < c.getProduct().checkQuantity())
+				throw new UnavailableProductCoreException();
+		}
+
+		List<String> productIds = new ArrayList<>();
+		List<Integer> quantities = new ArrayList<>();
+
+		for (Component c : product.getRecipe().getComponents()) {
+			productIds.add(c.getProduct().getId());
+			quantities.add(c.getQuantity());
+		}
+
+		createAggregateProduct(productId, product.getRecipe().getAlpha(), productIds, quantities,
+				product.getRecipe().getComponents().size());
+
+		for (Component c : product.getRecipe().getComponents()) {
+			Product productToComp = getProduct(c.getProduct().getId());
+			List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
+
+			productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
+		}
+
+		Batch batch = new Batch(_products.get(productId), _partners.get(partnerId),
+				product.getRecipe().getPrice(amountToCreate), quantity);
+		registerBatch(batch);
+
+		registerSaleByCredit(productId, partnerId, deadline, quantity);
+	}
 
 	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
@@ -271,7 +302,7 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(transactionId) == null)
 			throw new UnknownTransactionCoreException();
 
-		Date currentDate = new Date();
+		Date currentDate = new Date(0);
 		SaleByCredit unpaidTransaction = (SaleByCredit) _transactions.get(transactionId);
 		Date deadline = unpaidTransaction.getDeadline();
 		Partner partner = unpaidTransaction.getPartner();
@@ -280,7 +311,7 @@ public class Warehouse implements Serializable {
 		Status status = partner.getStatusType();
 		int n;
 
-		if (product instanceof AggregateProduct) {
+		if (product.getRecipe() == null) {
 			n = 3;
 		} else
 			n = 5;
@@ -289,9 +320,7 @@ public class Warehouse implements Serializable {
 
 		unpaidTransaction.pay();
 		partner.changeValuePaidSales(price);
-		partner.changePoints(status.getPoints(currentDate, deadline, n));
-		//FIXME ainda temos que mudar o tipo de status
-
+		partner.changePoints(status.getPoints(partner, currentDate, deadline, price, n));
 	}
 
 	/**
@@ -303,5 +332,4 @@ public class Warehouse implements Serializable {
 		Parser parser = new Parser(this);
 		parser.parseFile(txtfile);
 	}
-
 }

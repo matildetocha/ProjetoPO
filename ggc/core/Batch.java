@@ -56,6 +56,10 @@ public class Batch implements Serializable {
 		return _quantity;
 	}
 
+	void changeQuantity(int quantity) {
+		_quantity = quantity;
+	}
+
 	/**
 	 * Returns the product associated to the Batch.
 	 * 

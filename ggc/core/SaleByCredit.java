@@ -13,16 +13,28 @@ public class SaleByCredit extends Sale {
 		return _deadline;
 	}
 
-	double getAmountPaid() {
-		return _amountPaid;
+	// double getAmountPaid() {
+	// return _amountPaid;
+	// }
+
+	void getAmountToPay(int days) {
+		Partner partner = getPartner();
+		Date currentDate = new Date(days);
+		Product product = getProduct();
+		int n = 0;
+
+		if (product.getRecipe() == null) n = 3;
+
+		else n = 5;
+		_amountPaid = partner.getStatusType().getAmountToPay(currentDate, _deadline, getBaseValue(), n);
 	}
 
 	public String toString() {
-		if(this.isPaid())
-			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + getAmountPaid() + "|"
-				+ getDeadline() + "|" + getPaymentDate();
-		else	
-			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + getAmountPaid() + "|"
-				+ getDeadline();
+		if (isPaid())
+			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + _amountPaid + "|"
+					+ _deadline + "|" + getPaymentDate();
+		else
+			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + _amountPaid + "|"
+					+ _deadline;
 	}
 }

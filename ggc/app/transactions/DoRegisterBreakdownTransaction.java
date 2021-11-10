@@ -13,6 +13,8 @@ public class DoRegisterBreakdownTransaction extends Command<WarehouseManager> {
 public DoRegisterBreakdownTransaction(WarehouseManager receiver) {
    super(Label.REGISTER_BREAKDOWN_TRANSACTION, receiver);
    //FIXME maybe add command fields
+   addStringField("partnerId", Message.requestPartnerKey());
+   addStringField("productId", Message.requestProductKey());
    addIntegerField("quantity", Message.requestAmount());
  }
 

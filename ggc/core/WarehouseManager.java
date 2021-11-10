@@ -94,12 +94,12 @@ public class WarehouseManager {
 		_warehouse.createAggregateProduct(productId, alpha, productIds, quantitys, numComponents);
 	}
 
-	public void createSimpleProduct(String productId) throws DuplicateProductCoreException {
-		_warehouse.createSimpleProduct(productId);
+	public void createSimpleProduct(String id) throws DuplicateProductCoreException {
+		_warehouse.createSimpleProduct(id);
 	}
 
-	public boolean isAggregateProduct(Object obj) {
-		return isAggregateProduct(obj);
+	public boolean isAggregateProduct(String id) {
+		return isAggregateProduct(id);
 	}
 
 	public List<Batch> getSortedBatches() {
@@ -126,9 +126,10 @@ public class WarehouseManager {
 		return _warehouse.getSortedProducts();
 	}
 
-	// public void registerSale(int quantity, String productId, String partnerId, int deadline)
-	// 		throws UnavailableProductCoreException {
-	// 	_warehouse.registerSale(quantity, productId, partnerId, deadline);
+	// public void registerSale(int quantity, String productId, String partnerId,
+	// int deadline)
+	// throws UnavailableProductCoreException {
+	// _warehouse.registerSale(quantity, productId, partnerId, deadline);
 	// }
 
 	public int getAvailableStock(String productId) {
@@ -152,15 +153,19 @@ public class WarehouseManager {
 		return _warehouse.getTransaction(id);
 	}
 
-	public void registerSale(String productId, String partnerId, Date deadline, int quantity) throws UnavailableProductCoreException{
-		_warehouse.registerSale(productId, partnerId, deadline, quantity);
+	public void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
+			throws UnavailableProductCoreException {
+		_warehouse.registerSaleByCredit(productId, partnerId, deadline, quantity);
+	}
+
+	public void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
+	throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
+		_warehouse.saleAggProduct(partnerId, productId, deadline, quantity);
 	}
 
 	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
 		_warehouse.payTransaction(transactionId);
 	}
-
-
 
 	/**
 	 * @@throws IOException
@@ -224,7 +229,5 @@ public class WarehouseManager {
 			throw new ImportFileException(textfile, e);
 		}
 	}
-
-
 
 }

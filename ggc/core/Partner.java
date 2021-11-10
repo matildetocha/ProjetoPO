@@ -112,6 +112,9 @@ public class Partner implements Serializable {
 			return statusElite;
 	}
 
+	void changeStatus(Status statusType){
+		_status = statusType.getName();
+	}
 
 	double getPoints() {
 		return _points;

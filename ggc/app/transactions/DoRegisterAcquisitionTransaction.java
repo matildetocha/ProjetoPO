@@ -29,7 +29,6 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
     try {
       try {
         _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
-
         _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
             integerField("quantity"));
       } catch (UnknownProductCoreException e) {

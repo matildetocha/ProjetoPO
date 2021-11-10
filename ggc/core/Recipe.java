@@ -35,6 +35,18 @@ public class Recipe implements Serializable {
     return Collections.unmodifiableList(_components);
   }
 
+  double getPrice(int amountToCreate) {
+    List<Batch> batchesToSell;
+    double price = 0;
+    
+    for(Component c : getComponents()){
+      batchesToSell = c.getProduct().getBatchesToSell(amountToCreate);
+      price += c.getProduct().getPriceByFractions(batchesToSell, amountToCreate);
+    }
+
+    return price;
+  }
+
   @Override
   public String toString() {
     String string = "";

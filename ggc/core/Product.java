@@ -19,6 +19,8 @@ public abstract class Product implements Serializable {
 	/** A Product can be in multiple batches, that are saved in a List. */
 	private List<Batch> _batches;
 
+	private Recipe _recipe;
+
 	/**
 	 * Product's constructor that receives an Id and creates a new empty ArrayList
 	 * of batches.
@@ -101,9 +103,9 @@ public abstract class Product implements Serializable {
 		while (i > 0) {
 			Batch b = iter.next();
 			batchesToSell.add(b);
-			i-= b.getQuantity();
+			i -= b.getQuantity();
 		}
-		
+
 		return Collections.unmodifiableList(batchesToSell);
 	}
 
@@ -135,8 +137,18 @@ public abstract class Product implements Serializable {
 			priceByFractions += batchesToSell.get(i).getPrice() * batchesToSell.get(i).getQuantity();
 
 		priceByFractions += lastBatchAmount * lastBatchPrice - (lastBatchAmount - amount) * lastBatchPrice;
-		
+
 		return priceByFractions;
+	}
+
+	void updateBatchStock(List<Batch> batchesToSell, int amount) {
+		int i;
+
+		for (i = 0; i < batchesToSell.size(); i++) {
+			batchesToSell.get(i).changeQuantity(-(batchesToSell.get(i).getQuantity()));
+			if (batchesToSell.get(i).getQuantity() == 0)
+				_batches.remove(batchesToSell.get(i));
+		}
 	}
 
 	/**
@@ -153,5 +165,13 @@ public abstract class Product implements Serializable {
 		}
 		_maxPrice = res;
 		return res;
+	}
+
+	Recipe getRecipe() {
+		return _recipe;
+	}
+
+	void changeRecipe(Recipe recipe) {
+		_recipe = recipe;
 	}
 }

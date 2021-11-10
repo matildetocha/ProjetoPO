@@ -29,15 +29,17 @@ public class SelectionStatus implements Status {
   }
 
   @Override
-  public double getPoints(Date currentDate, Date deadline, int n) {
+  public double getPoints(Partner partner, Date currentDate, Date deadline, double price ,int n) {
     double points = 0;
     int difference = currentDate.difference(deadline);
 
     if (difference <= n)
-      points += 10;
+      points += 10 * price;
 
-    else if (difference >= 2)
+    else if (difference >= 2) {
       points *= 0.10;
+      partner.changeStatus(new NormalStatus());
+    }
     return points;
   }
 
