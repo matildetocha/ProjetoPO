@@ -52,8 +52,8 @@ public class Warehouse implements Serializable {
 		return _date.add(days);
 	}
 
-	double getGlobalBalance() {
-		return _globalBalance;
+	int getGlobalBalance() {
+		return (int) Math.round(_globalBalance);
 	}
 
 	void changeGlobalBalance(double price) {
@@ -87,7 +87,7 @@ public class Warehouse implements Serializable {
 
 	int getAvailableStock(String productId) {
 		Product product = _products.get(productId);
-		return product.checkQuantity();
+		return product.getQuantity();
 	}
 
 	Collection<Product> getProducts() {
@@ -222,7 +222,7 @@ public class Warehouse implements Serializable {
 		Product product = _products.get(productId);
 		Date deadlineDate = new Date(deadline);
 
-		if (product.checkQuantity() < quantity) {
+		if (product.getQuantity() < quantity) {
 			throw new UnavailableProductCoreException();
 		}
 
@@ -236,6 +236,7 @@ public class Warehouse implements Serializable {
 
 		partner.addSale(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
+		changeGlobalBalance(baseValue); //FIXME Changeglobalbalance para mudar mais tarde talvez
 
 		_transactions.put(_nextTransactionId, sale);
 
@@ -245,10 +246,10 @@ public class Warehouse implements Serializable {
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
 			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
 		AggregateProduct product = (AggregateProduct) _products.get(productId);
-		int amountToCreate = quantity - product.checkQuantity();
+		int amountToCreate = quantity - product.getQuantity();
 
 		for (Component c : product.getRecipe().getComponents()) {
-			if (c.getQuantity() * amountToCreate < c.getProduct().checkQuantity())
+			if (c.getQuantity() * amountToCreate < c.getProduct().getQuantity())
 				throw new UnavailableProductCoreException();
 		}
 
@@ -277,7 +278,7 @@ public class Warehouse implements Serializable {
 		registerSaleByCredit(productId, partnerId, deadline, quantity);
 	}
 
-	void registerAcquisiton(String partnerId, String productId, double price, int quantity)
+	void registerAcquisition(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
 		if (_products.get(productId) == null)
 			throw new UnknownProductCoreException();
@@ -292,10 +293,80 @@ public class Warehouse implements Serializable {
 
 		partner.addAcquisition(_nextTransactionId, acquisition);
 		partner.changeValueAcquisitions(baseValue);
+
 		_transactions.put(_nextTransactionId, acquisition);
 
 		Batch batch = new Batch(product, partner, baseValue, quantity);
 		registerBatch(batch);
+	}
+
+	void registerBreakdown(String partnerId, String productId, int quantity)
+			throws UnknownProductCoreException, UnavailableProductCoreException {
+		// parte 1 - cria transacao regista e consegue as variaveis todas
+		if (_products.get(productId) == null)
+			throw new UnknownProductCoreException();
+		if(_products.get(productId).getQuantity() < quantity)
+			throw new UnavailableProductCoreException();
+
+		Product product = _products.get(productId);
+		Partner partner = _partners.get(partnerId);
+		double baseValue = product.getPrice() * quantity;
+
+		_nextTransactionId++;
+
+
+		//comecar a ir buscar os componentes PARTE 2
+
+		List<Component> components = product.getRecipe().getComponents();
+		double paidValue = 0;
+		double price = 0;
+		double totalPrice = 0;
+		for(Component c : components){ //se nao houver lotes com o componente entao fica o preco mais alto do historico, se houver entao é o mais baixo
+
+			List<Batch> batchesByLowestPrice = new ArrayList<>(c.getProduct().getBatches());
+			Collections.sort(batchesByLowestPrice, new BatchComparator());
+			Batch lowestPriceBatch = batchesByLowestPrice.get(0);
+			
+			if(lowestPriceBatch != null){ 
+				price = lowestPriceBatch.getPrice();
+			}
+			else{//se nao houver nenhuma lote com o componente vaise ao passado ver qual a transacao mais cara com o produto
+				price = c.getProduct().getMaxPriceHistory(getTransactions());
+			}
+			
+			if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao esteja registado
+
+				Product newProduct = new Product(c.getProduct().getId());
+				registerProduct(newProduct);
+
+			}
+			
+			Batch batch = new Batch(c.getProduct(), partner, price , (quantity * c.getQuantity())); // 5 das aguas vezes 2 do hidrogenio (assumir que o produto ja existe)
+			registerBatch(batch);
+			price *=  (quantity * c.getQuantity());
+			totalPrice += price;
+		}
+		//fim do for
+
+
+		totalPrice *= (1+ product.getRecipe().getAlpha()); //basicamente somamos os precos de todos os componentes vezes a sua quantidade e multiplicamos pelo alpha
+		double difference = baseValue - totalPrice; //existe a diferenca entre a compra (o preco do produto agregado vezes quantidade)
+													// e a venda( soma dos precos dos componentes vezes o alpha)
+		if(difference < 0) {
+			partner.changeValueSales(0);
+			paidValue = 0;
+		}
+		else{
+			partner.changeValueSales(difference);
+			changeGlobalBalance(difference);
+			paidValue = difference;
+		}
+
+		Transaction breakdown = new BreakdownSale(_nextTransactionId, product, quantity, partner, difference, paidValue);
+
+		partner.addBreakdown(_nextTransactionId, breakdown);
+		_transactions.put(_nextTransactionId, breakdown);
+
 	}
 
 	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {

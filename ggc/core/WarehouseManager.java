@@ -38,7 +38,7 @@ public class WarehouseManager {
 		return _warehouse;
 	}
 
-	public double getGlobalBalance() {
+	public int getGlobalBalance() {
 		return _warehouse.getGlobalBalance();
 	}
 
@@ -144,9 +144,9 @@ public class WarehouseManager {
 		return _warehouse.getPayedTransactionsByPartner(partnerId);
 	}
 
-	public void registerAcquisiton(String partnerId, String productId, double price, int quantity)
+	public void registerAcquisition(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
-		_warehouse.registerAcquisiton(partnerId, productId, price, quantity);
+		_warehouse.registerAcquisition(partnerId, productId, price, quantity);
 	}
 
 	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
@@ -161,6 +161,10 @@ public class WarehouseManager {
 	public void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
 	throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
 		_warehouse.saleAggProduct(partnerId, productId, deadline, quantity);
+	}
+
+	public void registerBreakdown(String partnerId, String productId, int quantity) throws UnknownProductCoreException, UnavailableProductCoreException{
+		_warehouse.registerBreakdown(partnerId, productId, quantity);
 	}
 
 	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {

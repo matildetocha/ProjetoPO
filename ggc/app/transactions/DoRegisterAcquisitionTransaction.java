@@ -28,9 +28,11 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
   public final void execute() throws CommandException {
     try {
       try {
-        _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
-        _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+        
+        _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
             integerField("quantity"));
+        _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
+            
       } catch (UnknownProductCoreException e) {
         addStringField("answer", Message.requestAddRecipe());
 
@@ -51,11 +53,14 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
           _receiver.createAggregateProduct(stringField("productId"), realField("alpha"), productIds, quantities,
               integerField("numberComponents"));
-          _receiver.registerAcquisiton(stringField("partnerId"), stringField("productId"), realField("price"),
+          _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
               integerField("quantity"));
+          _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
 
-        } else
+        } else{       
           _receiver.createSimpleProduct(stringField("productId"));
+          _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
+        }
       }
     } catch (DuplicateProductCoreException | UnknownProductCoreException e) {
       e.printStackTrace();

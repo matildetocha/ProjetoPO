@@ -24,6 +24,7 @@ public class Partner implements Serializable {
 	private Map<Integer, Transaction> _transactions;
 	private Map<Integer, Transaction> _acquisitions;
 	private Map<Integer, Transaction> _sales;
+	private Map<Integer, Transaction> _breakdowns;
 
 	Partner(String name, String id, String address) {
 		_name = name;
@@ -37,6 +38,7 @@ public class Partner implements Serializable {
 		_transactions = new HashMap<>();
 		_sales = new HashMap<>();
 		_acquisitions = new HashMap<>();
+		_breakdowns = new HashMap<>();
 	}
 
 	String getId() {
@@ -76,6 +78,10 @@ public class Partner implements Serializable {
 
 	void addAcquisition(int id, Transaction transaction) {
 		_acquisitions.put(id, transaction);
+	}
+
+	void addBreakdown(int id, Transaction transaction) {
+		_breakdowns.put(id,transaction);
 	}
 
 	void setStatus() {

@@ -3,9 +3,12 @@ package ggc.core;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class Product implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
@@ -116,7 +119,7 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @return the product's quantity
 	 */
-	int checkQuantity() {
+	int getQuantity() {
 		int res = 0;
 		for (Batch batch : _batches) {
 			res += batch.getQuantity();
@@ -139,6 +142,20 @@ public abstract class Product implements Serializable {
 		priceByFractions += lastBatchAmount * lastBatchPrice - (lastBatchAmount - amount) * lastBatchPrice;
 
 		return priceByFractions;
+	}
+//procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar o mais alto
+	double getMaxPriceHistory(Collection<Transaction> transactions){
+		double res = 0;
+		Iterator<Transaction> iterator = transactions.iterator();
+		while (iterator.hasNext()) {
+			Transaction transaction = iterator.next(); 
+			if(transaction.getProduct().equals(this)){
+				if(transaction.getBaseValue() > res)
+					res = transaction.getBaseValue();
+			}
+		}
+		
+		return res;
 	}
 
 	void updateBatchStock(List<Batch> batchesToSell, int amount) {
