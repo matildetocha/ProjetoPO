@@ -17,12 +17,11 @@ public class DoLookupPaymentsByPartner extends Command<WarehouseManager> {
   }
 
   @Override
-  public void execute() throws CommandException {   
+  public void execute() throws CommandException {
     try {
       _display.popup(_receiver.getPayedTransactionsByPartner(stringField("partnerId")));
     } catch (UnknownUserCoreException e) {
       throw new UnknownPartnerKeyException(stringField("partnerId"));
     }
   }
-
 }

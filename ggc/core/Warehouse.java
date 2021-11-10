@@ -213,7 +213,8 @@ public class Warehouse implements Serializable {
 	}
 
 	Collection<Transaction> getPayedTransactionsByPartner(String id) throws UnknownUserCoreException {
-		if (getPartner(id) != null);
+		if (getPartner(id) != null)
+			;
 		return Collections.unmodifiableCollection(_partners.get(id.toLowerCase()).getPayedTransactions());
 	}
 
@@ -311,11 +312,8 @@ public class Warehouse implements Serializable {
 		registerBatch(batch);
 	}
 
-	void registerBreakdown(String partnerId, String productId, int quantity)
-			throws UnknownProductCoreException, UnavailableProductCoreException {
+	void registerBreakdown(String partnerId, String productId, int quantity) throws UnavailableProductCoreException {
 		// parte 1 - cria transacao regista e consegue as variaveis todas
-		if (_products.get(productId.toLowerCase()) == null)
-			throw new UnknownProductCoreException();
 		if (_products.get(productId.toLowerCase()).getQuantity() < quantity)
 			throw new UnavailableProductCoreException();
 

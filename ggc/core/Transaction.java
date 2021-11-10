@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class Transaction implements Serializable{
 	private static final long serialVersionUID = 202109192006L;
 
-	static int _id = 0;
+	static int _id = 1;
 	private Date _paymentDate;
 	private double _baseValue;
 	private int _quantity;

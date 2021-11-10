@@ -9,7 +9,7 @@ import java.util.Map;
 
 import java.io.Serializable;
 
-public class Partner implements Serializable {
+public class Partner implements Serializable, Observer {
 	private static final long serialVersionUID = 202109192006L;
 
 	private String _id;
@@ -21,6 +21,7 @@ public class Partner implements Serializable {
 	private double _valueSales;
 	private double _valuePaidSales;
 	private List<Batch> _batches;
+	private List<Notification> _notifications;
 	private Map<Integer, Transaction> _transactions;
 	private Map<Integer, Transaction> _acquisitions;
 	private Map<Integer, Transaction> _sales;
@@ -32,9 +33,8 @@ public class Partner implements Serializable {
 		_address = address;
 		Status _statusType = new NormalStatus();
 		_status = _statusType.getName();
-		_points = 0;
-		_valueAcquisitions = _valueSales = _valuePaidSales = 0;
 		_batches = new ArrayList<>();
+		_notifications = new ArrayList<>();
 		_transactions = new HashMap<>();
 		_sales = new HashMap<>();
 		_acquisitions = new HashMap<>();
@@ -81,7 +81,7 @@ public class Partner implements Serializable {
 	}
 
 	void addBreakdown(int id, Transaction transaction) {
-		_breakdowns.put(id,transaction);
+		_breakdowns.put(id, transaction);
 	}
 
 	void setStatus() {
@@ -97,7 +97,7 @@ public class Partner implements Serializable {
 
 		else if (_points > 25000)
 			_status = statusElite.getName();
-	}
+	} // FIXME não sei se é preciso
 
 	String getStatus() {
 		return _status;
@@ -114,16 +114,20 @@ public class Partner implements Serializable {
 		else if (_status.equals(statusSelection.getName()))
 			return statusNormal;
 
-		else 
+		else
 			return statusElite;
 	}
 
-	void changeStatus(Status statusType){
+	void changeStatus(Status statusType) {
 		_status = statusType.getName();
-	}
+	} // FIXME acho que não precisamos disto
 
 	double getPoints() {
 		return _points;
+	}
+
+	void changePoints(double points) {
+		_points += points;
 	}
 
 	void changeValueAcquisitions(double price) {
@@ -142,8 +146,9 @@ public class Partner implements Serializable {
 		return getStatusType().getAmountToPay(currentDate, deadline, price, n);
 	}
 
-	void changePoints(double points) {
-		_points += points;
+	@Override
+	public void update(String notification) {
+		
 	}
 
 	@Override
@@ -155,6 +160,7 @@ public class Partner implements Serializable {
 	public boolean equals(Object obj) {
 		return obj instanceof Product && ((Partner) obj)._id.toLowerCase().equals(_id.toLowerCase());
 	}
+
 	@Override
 	public String toString() {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"

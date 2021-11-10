@@ -159,11 +159,12 @@ public class WarehouseManager {
 	}
 
 	public void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
-	throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
+			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
 		_warehouse.saleAggProduct(partnerId, productId, deadline, quantity);
 	}
 
-	public void registerBreakdown(String partnerId, String productId, int quantity) throws UnknownProductCoreException, UnavailableProductCoreException{
+	public void registerBreakdown(String partnerId, String productId, int quantity)
+			throws UnavailableProductCoreException {
 		_warehouse.registerBreakdown(partnerId, productId, quantity);
 	}
 

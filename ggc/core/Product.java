@@ -200,7 +200,7 @@ public abstract class Product implements Serializable {
 				res = batch.getPrice();
 		}
 		_maxPrice = res;
-		return res;
+		return _maxPrice;
 	}
 
 	Recipe getRecipe() {
@@ -211,9 +211,17 @@ public abstract class Product implements Serializable {
 		_recipe = recipe;
 	}
 
-	// void notifyAllObservers() {
-	// 	for (Observer observer : _observers) {
-	// 		observer.update();
-	// 	}
-	// }
+	void addObserver(Observer observer) {
+		_observers.add(observer);
+	}
+
+	void removeObserver(Observer observer) {
+		_observers.remove(observer);
+	}
+
+	void notifyAllObservers() {
+		for (Observer observer : _observers) {
+			observer.update("qualquer coisa, ainda nao sei");
+		}
+	}
 }
