@@ -148,12 +148,12 @@ public class Partner implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return _id.hashCode();
+		return _id.toLowerCase().hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Product && ((Partner) obj)._id.equals(_id);
+		return obj instanceof Product && ((Partner) obj)._id.toLowerCase().equals(_id.toLowerCase());
 	}
 	@Override
 	public String toString() {

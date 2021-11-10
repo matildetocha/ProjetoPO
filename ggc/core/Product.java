@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public abstract class Product implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
@@ -25,6 +23,8 @@ public abstract class Product implements Serializable {
 	private Recipe _recipe;
 
 	private int _quantity;
+
+	private List<Observer> _observers;
 
 	/**
 	 * Product's constructor that receives an Id and creates a new empty ArrayList
@@ -45,7 +45,7 @@ public abstract class Product implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return _id.hashCode();
+		return _id.toLowerCase().hashCode();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public abstract class Product implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Product && ((Product) obj)._id.equals(_id);
+		return obj instanceof Product && ((Product) obj)._id.toLowerCase().equals(_id.toLowerCase());
 	}
 
 	/**
@@ -129,15 +129,16 @@ public abstract class Product implements Serializable {
 		return res;
 	}
 
-	int getQuantity2(){
+	int getQuantity2() {
 		return _quantity;
 	}
 
-	void updateQuantity(int quantity){
+	void updateQuantity(int quantity) {
 		_quantity += quantity;
 	}
-	void updateMaxPrice(double price){
-		if(price > _maxPrice)
+
+	void updateMaxPrice(double price) {
+		if (price > _maxPrice)
 			_maxPrice = price;
 	}
 
@@ -147,8 +148,8 @@ public abstract class Product implements Serializable {
 		int lastBatchAmount;
 		int i;
 
-		lastBatchAmount = batchesToSell.get(-1).getQuantity();
-		lastBatchPrice = batchesToSell.get(-1).getPrice();
+		lastBatchAmount = batchesToSell.get(batchesToSell.size() - 1).getQuantity();
+		lastBatchPrice = batchesToSell.get(batchesToSell.size() - 1).getPrice();
 
 		for (i = 0; i < batchesToSell.size() - 1; i++)
 			priceByFractions += batchesToSell.get(i).getPrice() * batchesToSell.get(i).getQuantity();
@@ -157,14 +158,16 @@ public abstract class Product implements Serializable {
 
 		return priceByFractions;
 	}
-//procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar o mais alto
+
+	// procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar
+	// o mais alto
 	double getMaxPriceHistory(Collection<Transaction> transactions) {
 		double res = 0;
 		Iterator<Transaction> iterator = transactions.iterator();
 		while (iterator.hasNext()) {
-			Transaction transaction = iterator.next(); 
-			if(transaction.getProduct().equals(this)){
-				if(transaction.getBaseValue() > res)
+			Transaction transaction = iterator.next();
+			if (transaction.getProduct().equals(this)) {
+				if (transaction.getBaseValue() > res)
 					res = transaction.getBaseValue();
 			}
 		}
@@ -207,4 +210,10 @@ public abstract class Product implements Serializable {
 	void changeRecipe(Recipe recipe) {
 		_recipe = recipe;
 	}
+
+	// void notifyAllObservers() {
+	// 	for (Observer observer : _observers) {
+	// 		observer.update();
+	// 	}
+	// }
 }

@@ -1,5 +1,5 @@
 *** tests/A-12-01-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-12-01-M-ok.outhyp	2021-11-10 01:03:59.325883223 +0000
+--- tests/A-12-01-M-ok.outhyp	2021-11-10 20:03:23.076981716 +0000
 ***************
 *** 9,16 ****
   8 - Menu de Consultas
@@ -14,7 +14,7 @@
   8 - Menu de Consultas
   9 - Ver Saldo Global
   0 - Sair
-! Escolha uma opção: 0.0
+! Escolha uma opção: 0
   Menu Principal
   1 - Abrir
   2 - Guardar

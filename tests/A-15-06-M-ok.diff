@@ -1,23 +1,5 @@
 *** tests/A-15-06-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-15-06-M-ok.outhyp	2021-11-10 01:04:00.141877550 +0000
-***************
-*** 16,23 ****
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Quantidade: Registar desagregação: Operação inválida: Produto 'GARRAFA': pedido=6, existências=5
-! Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-  3 - Registar venda
---- 16,22 ----
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Quantidade: Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-  3 - Registar venda
+--- tests/A-15-06-M-ok.outhyp	2021-11-10 20:03:24.300984187 +0000
 ***************
 *** 41,47 ****
   3 - Visualizar lotes fornecidos por parceiro
@@ -27,7 +9,7 @@
   HIDROGENIO|200|5000
   ROLHA|2|500
   SAL|16|500
---- 40,46 ----
+--- 41,47 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
@@ -45,7 +27,7 @@
   1 - Visualizar
   2 - Registar desagregação
   3 - Registar venda
---- 69,75 ----
+--- 70,76 ----
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair

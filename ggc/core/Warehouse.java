@@ -86,7 +86,7 @@ public class Warehouse implements Serializable {
 	}
 
 	int getAvailableStock(String productId) {
-		Product product = _products.get(productId);
+		Product product = _products.get(productId.toLowerCase());
 		return product.getQuantity();
 	}
 
@@ -137,8 +137,7 @@ public class Warehouse implements Serializable {
 	}
 
 	boolean isAggregateProduct(String id) {
-		Product product = _products.get(id);
-		return product.getRecipe() != null;
+		return _products.get(id.toLowerCase()).getRecipe() != null;
 	}
 
 	List<Batch> getSortedBatches() {
@@ -213,25 +212,27 @@ public class Warehouse implements Serializable {
 		return _transactions.get(id);
 	}
 
-	Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
-		return _partners.get(partnerId).getPayedTransactions();
+	Collection<Transaction> getPayedTransactionsByPartner(String id) throws UnknownUserCoreException {
+		if (getPartner(id) != null);
+		return Collections.unmodifiableCollection(_partners.get(id.toLowerCase()).getPayedTransactions());
 	}
 
 	void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
 			throws UnavailableProductCoreException {
-		Product product = _products.get(productId);
+		Product product = _products.get(productId.toLowerCase());
 		Date deadlineDate = new Date(deadline);
 
 		if (product.getQuantity() < quantity) {
 			throw new UnavailableProductCoreException();
 		}
 
-		Partner partner = _partners.get(partnerId);
+		Partner partner = _partners.get(partnerId.toLowerCase());
 		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
 
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 
-		//vai receber uma nova batch com um preco mais alto possivelmente, e vai ter mais quantiodade
+		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
+		// mais quantiodade
 		product.updateMaxPrice(baseValue);
 		product.updateQuantity(quantity);
 
@@ -241,7 +242,7 @@ public class Warehouse implements Serializable {
 
 		partner.addSale(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
-		changeGlobalBalance(baseValue); //FIXME Changeglobalbalance para mudar mais tarde talvez
+		changeGlobalBalance(baseValue); // FIXME Changeglobalbalance para mudar mais tarde talvez
 
 		_transactions.put(_nextTransactionId, sale);
 
@@ -250,7 +251,7 @@ public class Warehouse implements Serializable {
 
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
 			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
-		AggregateProduct product = (AggregateProduct) _products.get(productId);
+		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
 		int amountToCreate = quantity - product.getQuantity();
 
 		for (Component c : product.getRecipe().getComponents()) {
@@ -273,10 +274,10 @@ public class Warehouse implements Serializable {
 			Product productToComp = getProduct(c.getProduct().getId());
 			List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
 
-			//muda a quantidade dos produtos
+			// muda a quantidade dos produtos
 			productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
 		}
-			//cria o produto agregado
+		// cria o produto agregado
 		Batch batch = new Batch(_products.get(productId), _partners.get(partnerId),
 				product.getRecipe().getPrice(amountToCreate), quantity);
 		registerBatch(batch);
@@ -286,13 +287,14 @@ public class Warehouse implements Serializable {
 
 	void registerAcquisition(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
-		if (_products.get(productId) == null)
+		if (_products.get(productId.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
 
-		Product product = _products.get(productId);
-		Partner partner = _partners.get(partnerId);
+		Product product = _products.get(productId.toLowerCase());
+		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = price * quantity;
-		//vai receber uma nova batch com um preco mais alto possivelmente, e vai ter mais quantiodade
+		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
+		// mais quantiodade
 		product.updateMaxPrice(price);
 		product.updateQuantity(quantity);
 
@@ -312,60 +314,63 @@ public class Warehouse implements Serializable {
 	void registerBreakdown(String partnerId, String productId, int quantity)
 			throws UnknownProductCoreException, UnavailableProductCoreException {
 		// parte 1 - cria transacao regista e consegue as variaveis todas
-		if (_products.get(productId) == null)
+		if (_products.get(productId.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
-		if(_products.get(productId).getQuantity() < quantity)
+		if (_products.get(productId.toLowerCase()).getQuantity() < quantity)
 			throw new UnavailableProductCoreException();
 
-		Product product = _products.get(productId);
-		Partner partner = _partners.get(partnerId);
+		Product product = _products.get(productId.toLowerCase());
+		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = product.getPrice() * quantity;
 
 		_nextTransactionId++;
 
-
-		//comecar a ir buscar os componentes PARTE 2
+		// comecar a ir buscar os componentes PARTE 2
 
 		List<Component> components = product.getRecipe().getComponents();
 		double paidValue = 0;
 		double price = 0;
 		double totalPrice = 0;
-		for(Component c : components){ //se nao houver lotes com o componente entao fica o preco mais alto do historico, se houver entao é o mais baixo
+		for (Component c : components) { // se nao houver lotes com o componente entao fica o preco mais alto do
+																			// historico, se houver entao é o mais baixo
 
 			List<Batch> batchesByLowestPrice = new ArrayList<>(c.getProduct().getBatches());
 			Collections.sort(batchesByLowestPrice, new BatchComparator());
 			Batch lowestPriceBatch = batchesByLowestPrice.get(0);
-			
-			if(lowestPriceBatch != null){ 
+
+			if (lowestPriceBatch != null) {
 				price = lowestPriceBatch.getPrice();
-			}
-			else{                            //se nao houver nenhuma lote com o componente vaise ao passado ver qual a transacao mais cara com o produto
+			} else { // se nao houver nenhuma lote com o componente vaise ao passado ver qual a
+								// transacao mais cara com o produto
 				price = c.getProduct().getMaxPriceHistory(getTransactions());
 			}
-			
-//			if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao esteja registado
 
-//				Product newProduct = new Product(c.getProduct().getId());
-//				registerProduct(newProduct);
+			// if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao
+			// esteja registado
 
-//			}
-			
-			Batch batch = new Batch(c.getProduct(), partner, price , (quantity * c.getQuantity())); // 5 das aguas vezes 2 do hidrogenio (assumir que o produto ja existe)
+			// Product newProduct = new Product(c.getProduct().getId());
+			// registerProduct(newProduct);
+
+			// }
+
+			Batch batch = new Batch(c.getProduct(), partner, price, (quantity * c.getQuantity())); // 5 das aguas vezes 2 do
+																																															// hidrogenio (assumir que
+																																															// o produto ja existe)
 			registerBatch(batch);
-			price *=  (quantity * c.getQuantity());
+			price *= (quantity * c.getQuantity());
 			totalPrice += price;
 		}
-		//fim do for
+		// fim do for
 
-
-		totalPrice *= (1+ product.getRecipe().getAlpha()); //basicamente somamos os precos de todos os componentes vezes a sua quantidade e multiplicamos pelo alpha
-		double difference = baseValue - totalPrice; //existe a diferenca entre a compra (o preco do produto agregado vezes quantidade)
-													// e a venda( soma dos precos dos componentes vezes o alpha)
-		if(difference < 0) {
+		totalPrice *= (1 + product.getRecipe().getAlpha()); // basicamente somamos os precos de todos os componentes vezes a
+																												// sua quantidade e multiplicamos pelo alpha
+		double difference = baseValue - totalPrice; // existe a diferenca entre a compra (o preco do produto agregado vezes
+																								// quantidade)
+		// e a venda( soma dos precos dos componentes vezes o alpha)
+		if (difference < 0) {
 			partner.changeValueSales(0);
 			paidValue = 0;
-		}
-		else{
+		} else {
 			partner.changeValueSales(difference);
 			changeGlobalBalance(difference);
 			paidValue = difference;

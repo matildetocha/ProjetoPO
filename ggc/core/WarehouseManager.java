@@ -99,7 +99,7 @@ public class WarehouseManager {
 	}
 
 	public boolean isAggregateProduct(String id) {
-		return isAggregateProduct(id);
+		return _warehouse.isAggregateProduct(id);
 	}
 
 	public List<Batch> getSortedBatches() {
@@ -140,7 +140,7 @@ public class WarehouseManager {
 		return _warehouse.getSortedBatchesUnderLimit(priceLimit);
 	}
 
-	public Collection<Transaction> getPayedTransactionsByPartner(String partnerId) {
+	public Collection<Transaction> getPayedTransactionsByPartner(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getPayedTransactionsByPartner(partnerId);
 	}
 
