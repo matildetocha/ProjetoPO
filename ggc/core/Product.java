@@ -24,6 +24,8 @@ public abstract class Product implements Serializable {
 
 	private Recipe _recipe;
 
+	private int _quantity;
+
 	/**
 	 * Product's constructor that receives an Id and creates a new empty ArrayList
 	 * of batches.
@@ -127,6 +129,18 @@ public abstract class Product implements Serializable {
 		return res;
 	}
 
+	int getQuantity2(){
+		return _quantity;
+	}
+
+	void updateQuantity(int quantity){
+		_quantity += quantity;
+	}
+	void updateMaxPrice(double price){
+		if(price > _maxPrice)
+			_maxPrice = price;
+	}
+
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
 		double priceByFractions = 0;
 		double lastBatchPrice;
@@ -144,7 +158,7 @@ public abstract class Product implements Serializable {
 		return priceByFractions;
 	}
 //procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar o mais alto
-	double getMaxPriceHistory(Collection<Transaction> transactions){
+	double getMaxPriceHistory(Collection<Transaction> transactions) {
 		double res = 0;
 		Iterator<Transaction> iterator = transactions.iterator();
 		while (iterator.hasNext()) {
@@ -154,7 +168,7 @@ public abstract class Product implements Serializable {
 					res = transaction.getBaseValue();
 			}
 		}
-		
+		_maxPrice = res;
 		return res;
 	}
 
@@ -163,6 +177,8 @@ public abstract class Product implements Serializable {
 
 		for (i = 0; i < batchesToSell.size(); i++) {
 			batchesToSell.get(i).changeQuantity(-(batchesToSell.get(i).getQuantity()));
+			// altera a quantidade do produto ja que subtraimos na batch
+			batchesToSell.get(i).getProduct().updateQuantity(-(batchesToSell.get(i).getQuantity()));
 			if (batchesToSell.get(i).getQuantity() == 0)
 				_batches.remove(batchesToSell.get(i));
 		}

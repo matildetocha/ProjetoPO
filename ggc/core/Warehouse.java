@@ -230,6 +230,11 @@ public class Warehouse implements Serializable {
 		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
 
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
+
+		//vai receber uma nova batch com um preco mais alto possivelmente, e vai ter mais quantiodade
+		product.updateMaxPrice(baseValue);
+		product.updateQuantity(quantity);
+
 		_nextTransactionId++;
 
 		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadlineDate);
@@ -268,9 +273,10 @@ public class Warehouse implements Serializable {
 			Product productToComp = getProduct(c.getProduct().getId());
 			List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
 
+			//muda a quantidade dos produtos
 			productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
 		}
-
+			//cria o produto agregado
 		Batch batch = new Batch(_products.get(productId), _partners.get(partnerId),
 				product.getRecipe().getPrice(amountToCreate), quantity);
 		registerBatch(batch);
@@ -285,7 +291,10 @@ public class Warehouse implements Serializable {
 
 		Product product = _products.get(productId);
 		Partner partner = _partners.get(partnerId);
-		double baseValue = product.getPrice() * quantity;
+		double baseValue = price * quantity;
+		//vai receber uma nova batch com um preco mais alto possivelmente, e vai ter mais quantiodade
+		product.updateMaxPrice(price);
+		product.updateQuantity(quantity);
 
 		_nextTransactionId++;
 
@@ -330,16 +339,16 @@ public class Warehouse implements Serializable {
 			if(lowestPriceBatch != null){ 
 				price = lowestPriceBatch.getPrice();
 			}
-			else{//se nao houver nenhuma lote com o componente vaise ao passado ver qual a transacao mais cara com o produto
+			else{                            //se nao houver nenhuma lote com o componente vaise ao passado ver qual a transacao mais cara com o produto
 				price = c.getProduct().getMaxPriceHistory(getTransactions());
 			}
 			
-			if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao esteja registado
+//			if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao esteja registado
 
-				Product newProduct = new Product(c.getProduct().getId());
-				registerProduct(newProduct);
+//				Product newProduct = new Product(c.getProduct().getId());
+//				registerProduct(newProduct);
 
-			}
+//			}
 			
 			Batch batch = new Batch(c.getProduct(), partner, price , (quantity * c.getQuantity())); // 5 das aguas vezes 2 do hidrogenio (assumir que o produto ja existe)
 			registerBatch(batch);
