@@ -3,6 +3,7 @@ package ggc.app.transactions;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 
@@ -34,9 +35,8 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
             
       } catch (UnknownProductCoreException e) {
-        addStringField("answer", Message.requestAddRecipe());
 
-        if (stringField("answer").equals("y")) {
+        if (Form.confirm(Message.requestAddRecipe()) ) {
           addIntegerField("numberComponents", Message.requestNumberOfComponents());
           addRealField("alpha", Message.requestAlpha());
 
@@ -59,6 +59,8 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
         } else{       
           _receiver.createSimpleProduct(stringField("productId"));
+          _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
+              integerField("quantity"));
           _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
         }
       }

@@ -32,6 +32,7 @@ public class DoRegisterSaleTransaction extends Command<WarehouseManager> {
       if (!_receiver.isAggregateProduct(stringField("productId")))
         throw new UnavailableProductException(stringField("productId"), integerField("quantity"),
             _receiver.getAvailableStock(stringField("productId")));
+            
       try {
         _receiver.saleAggProduct(stringField("partnerId"), stringField("productId"), integerField("deadline"),
             integerField("quantity"));
