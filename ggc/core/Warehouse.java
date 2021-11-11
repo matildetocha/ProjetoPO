@@ -205,7 +205,7 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(id) == null)
 			throw new UnknownTransactionCoreException();
 
-		if (_transactions.get(id) instanceof SaleByCredit && _transactions.get(id).isPaid()) {
+		if (_transactions.get(id) instanceof SaleByCredit) {
 			SaleByCredit sale = (SaleByCredit) _transactions.get(id);
 			sale.getAmountToPay(displayDate());
 		}
@@ -395,9 +395,9 @@ public class Warehouse implements Serializable {
 		int n;
 
 		if (product.getRecipe() == null) {
-			n = 3;
-		} else
 			n = 5;
+		} else
+			n = 3;
 		
 		price = partner.getAmountToPay(currentDate, deadline, price, n);
 
