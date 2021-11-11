@@ -1,22 +1,5 @@
-*** tests/A-13-02-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-13-02-M-ok.outhyp	2021-11-10 22:10:02.642779176 +0000
-***************
-*** 28,34 ****
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|1|0
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
---- 28,34 ----
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|1|-10
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
+*** tests/A-13-02-M-ok.out	2021-11-08 09:39:22.340214323 +0000
+--- tests/A-13-02-M-ok.outhyp	2021-11-11 03:34:26.411064864 +0000
 ***************
 *** 51,60 ****
   1 - Produtos com Preço Abaixo de Limite

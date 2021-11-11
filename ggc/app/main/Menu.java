@@ -17,7 +17,7 @@ public class Menu extends pt.tecnico.uilib.menus.Menu {
         new DoOpenMenu(Label.OPEN_MENU_PARTNERS, new ggc.app.partners.Menu(receiver)), //
         new DoOpenMenu(Label.OPEN_MENU_TRANSACTIONS, new ggc.app.transactions.Menu(receiver)), //
         new DoOpenMenu(Label.OPEN_MENU_LOOKUPS, new ggc.app.lookups.Menu(receiver)), //
-        new DoShowGlobalBalance(receiver) //
+        new DoShowAccountingBalance(receiver) //
     );
   }
 

@@ -129,17 +129,8 @@ public abstract class Product implements Serializable {
 		return res;
 	}
 
-	int getQuantity2() {
-		return _quantity;
-	}
-
 	void updateQuantity(int quantity) {
 		_quantity += quantity;
-	}
-
-	void updateMaxPrice(double price) {
-		if (price > _maxPrice)
-			_maxPrice = price;
 	}
 
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
@@ -159,6 +150,22 @@ public abstract class Product implements Serializable {
 		return priceByFractions;
 	}
 
+	/**
+	 * By checking every single batch that is associated to the product, the method
+	 * returns the highest price that the product has in a batch.
+	 * 
+	 * @return the maximum price of the product
+	 */
+	double updateMaxPrice() {
+		double res = 0;
+		for (Batch batch : _batches) {
+			if (batch.getPrice() > res)
+				res = batch.getPrice();
+		}
+		_maxPrice = res;
+		return _maxPrice;
+	}
+
 	// procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar
 	// o mais alto
 	double getMaxPriceHistory(Collection<Transaction> transactions) {
@@ -176,31 +183,22 @@ public abstract class Product implements Serializable {
 	}
 
 	void updateBatchStock(List<Batch> batchesToSell, int amount) {
-		int i;
+		int i, lastI = batchesToSell.size() - 1;
 
-		for (i = 0; i < batchesToSell.size(); i++) {
-			batchesToSell.get(i).changeQuantity(-(batchesToSell.get(i).getQuantity()));
-			// altera a quantidade do produto ja que subtraimos na batch
-			batchesToSell.get(i).getProduct().updateQuantity(-(batchesToSell.get(i).getQuantity()));
-			if (batchesToSell.get(i).getQuantity() == 0)
+		if (batchesToSell.size() != 1) {
+			for (i = 0; i < batchesToSell.size() - 1; i++) {
+				batchesToSell.get(i).changeQuantity(-batchesToSell.get(i).getQuantity());
+				// altera a quantidade do produto ja que subtraimos na batch
+				batchesToSell.get(i).getProduct().updateQuantity(-(batchesToSell.get(i).getQuantity()));
 				_batches.remove(batchesToSell.get(i));
+				amount -= batchesToSell.get(i).getQuantity();
+			}
 		}
-	}
 
-	/**
-	 * By checking every single batch that is associated to the product, the method
-	 * returns the highest price that the product has in a batch.
-	 * 
-	 * @return the maximum price of the product
-	 */
-	double getPrice() {
-		double res = 0;
-		for (Batch batch : _batches) {
-			if (batch.getPrice() > res)
-				res = batch.getPrice();
-		}
-		_maxPrice = res;
-		return _maxPrice;
+		batchesToSell.get(lastI).changeQuantity(-amount);
+		batchesToSell.get(lastI).getProduct().updateQuantity(-amount);
+		if (batchesToSell.get(lastI).getQuantity() == 0)
+			_batches.remove(lastI);
 	}
 
 	Recipe getRecipe() {

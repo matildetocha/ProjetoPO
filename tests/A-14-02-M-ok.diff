@@ -1,20 +1,19 @@
-*** tests/A-14-02-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-14-02-M-ok.outhyp	2021-11-10 22:10:02.854791030 +0000
+*** tests/A-14-02-M-ok.out	2021-11-08 09:39:22.340214323 +0000
+--- tests/A-14-02-M-ok.outhyp	2021-11-11 03:34:26.695070495 +0000
 ***************
-*** 48,55 ****
+*** 48,54 ****
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
 ! Escolha uma opção: Identificador da transacção: COMPRA|0|M1|SAL|10|100|0
-! Gestão de Transacções
+  Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
-  3 - Registar venda
 --- 48,54 ----
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador da transacção: Gestão de Transacções
+! Escolha uma opção: Identificador da transacção: COMPRA|1|M1|SAL|10|100|0
+  Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
-  3 - Registar venda

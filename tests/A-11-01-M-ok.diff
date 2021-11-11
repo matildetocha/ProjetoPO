@@ -1,87 +1,19 @@
-*** tests/A-11-01-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-11-01-M-ok.outhyp	2021-11-10 22:10:01.782731102 +0000
+*** tests/A-11-01-M-ok.out	2021-11-08 09:39:22.340214323 +0000
+--- tests/A-11-01-M-ok.outhyp	2021-11-11 03:34:25.203040907 +0000
 ***************
-*** 28,34 ****
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|1|0
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
---- 28,34 ----
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|1|-10
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
-***************
-*** 61,76 ****
+*** 61,67 ****
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
 ! Escolha uma opção: Identificador da transacção: VENDA|0|M1|SAL|10|10|10|2
-! Gestão de Transacções
+  Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
-  3 - Registar venda
+--- 61,67 ----
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador da transacção: COMPRA|1|M1|SAL|10|1000|0
-! Gestão de Transacções
+! Escolha uma opção: Identificador da transacção: VENDA|1|M1|SAL|10|10|9|2
+  Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
-  3 - Registar venda
---- 61,74 ----
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-  3 - Registar venda
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-  3 - Registar venda
-***************
-*** 96,102 ****
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|100|10
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
---- 94,100 ----
-  0 - Sair
-  Escolha uma opção: HIDROGENIO|2|5000
-  ROLHA|2|500
-! SAL|1000|0
-  VIDRO|1|500
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
-***************
-*** 104,110 ****
-  3 - Visualizar lotes fornecidos por parceiro
-  4 - Visualizar lotes de um dado produto
-  0 - Sair
-! Escolha uma opção: Identificador do produto: SAL|M1|100|10
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
-  2 - Visualizar todos os lotes
---- 102,109 ----
-  3 - Visualizar lotes fornecidos por parceiro
-  4 - Visualizar lotes de um dado produto
-  0 - Sair
-! Escolha uma opção: Identificador do produto: SAL|S1|1|-10
-! SAL|M1|1000|10
-  Gestão de Produtos
-  1 - Visualizar todos os produtos
-  2 - Visualizar todos os lotes

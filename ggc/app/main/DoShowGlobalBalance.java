@@ -7,15 +7,15 @@ import ggc.core.WarehouseManager;
 /**
  * Show global balance.
  */
-class DoShowGlobalBalance extends Command<WarehouseManager> {
+class DoShowAccountingBalance extends Command<WarehouseManager> {
 
-  DoShowGlobalBalance(WarehouseManager receiver) {
+  DoShowAccountingBalance(WarehouseManager receiver) {
     super(Label.SHOW_BALANCE, receiver);
   }
 
   @Override
   public final void execute() throws CommandException {
-    _display.popup(_receiver.getGlobalBalance());
+    _display.popup(Message.currentBalance(_receiver.getAvailableBalance(), _receiver.getAccountingBalance()));
   }
   
 }

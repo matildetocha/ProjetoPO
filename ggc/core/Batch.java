@@ -57,7 +57,7 @@ public class Batch implements Serializable {
 	}
 
 	void changeQuantity(int quantity) {
-		_quantity = quantity;
+		_quantity += quantity;
 	}
 
 	/**

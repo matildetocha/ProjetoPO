@@ -32,7 +32,6 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
         
         _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
             integerField("quantity"));
-        _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
             
       } catch (UnknownProductCoreException e) {
 
@@ -55,13 +54,11 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
               integerField("numberComponents"));
           _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
               integerField("quantity"));
-          _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
 
         } else{       
           _receiver.createSimpleProduct(stringField("productId"));
           _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
               integerField("quantity"));
-          _receiver.changeGlobalBalance(-(realField("price") * integerField("quantity")));
         }
       }
     } catch (DuplicateProductCoreException | UnknownProductCoreException e) {

@@ -87,6 +87,8 @@ public class Parser {
 
       Batch batch = new Batch(product, partner, price, stock);
       _store.registerBatch(batch);
+
+      product.updateMaxPrice();
     } catch (UnknownUserCoreException | UnknownProductCoreException | DuplicateProductCoreException e) {
       throw new BadEntryException("", e);
     }
@@ -128,6 +130,8 @@ public class Parser {
 
       Batch batch = new Batch(product, partner, price, stock);
       _store.registerBatch(batch);
+
+      product.updateMaxPrice();
     } catch (UnknownUserCoreException | UnknownProductCoreException | DuplicateProductCoreException e) {
       throw new BadEntryException("", e);
     }

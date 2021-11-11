@@ -38,12 +38,12 @@ public class WarehouseManager {
 		return _warehouse;
 	}
 
-	public int getGlobalBalance() {
-		return _warehouse.getGlobalBalance();
+	public int getAccountingBalance() {
+		return _warehouse.getAccountingBalance();
 	}
 
-	public void changeGlobalBalance(double price) {
-		_warehouse.changeGlobalBalance(price);
+	public int getAvailableBalance() {
+		return _warehouse.getAvailableBalance();
 	}
 
 	public int displayDate() {

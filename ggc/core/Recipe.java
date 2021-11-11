@@ -51,8 +51,10 @@ public class Recipe implements Serializable {
   public String toString() {
     String string = "";
     for (Component component : _components) {
-      string += component;
+      string += component + "#";
     }
+
+    string = string.substring(0, string.length() - 1);
     return string;
   }
 }

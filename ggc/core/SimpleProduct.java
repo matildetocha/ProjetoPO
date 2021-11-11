@@ -8,6 +8,6 @@ class SimpleProduct extends Product {
 
 	@Override
 	public String toString() {
-		return getId() + "|" + Math.round(getPrice()) + "|" + getQuantity();
+		return getId() + "|" + Math.round(getMaxPrice()) + "|" + getQuantity();
 	}
 }

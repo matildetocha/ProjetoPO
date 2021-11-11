@@ -28,7 +28,7 @@ Escolha uma opção: Gestão de Produtos
 0 - Sair
 Escolha uma opção: HIDROGENIO|2|5000
 ROLHA|2|500
-SAL|1|-10
+SAL|1|0
 VIDRO|1|500
 Gestão de Produtos
 1 - Visualizar todos os produtos

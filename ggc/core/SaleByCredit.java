@@ -13,9 +13,9 @@ public class SaleByCredit extends Sale {
 		return _deadline;
 	}
 
-	// double getAmountPaid() {
-	// return _amountPaid;
-	// }
+	double getAmountPaid() {
+		return _amountPaid;
+	}
 
 	void getAmountToPay(int days) {
 		Partner partner = getPartner();
@@ -23,18 +23,21 @@ public class SaleByCredit extends Sale {
 		Product product = getProduct();
 		int n = 0;
 
-		if (product.getRecipe() == null) n = 3;
+		if (product.getRecipe() == null)
+			n = 3;
 
-		else n = 5;
+		else
+			n = 5;
 		_amountPaid = partner.getStatusType().getAmountToPay(currentDate, _deadline, getBaseValue(), n);
 	}
 
+	@Override
 	public String toString() {
 		if (isPaid())
-			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + _amountPaid + "|"
-					+ _deadline + "|" + getPaymentDate();
+			return "VENDA|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + getQuantity() + "|"
+					+ Math.round(getBaseValue()) + "|" + Math.round(_amountPaid) + "|" + _deadline.now() + "|" + getPaymentDate();
 		else
-			return "VENDA|" + getId() + "|" + getId() + "|" + getQuantity() + "|" + getBaseValue() + "|" + _amountPaid + "|"
-					+ _deadline;
+			return "VENDA|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + getQuantity() + "|"
+					+ Math.round(getBaseValue()) + "|" + Math.round(_amountPaid) + "|" + _deadline.now();
 	}
 }

@@ -52,14 +52,7 @@ Escolha uma opção: Gestão de Transacções
 4 - Registar compra
 5 - Receber pagamento de venda
 0 - Sair
-Escolha uma opção: Identificador da transacção: Gestão de Transacções
-1 - Visualizar
-2 - Registar desagregação
-3 - Registar venda
-4 - Registar compra
-5 - Receber pagamento de venda
-0 - Sair
-Escolha uma opção: Identificador da transacção: Receber pagamento de venda: Operação inválida: A transacção '0' não existe.
+Escolha uma opção: Identificador da transacção: VENDA|0|S1|SAL|5|25|23|10
 Gestão de Transacções
 1 - Visualizar
 2 - Registar desagregação
@@ -68,6 +61,14 @@ Gestão de Transacções
 5 - Receber pagamento de venda
 0 - Sair
 Escolha uma opção: Identificador da transacção: Gestão de Transacções
+1 - Visualizar
+2 - Registar desagregação
+3 - Registar venda
+4 - Registar compra
+5 - Receber pagamento de venda
+0 - Sair
+Escolha uma opção: Identificador da transacção: VENDA|0|S1|SAL|5|25|23|10|null
+Gestão de Transacções
 1 - Visualizar
 2 - Registar desagregação
 3 - Registar venda
@@ -93,7 +94,7 @@ Escolha uma opção: Gestão de Parceiros
 5 - Mostrar compras com parceiro
 6 - Mostrar vendas (e desagregações) com parceiro
 0 - Sair
-Escolha uma opção: Identificador do parceiro: S1|Toshiba|Tokyo, Japan|NORMAL|0|0|25|0
+Escolha uma opção: Identificador do parceiro: S1|Toshiba|Tokyo, Japan|NORMAL|0|0|25|65
 Gestão de Parceiros
 1 - Mostrar parceiro
 2 - Mostrar parceiros

@@ -48,7 +48,8 @@ Escolha uma opção: Gestão de Transacções
 4 - Registar compra
 5 - Receber pagamento de venda
 0 - Sair
-Escolha uma opção: Identificador da transacção: Gestão de Transacções
+Escolha uma opção: Identificador da transacção: COMPRA|1|M1|SAL|10|100|0
+Gestão de Transacções
 1 - Visualizar
 2 - Registar desagregação
 3 - Registar venda

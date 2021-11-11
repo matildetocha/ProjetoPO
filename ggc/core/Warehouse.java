@@ -34,14 +34,14 @@ public class Warehouse implements Serializable {
 	private Map<String, Partner> _partners;
 	private Map<String, Product> _products;
 	private Map<Integer, Transaction> _transactions;
-	private static double _globalBalance;
+	private static double _accountingBalance;
+	private static double _availableBalance;
 
 	Warehouse() {
 		_date = new Date(0);
 		_partners = new HashMap<>();
 		_products = new HashMap<>();
 		_transactions = new HashMap<>();
-		_globalBalance = 0;
 	}
 
 	int displayDate() {
@@ -52,12 +52,12 @@ public class Warehouse implements Serializable {
 		return _date.add(days);
 	}
 
-	int getGlobalBalance() {
-		return (int) Math.round(_globalBalance);
+	int getAccountingBalance() {
+		return (int) Math.round(_accountingBalance);
 	}
 
-	void changeGlobalBalance(double price) {
-		_globalBalance += price;
+	int getAvailableBalance(){
+		return (int) Math.round(_availableBalance);
 	}
 
 	Collection<Partner> getPartners() {
@@ -205,7 +205,7 @@ public class Warehouse implements Serializable {
 		if (_transactions.get(id) == null)
 			throw new UnknownTransactionCoreException();
 
-		else if (_transactions.get(id) instanceof SaleByCredit) {
+		if (_transactions.get(id) instanceof SaleByCredit) {
 			SaleByCredit sale = (SaleByCredit) _transactions.get(id);
 			sale.getAmountToPay(displayDate());
 		}
@@ -234,20 +234,17 @@ public class Warehouse implements Serializable {
 
 		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
 		// mais quantiodade
-		product.updateMaxPrice(baseValue);
-		product.updateQuantity(quantity);
-
-		_nextTransactionId++;
 
 		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadlineDate);
 
 		partner.addSale(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
-		changeGlobalBalance(baseValue); // FIXME Changeglobalbalance para mudar mais tarde talvez
 
 		_transactions.put(_nextTransactionId, sale);
+		_nextTransactionId++;
 
 		product.updateBatchStock(batchesToSell, quantity);
+		product.updateQuantity(quantity);
 	}
 
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
@@ -296,20 +293,25 @@ public class Warehouse implements Serializable {
 		double baseValue = price * quantity;
 		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
 		// mais quantiodade
-		product.updateMaxPrice(price);
-		product.updateQuantity(quantity);
-
-		_nextTransactionId++;
 
 		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity);
 
+		acquisition.setPaymentDate(_date);
+		
 		partner.addAcquisition(_nextTransactionId, acquisition);
 		partner.changeValueAcquisitions(baseValue);
 
 		_transactions.put(_nextTransactionId, acquisition);
+		_nextTransactionId++;
 
-		Batch batch = new Batch(product, partner, baseValue, quantity);
+		Batch batch = new Batch(product, partner, price, quantity);
 		registerBatch(batch);
+
+		product.updateMaxPrice();
+		product.updateQuantity(quantity);
+
+		_availableBalance -= price;
+		_accountingBalance -= price;
 	}
 
 	void registerBreakdown(String partnerId, String productId, int quantity) throws UnavailableProductCoreException {
@@ -319,9 +321,7 @@ public class Warehouse implements Serializable {
 
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
-		double baseValue = product.getPrice() * quantity;
-
-		_nextTransactionId++;
+		double baseValue = product.getMaxPrice() * quantity;
 
 		// comecar a ir buscar os componentes PARTE 2
 
@@ -370,7 +370,7 @@ public class Warehouse implements Serializable {
 			paidValue = 0;
 		} else {
 			partner.changeValueSales(difference);
-			changeGlobalBalance(difference);
+			_accountingBalance += difference;
 			paidValue = difference;
 		}
 
@@ -378,7 +378,7 @@ public class Warehouse implements Serializable {
 
 		partner.addBreakdown(_nextTransactionId, breakdown);
 		_transactions.put(_nextTransactionId, breakdown);
-
+		_nextTransactionId++;
 	}
 
 	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
@@ -401,6 +401,7 @@ public class Warehouse implements Serializable {
 
 		price = partner.getAmountToPay(currentDate, deadline, price, n);
 
+		_availableBalance += price;
 		unpaidTransaction.pay();
 		partner.changeValuePaidSales(price);
 		partner.changePoints(status.getPoints(partner, currentDate, deadline, price, n));

@@ -8,6 +8,6 @@ public class AggregateProduct extends Product {
 
     @Override
     public String toString() {
-        return super.getId() + "|" + Math.round(getPrice()) + "|" + getQuantity() + "|" + getRecipe();
+        return super.getId() + "|" + Math.round(getMaxPrice()) + "|" + getQuantity() + "|" + getRecipe();
     }
 }
