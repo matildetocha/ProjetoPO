@@ -56,6 +56,17 @@ public class Warehouse implements Serializable {
 		return (int) Math.round(_accountingBalance);
 	}
 
+	void updateAccountingBalance() {
+		for(Partner partner : _partners){
+			for(Transaction transaction : {
+
+			}
+			
+			
+		
+		}
+	}
+
 	int getAvailableBalance(){
 		return (int) Math.round(_availableBalance);
 	}
@@ -200,6 +211,22 @@ public class Warehouse implements Serializable {
 	Collection<Transaction> getTransactions() {
 		return Collections.unmodifiableCollection(_transactions.values());
 	}
+
+	Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException{
+		if(_partners.get(partnerId.toLowerCase()) == null){
+			throw new UnknownUserCoreException();
+		}
+		return _partners.get(partnerId.toLowerCase()).getAcquistions();
+	}
+
+
+	Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException{
+		if(_partners.get(partnerId.toLowerCase()) == null){
+			throw new UnknownUserCoreException();
+		}
+		return _partners.get(partnerId.toLowerCase()).getSales();
+	}
+
 
 	Transaction getTransaction(int id) throws UnknownTransactionCoreException {
 		if (_transactions.get(id) == null)
@@ -377,6 +404,7 @@ public class Warehouse implements Serializable {
 		Transaction breakdown = new BreakdownSale(_nextTransactionId, product, quantity, partner, difference, paidValue);
 
 		partner.addBreakdown(_nextTransactionId, breakdown);
+		partner.addSale(_nextTransactionId, breakdown);
 		_transactions.put(_nextTransactionId, breakdown);
 		_nextTransactionId++;
 	}

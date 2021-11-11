@@ -1,16 +1,16 @@
-*** tests/A-10-02-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-10-02-M-ok.outhyp	2021-11-11 13:41:30.037084606 +0000
+*** tests/A-18-02-M-ok.out	2021-11-10 23:23:51.000000000 +0000
+--- tests/A-18-02-M-ok.outhyp	2021-11-11 13:41:32.853083334 +0000
 ***************
-*** 17,24 ****
+*** 71,78 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Activa/desactivar notificações de um produto: Operação inválida: O produto 'DEDE' não existe.
+! Escolha uma opção: Identificador do parceiro: VENDA|0|S1|SAL|10|1000|1000|10
 ! Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
---- 17,23 ----
+--- 71,77 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
@@ -19,32 +19,29 @@
   2 - Mostrar parceiros
   3 - Registar parceiro
 ***************
-*** 26,33 ****
+*** 80,86 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Activa/desactivar notificações de um produto: Operação inválida: O parceiro 'MM1' não existe.
-! Gestão de Parceiros
+! Escolha uma opção: Identificador do parceiro: Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
---- 25,33 ----
+--- 79,86 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Número inválido!
 ! Escolha uma opção: Número inválido!
 ! Escolha uma opção: Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
 ***************
-*** 35,40 ****
---- 35,42 ----
+*** 88,93 ****
+--- 88,94 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-+ Escolha uma opção: Número inválido!
 + Escolha uma opção: Número inválido!
   Escolha uma opção: Menu Principal
   1 - Abrir

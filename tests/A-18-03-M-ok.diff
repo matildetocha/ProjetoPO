@@ -1,16 +1,15 @@
-*** tests/A-10-02-M-ok.out	2021-11-07 16:04:59.000000000 +0000
---- tests/A-10-02-M-ok.outhyp	2021-11-11 13:41:30.037084606 +0000
+*** tests/A-18-03-M-ok.out	2021-11-10 23:23:51.000000000 +0000
+--- tests/A-18-03-M-ok.outhyp	2021-11-11 13:41:32.921083314 +0000
 ***************
-*** 17,24 ****
+*** 42,48 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Activa/desactivar notificações de um produto: Operação inválida: O produto 'DEDE' não existe.
-! Gestão de Parceiros
+! Escolha uma opção: Identificador do parceiro: Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
---- 17,23 ----
+--- 42,48 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
@@ -19,32 +18,30 @@
   2 - Mostrar parceiros
   3 - Registar parceiro
 ***************
-*** 26,33 ****
+*** 50,57 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Identificador do produto: Activa/desactivar notificações de um produto: Operação inválida: O parceiro 'MM1' não existe.
+! Escolha uma opção: Identificador do parceiro: DESAGREGAÇÃO|0|M2|GARRAFA|5|30|30|0|ROLHA:5:10#VIDRO:10:10
 ! Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
---- 25,33 ----
+--- 50,57 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Número inválido!
 ! Escolha uma opção: Número inválido!
 ! Escolha uma opção: Gestão de Parceiros
   1 - Mostrar parceiro
   2 - Mostrar parceiros
   3 - Registar parceiro
 ***************
-*** 35,40 ****
---- 35,42 ----
+*** 59,64 ****
+--- 59,65 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-+ Escolha uma opção: Número inválido!
 + Escolha uma opção: Número inválido!
   Escolha uma opção: Menu Principal
   1 - Abrir

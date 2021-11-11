@@ -59,6 +59,11 @@ public class Partner implements Serializable, Observer {
 
 		return Collections.unmodifiableCollection(_payedTransactions.values());
 	}
+	
+	Collection<Transaction> getTransactions() {
+
+		return Collections.unmodifiableCollection(_transactions.values());
+	}
 
 	void addBatch(Batch batch) {
 		_batches.add(batch);
@@ -144,6 +149,10 @@ public class Partner implements Serializable, Observer {
 
 	double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
 		return getStatusType().getAmountToPay(currentDate, deadline, price, n);
+	}
+
+	void addNotification(Notification notification) {
+		_notifications.add(notification);
 	}
 
 	@Override

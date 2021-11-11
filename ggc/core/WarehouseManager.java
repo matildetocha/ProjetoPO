@@ -172,6 +172,14 @@ public class WarehouseManager {
 		_warehouse.payTransaction(transactionId);
 	}
 
+	public Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException{
+		return _warehouse.getPartnerAcquistions(partnerId);
+	}
+
+	public Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException{
+		return _warehouse.getPartnerSales(partnerId);
+	}
+
 	/**
 	 * @@throws IOException
 	 * @@throws FileNotFoundException
