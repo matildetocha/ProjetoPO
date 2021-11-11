@@ -25,6 +25,4 @@ class DoShowPartnerAcquisitions extends Command<WarehouseManager> {
       throw new UnknownPartnerKeyException(stringField("partnerId"));
     }
   }
-  }
-
-
+}

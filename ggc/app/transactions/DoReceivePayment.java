@@ -22,7 +22,7 @@ public class DoReceivePayment extends Command<WarehouseManager> {
   public final void execute() throws CommandException {
     try {
       //_receiver.getTransaction(integerField("TransactionId"));
-      _receiver.payTransaction(integerField("TransactionId")); //.pay();
+      _receiver.payTransaction(integerField("TransactionId")); 
     } catch (UnknownTransactionCoreException e) {
       throw new UnknownTransactionKeyException(integerField("TransactionId"));
     }

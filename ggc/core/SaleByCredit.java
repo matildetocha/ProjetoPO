@@ -39,7 +39,7 @@ public class SaleByCredit extends Sale {
 	public String toString() {
 		if (isPaid())
 			return "VENDA|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + getQuantity() + "|"
-					+ Math.round(getBaseValue()) + "|" + Math.round(_amountPaid) + "|" + _deadline.now() + "|" + getPaymentDate();
+					+ Math.round(getBaseValue()) + "|" + Math.round(_amountPaid) + "|" + _deadline.now() + "|" + getPaymentDate().now();
 		else
 			return "VENDA|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + getQuantity() + "|"
 					+ Math.round(getBaseValue()) + "|" + Math.round(_amountPaid) + "|" + _deadline.now();

@@ -26,7 +26,6 @@ class DoRegisterPartner extends Command<WarehouseManager> {
     try {
       _receiver.registerPartner(stringField("name"), stringField("id"), stringField("address"));
     } catch (DuplicatePartnerCoreException e) {
-
       throw new DuplicatePartnerKeyException(stringField("id"));
     }
   }

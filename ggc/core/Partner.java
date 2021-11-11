@@ -59,7 +59,7 @@ public class Partner implements Serializable, Observer {
 
 		return Collections.unmodifiableCollection(_payedTransactions.values());
 	}
-	
+
 	Collection<Transaction> getTransactions() {
 
 		return Collections.unmodifiableCollection(_transactions.values());
@@ -87,6 +87,10 @@ public class Partner implements Serializable, Observer {
 
 	void addBreakdown(int id, Transaction transaction) {
 		_breakdowns.put(id, transaction);
+	}
+
+	void addTransaction(int id, Transaction transaction) {
+		_transactions.put(id, transaction);
 	}
 
 	void setStatus() {
@@ -151,13 +155,13 @@ public class Partner implements Serializable, Observer {
 		return getStatusType().getAmountToPay(currentDate, deadline, price, n);
 	}
 
-	void addNotification(Notification notification) {
-		_notifications.add(notification);
+	List<Notification> getNotifications() {
+		return Collections.unmodifiableList(_notifications);
 	}
 
 	@Override
-	public void update(String notification) {
-		
+	public void update(Notification notification) {
+		_notifications.add(notification);
 	}
 
 	@Override

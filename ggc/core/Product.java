@@ -24,7 +24,7 @@ public abstract class Product implements Serializable {
 
 	private int _quantity;
 
-	private List<Observer> _observers;
+	private List<Partner> _observers;
 
 	/**
 	 * Product's constructor that receives an Id and creates a new empty ArrayList
@@ -35,6 +35,7 @@ public abstract class Product implements Serializable {
 	Product(String id) {
 		_id = id;
 		_batches = new ArrayList<>();
+		_observers = new ArrayList<>();
 	}
 
 	/**
@@ -156,30 +157,25 @@ public abstract class Product implements Serializable {
 	 * 
 	 * @return the maximum price of the product
 	 */
-	double updateMaxPrice() {
+	void updateMaxPrice() {
 		double res = 0;
-		for (Batch batch : _batches) {
-			if (batch.getPrice() > res)
-				res = batch.getPrice();
+
+		for (Batch b : _batches) {
+			if (b.getPrice() > res)
+				res = b.getPrice();
 		}
 		_maxPrice = res;
-		return _maxPrice;
 	}
 
-	// procura em todas as transacoes pelo produto que quer, ve o preco e vai buscar
-	// o mais alto
-	double getMaxPriceHistory(Collection<Transaction> transactions) {
-		double res = 0;
-		Iterator<Transaction> iterator = transactions.iterator();
-		while (iterator.hasNext()) {
-			Transaction transaction = iterator.next();
-			if (transaction.getProduct().equals(this)) {
-				if (transaction.getBaseValue() > res)
-					res = transaction.getBaseValue();
-			}
+	double getMinPrice() {
+		double minPrice = _maxPrice;
+
+		for (Batch b : _batches) {
+			if (b.getPrice() < minPrice) 
+				minPrice = b.getPrice();
 		}
-		_maxPrice = res;
-		return res;
+
+		return minPrice;
 	}
 
 	void updateBatchStock(List<Batch> batchesToSell, int amount) {
@@ -209,17 +205,25 @@ public abstract class Product implements Serializable {
 		_recipe = recipe;
 	}
 
-	void addObserver(Observer observer) {
-		_observers.add(observer);
+	List<Partner> getObservers() {
+		return _observers;
+	}
+
+	void addObserver(Partner partner) {
+		_observers.add(partner);
 	}
 
 	void removeObserver(Observer observer) {
 		_observers.remove(observer);
 	}
 
-	void notifyAllObservers() {
-		for (Observer observer : _observers) {
-			observer.update("qualquer coisa, ainda nao sei");
+	void sendNotification(Notification notification, Partner partner) {
+		partner.update(notification);
+	} //FIXME deve ser lixo, temos que verificar
+
+	void notifyAllObservers(Notification notification) {
+		for (Partner partner : _observers) {
+			partner.update(notification);
 		}
 	}
 }

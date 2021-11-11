@@ -180,6 +180,22 @@ public class WarehouseManager {
 		return _warehouse.getPartnerSales(partnerId);
 	}
 
+	public List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
+		return _warehouse.getNotifications(partnerId);
+	}
+
+	public void sendNewNotification(Product product) {
+		_warehouse.sendNewNotification(product);
+	}
+
+	public void sendBargainNotification(Product product) {
+		_warehouse.sendBargainNotification(product);
+	}
+
+	public void toogleProductNotifications(String partnerId, String productId) throws UnknownUserCoreException, UnknownProductCoreException {
+		_warehouse.toogleProductNotifications(partnerId, productId);
+	}
+
 	/**
 	 * @@throws IOException
 	 * @@throws FileNotFoundException
