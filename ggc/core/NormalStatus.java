@@ -27,7 +27,7 @@ public class NormalStatus implements Status {
     double points = 0;
     int difference = currentDate.difference(deadline);
 
-    if (difference <= n)
+    if (difference > 0)
       points += 10 * price;
 
     else 

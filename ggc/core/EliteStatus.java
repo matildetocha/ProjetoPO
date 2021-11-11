@@ -25,7 +25,7 @@ public class EliteStatus implements Status {
     if (difference <= n)
       points += 10 * price;
 
-    else if (difference >= 15) {
+    else if (-difference >= 15) {
       points *= 0.25;
       partner.changeStatus(new SelectionStatus());
     }

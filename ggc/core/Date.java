@@ -22,7 +22,7 @@ public class Date implements Serializable {
 	}
 
 	int difference(Date other) {
-		return Math.abs(other.now() - now());
+		return other.now() - now();
 	}
 
 	int now() {
