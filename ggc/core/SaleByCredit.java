@@ -17,6 +17,10 @@ public class SaleByCredit extends Sale {
 		return _amountPaid;
 	}
 
+	void setAmountPaid(double amountPaid){
+		_amountPaid = amountPaid;
+	}
+
 	void getAmountToPay(int days) {
 		Partner partner = getPartner();
 		Date currentDate = new Date(days);
