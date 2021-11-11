@@ -30,7 +30,7 @@ public class Warehouse implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
 
 	private Date _date;
-	private int _nextTransactionId;
+	private int _nextTransactionId = 0;
 	private Map<String, Partner> _partners;
 	private Map<String, Product> _products;
 	private Map<Integer, Transaction> _transactions;
@@ -53,18 +53,21 @@ public class Warehouse implements Serializable {
 	}
 
 	int getAccountingBalance() {
-		return (int) Math.round(_accountingBalance);
+
+		return (int) Math.round(_accountingBalance + getUnpaidTransactionsBalance()) ;
 	}
 
-	void updateAccountingBalance() {
-		for(Partner partner : _partners){
-			for(Transaction transaction : {
+	double getUnpaidTransactionsBalance() {
+		double res = 0;
+		for(Transaction transaction : getTransactions()){
 
+				if( !transaction.isPaid()){
+					((SaleByCredit) transaction).getAmountToPay(_date.now());
+					res += ((SaleByCredit) transaction).getAmountPaid();
+				}
+				
 			}
-			
-			
-		
-		}
+		return res;
 	}
 
 	int getAvailableBalance(){
@@ -337,8 +340,8 @@ public class Warehouse implements Serializable {
 		product.updateMaxPrice();
 		product.updateQuantity(quantity);
 
-		_availableBalance -= price;
-		_accountingBalance -= price;
+		_availableBalance -= baseValue;
+		_accountingBalance -= baseValue;
 	}
 
 	void registerBreakdown(String partnerId, String productId, int quantity) throws UnavailableProductCoreException {
@@ -397,7 +400,7 @@ public class Warehouse implements Serializable {
 			paidValue = 0;
 		} else {
 			partner.changeValueSales(difference);
-			_accountingBalance += difference;
+			//_accountingBalance += difference;
 			paidValue = difference;
 		}
 
@@ -430,6 +433,7 @@ public class Warehouse implements Serializable {
 		price = partner.getAmountToPay(currentDate, deadline, price, n);
 
 		_availableBalance += price;
+		_accountingBalance += price;
 		unpaidTransaction.pay();
 		unpaidTransaction.setAmountPaid(price);
 		partner.changeValuePaidSales(price);
