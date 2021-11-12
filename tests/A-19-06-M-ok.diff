@@ -1,5 +1,5 @@
 *** tests/A-19-06-M-ok.out	2021-11-10 23:24:42.000000000 +0000
---- tests/A-19-06-M-ok.outhyp	2021-11-12 18:54:26.595376938 +0000
+--- tests/A-19-06-M-ok.outhyp	2021-11-12 23:35:08.838019812 +0000
 ***************
 *** 16,29 ****
   4 - Registar compra
@@ -20,7 +20,7 @@
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identificador do produto: Quantidade: Registar venda: Operação inválida: Produto 'GARRAFA': pedido=4, existências=2
+! Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identificador do produto: Quantidade: Registar venda: Operação inválida: Produto 'null': pedido=0, existências=0
 ! Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
@@ -48,7 +48,7 @@
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: GARRAFA|13|2|ROLHA:10#VIDRO:5
+! Escolha uma opção: GARRAFA|13|-24|ROLHA:10#VIDRO:5
 ! ROLHA|2|75
   SAL|40|500
 ! VIDRO|1|45

@@ -30,10 +30,10 @@ public class DoRegisterBreakdownTransaction extends Command<WarehouseManager> {
       try {
         _receiver.getProduct(stringField("productId"));
         _receiver.getPartner(stringField("partnerId"));
-      } catch (UnknownProductCoreException e) {
-        throw new UnknownProductKeyException(stringField("productId"));
       } catch (UnknownUserCoreException e) {
         throw new UnknownPartnerKeyException(stringField("partnerId"));
+      } catch (UnknownProductCoreException e) {
+        throw new UnknownProductKeyException(stringField("productId"));
       }
       if (_receiver.isAggregateProduct(stringField("productId")))
         _receiver.registerBreakdown(stringField("partnerId"), stringField("productId"), integerField("quantity"));

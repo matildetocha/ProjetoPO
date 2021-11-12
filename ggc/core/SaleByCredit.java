@@ -25,7 +25,7 @@ public class SaleByCredit extends Sale {
 		Partner partner = getPartner();
 		Date currentDate = new Date(days);
 		Product product = getProduct();
-		int n = 0;
+		int n;
 
 		if (product.getRecipe() == null)
 			n = 5;

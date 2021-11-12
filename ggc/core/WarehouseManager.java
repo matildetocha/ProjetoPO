@@ -70,10 +70,6 @@ public class WarehouseManager {
 	 * Partners management of the WarehouseManager
 	 */
 
-	public Collection<Partner> getPartners() {
-		return _warehouse.getPartners();
-	}
-
 	public List<Partner> getSortedPartners() {
 		return _warehouse.getSortedPartners();
 	}
@@ -94,21 +90,9 @@ public class WarehouseManager {
 		return _warehouse.getPartnerSales(partnerId);
 	}
 
-	public Collection<Transaction> getPartnerSalesByCredit(String partnerId) throws UnknownUserCoreException {
-		return _warehouse.getPartnerSalesByCredit(partnerId);
-	}
-
-	public Collection<Transaction> getPartnerBreakdownSale(String partnerId) throws UnknownUserCoreException {
-		return _warehouse.getPartnerBreakdownSale(partnerId);
-	}
-
 	/*
 	 * Product management of the WarehouseManager
 	 */
-
-	public Collection<Product> getProducts() {
-		return _warehouse.getProducts();
-	}
 
 	public List<Product> getSortedProducts() {
 		return _warehouse.getSortedProducts();
@@ -122,9 +106,6 @@ public class WarehouseManager {
 	 * @param product
 	 * @throws DuplicateProductCoreException
 	 */
-	public void registerProduct(Product product) throws DuplicateProductCoreException {
-		_warehouse.registerProduct(product);
-	}
 
 	public void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
 			int numComponents) throws DuplicateProductCoreException {
@@ -163,10 +144,6 @@ public class WarehouseManager {
 		return _warehouse.getBatchesByProduct(id);
 	}
 
-	public void registerBatch(Batch batch) {
-		_warehouse.registerBatch(batch);
-	}
-
 	/*
 	 * Transaction management of the WarehouseManager
 	 */
@@ -190,8 +167,7 @@ public class WarehouseManager {
 	}
 
 	public void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
-			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException,
-			UnknownUserCoreException {
+			throws UnavailableProductCoreException, UnknownProductCoreException, UnknownUserCoreException {
 		_warehouse.saleAggProduct(partnerId, productId, deadline, quantity);
 	}
 

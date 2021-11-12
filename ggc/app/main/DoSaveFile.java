@@ -22,7 +22,7 @@ class DoSaveFile extends Command<WarehouseManager> {
   @Override
   public final void execute() throws CommandException {
     try {
-      if (_receiver.getFilename().equals("")) {
+      if (("").equals(_receiver.getFilename())) {
         Form form = new Form("File");
         form.addStringField("filename", Message.newSaveAs());
         form.parse();

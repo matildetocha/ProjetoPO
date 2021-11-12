@@ -22,8 +22,6 @@ public abstract class Product implements Serializable {
 
 	private Recipe _recipe;
 
-	private int _quantity;
-
 	private List<Partner> _observers;
 
 	/**
@@ -98,21 +96,25 @@ public abstract class Product implements Serializable {
 	}
 
 	List<Batch> getBatchesToSell(int amount) {
-		List<Batch> batchesByLowestPrice = new ArrayList<>();
+		List<Batch> batchesByLowestPrice = new ArrayList<Batch>(_batches);
 		List<Batch> batchesToSell = new ArrayList<>();
 		int i = amount;
 
-		batchesByLowestPrice = _batches;
 		Collections.sort(batchesByLowestPrice, Batch.getComparator());
 		Iterator<Batch> iter = batchesByLowestPrice.iterator();
 
-		while (i > 0) {
+		while (i > 0 && iter.hasNext()) {
 			Batch b = iter.next();
 			batchesToSell.add(b);
 			i -= b.getQuantity();
 		}
 
 		return Collections.unmodifiableList(batchesToSell);
+	}
+
+	List<Batch> copyBatches() {
+		List<Batch> copy = new ArrayList<Batch>(_batches);
+		return copy;
 	}
 
 	/**
@@ -129,21 +131,13 @@ public abstract class Product implements Serializable {
 		}
 		return res;
 	}
-
-	void updateQuantity(int quantity) {
-		_quantity += quantity;
-	}
-
+	
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
 		double priceByFractions = 0;
-		double lastBatchPrice;
-		int lastBatchAmount;
-		int i;
+		int lastBatchAmount = batchesToSell.get(batchesToSell.size() - 1).getQuantity();
+		double lastBatchPrice = batchesToSell.get(batchesToSell.size() - 1).getPrice();
 
-		lastBatchAmount = batchesToSell.get(batchesToSell.size() - 1).getQuantity();
-		lastBatchPrice = batchesToSell.get(batchesToSell.size() - 1).getPrice();
-
-		for (i = 0; i < batchesToSell.size() - 1; i++)
+		for (int i = 0; i < batchesToSell.size() - 1; i++)
 			priceByFractions += batchesToSell.get(i).getPrice() * batchesToSell.get(i).getQuantity();
 
 		priceByFractions += lastBatchAmount * lastBatchPrice - (lastBatchAmount - amount) * lastBatchPrice;
@@ -184,15 +178,12 @@ public abstract class Product implements Serializable {
 		if (batchesToSell.size() != 1) {
 			for (i = 0; i < batchesToSell.size() - 1; i++) {
 				batchesToSell.get(i).changeQuantity(-batchesToSell.get(i).getQuantity());
-				// altera a quantidade do produto ja que subtraimos na batch
-				batchesToSell.get(i).getProduct().updateQuantity(-(batchesToSell.get(i).getQuantity()));
 				_batches.remove(batchesToSell.get(i));
 				amount -= batchesToSell.get(i).getQuantity();
 			}
 		}
 
 		batchesToSell.get(lastI).changeQuantity(-amount);
-		batchesToSell.get(lastI).getProduct().updateQuantity(-amount);
 		if (batchesToSell.get(lastI).getQuantity() == 0)
 			_batches.remove(lastI);
 	}
@@ -206,7 +197,7 @@ public abstract class Product implements Serializable {
 	}
 
 	List<Partner> getObservers() {
-		return _observers;
+		return Collections.unmodifiableList(_observers);
 	}
 
 	void addObserver(Partner partner) {

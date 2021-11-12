@@ -70,15 +70,11 @@ public class Warehouse implements Serializable {
 	 * Partners management of the Warehouse
 	 */
 
-	Collection<Partner> getPartners() {
-		return Collections.unmodifiableCollection(_partners.values());
-	}
-
 	List<Partner> getSortedPartners() {
 		List<Partner> partnersByKey = new ArrayList<Partner>(_partners.values());
 		Collections.sort(partnersByKey, Partner.getComparator());
 
-		return partnersByKey;
+		return Collections.unmodifiableList(partnersByKey);
 	}
 
 	Partner getPartner(String partnerId) throws UnknownUserCoreException {
@@ -121,27 +117,6 @@ public class Warehouse implements Serializable {
 		return Collections.unmodifiableList(sales);
 	}
 
-	Collection<Transaction> getPartnerSalesByCredit(String partnerId) throws UnknownUserCoreException {
-		if (_partners.get(partnerId.toLowerCase()) == null) {
-			throw new UnknownUserCoreException();
-		}
-
-		Partner partner = _partners.get(partnerId.toLowerCase());
-		for (Transaction sale : partner.getSalesByCredit()) {
-			((SaleByCredit) sale).getAmountToPay(_date.now());
-		}
-
-		return _partners.get(partnerId.toLowerCase()).getSalesByCredit();
-	}
-
-	Collection<Transaction> getPartnerBreakdownSale(String partnerId) throws UnknownUserCoreException {
-		if (_partners.get(partnerId.toLowerCase()) == null) {
-			throw new UnknownUserCoreException();
-		}
-
-		return _partners.get(partnerId.toLowerCase()).getBreakdownSales();
-	}
-
 	/*
 	 * Product management of the Warehouse
 	 */
@@ -153,7 +128,7 @@ public class Warehouse implements Serializable {
 		List<Product> productsByKey = new ArrayList<Product>(_products.values());
 		Collections.sort(productsByKey, Product.getComparator());
 
-		return productsByKey;
+		return Collections.unmodifiableList(productsByKey);
 	}
 
 	Product getProduct(String id) throws UnknownProductCoreException {
@@ -229,11 +204,16 @@ public class Warehouse implements Serializable {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
 		for (Product product : getProducts()) {
-			orderedBatches.addAll(product.getBatches());
+			if (product.getQuantity() != 0)
+				orderedBatches.addAll(product.getBatches());
+		}
+		for (Batch batch : orderedBatches) {
+			if (batch.getPrice() >= priceLimit || batch.getQuantity() == 0)
+				orderedBatches.remove(batch);
 		}
 
 		Collections.sort(orderedBatches, Batch.getComparator());
-		return orderedBatches;
+		return Collections.unmodifiableList(orderedBatches);
 	}
 
 	List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -292,17 +272,16 @@ public class Warehouse implements Serializable {
 	void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
 			throws UnavailableProductCoreException, UnknownUserCoreException, UnknownProductCoreException {
 		if (_products.get(productId.toLowerCase()) == null)
-			throw new UnknownProductCoreException(); 
-			
+			throw new UnknownProductCoreException();
+
 		if (_partners.get(partnerId.toLowerCase()) == null)
-				throw new UnknownUserCoreException();
-				
+			throw new UnknownUserCoreException();
+
 		Product product = _products.get(productId.toLowerCase());
 		Date deadlineDate = new Date(deadline);
 
-		if (product.getQuantity() < quantity) {
+		if (product.getQuantity() < quantity)
 			throw new UnavailableProductCoreException();
-		}
 
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
@@ -319,43 +298,42 @@ public class Warehouse implements Serializable {
 		_nextTransactionId++;
 
 		product.updateBatchStock(batchesToSell, quantity);
-		product.updateQuantity(quantity);
 	}
 
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
-			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException, UnknownUserCoreException {
+			throws UnavailableProductCoreException, UnknownUserCoreException, UnknownProductCoreException {
 		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
 		int amountToCreate = quantity - product.getQuantity();
 
-		for (Component c : product.getRecipe().getComponents()) {
-			if (c.getQuantity() * amountToCreate > c.getProduct().getQuantity())
-				throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
-						c.getQuantity() * amountToCreate);
-		} 
+		tryToAggregate(partnerId, productId, deadline, quantity);
+	
 
-		List<String> productIds = new ArrayList<>();
-		List<Integer> quantities = new ArrayList<>();
-
-		for (Component c : product.getRecipe().getComponents()) {
-			productIds.add(c.getProduct().getId());
-			quantities.add(c.getQuantity());
-		}
-
-		createAggregateProduct(productId, product.getRecipe().getAlpha(), productIds, quantities,
-				product.getRecipe().getComponents().size());
-
-		for (Component c : product.getRecipe().getComponents()) {
-			Product productToComp = getProduct(c.getProduct().getId());
-			List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
-
-			productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
-		}
-
-		Batch batch = new Batch(_products.get(productId), _partners.get(partnerId),
+		Batch batch = new Batch(_products.get(productId.toLowerCase()), _partners.get(partnerId.toLowerCase()),
 				product.getRecipe().getPrice(amountToCreate), quantity);
 		registerBatch(batch);
 
 		registerSaleByCredit(productId, partnerId, deadline, quantity);
+	}
+
+	void tryToAggregate(String partnerId, String productId, int deadline, int quantity)
+			throws UnavailableProductCoreException, UnknownProductCoreException {
+		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
+		int amountToCreate = quantity - product.getQuantity();
+
+		for (Component c : product.getRecipe().getComponents()) {
+			if (c.getQuantity() * amountToCreate > c.getProduct().getQuantity()) {
+				if (!isAggregateProduct(c.getProduct().getId()))
+					throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
+							c.getQuantity() * amountToCreate);
+				else
+					tryToAggregate(partnerId, c.getProduct().getId(), deadline, c.getQuantity() * amountToCreate);
+			} else {
+				Product productToComp = getProduct(c.getProduct().getId());
+				List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
+
+				productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
+			}
+		}
 	}
 
 	void registerAcquisition(String partnerId, String productId, double price, int quantity)
@@ -368,9 +346,10 @@ public class Warehouse implements Serializable {
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = price * quantity;
 
-		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity);
-
 		Date copyDate = new Date(_date.now());
+
+		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, copyDate, baseValue, quantity);
+
 		acquisition.setPaymentDate(copyDate);
 
 		partner.addAcquisition(_nextTransactionId, acquisition);
@@ -391,7 +370,6 @@ public class Warehouse implements Serializable {
 		registerBatch(batch);
 
 		product.updateMaxPrice();
-		product.updateQuantity(quantity);
 
 		_availableBalance -= baseValue;
 		_accountingBalance -= baseValue;
@@ -404,7 +382,7 @@ public class Warehouse implements Serializable {
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = product.getMaxPrice() * quantity;
-		double paidValue = 0;
+		double paidValue;
 
 		List<Component> components = product.getRecipe().getComponents();
 
@@ -434,7 +412,7 @@ public class Warehouse implements Serializable {
 
 	double getTotalRecipePrice(List<Component> components, Partner partner, int quantity) {
 
-		double price = 0;
+		double price;
 		double totalPrice = 0;
 		for (Component c : components) {
 

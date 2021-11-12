@@ -47,7 +47,7 @@ public class Partner implements Serializable, Observer {
 	}
 
 	List<Batch> getBatches() {
-		return _batches;
+		return Collections.unmodifiableList(_batches);
 	}
 
 	Collection<Transaction> getPayedTransactions() {
@@ -59,10 +59,6 @@ public class Partner implements Serializable, Observer {
 		}
 
 		return Collections.unmodifiableCollection(_payedTransactions.values());
-	}
-
-	Collection<Transaction> getTransactions() {
-		return Collections.unmodifiableCollection(_transactions.values());
 	}
 
 	void addBatch(Batch batch) {
@@ -120,7 +116,7 @@ public class Partner implements Serializable, Observer {
 			return statusNormal;
 
 		else if (_status.equals(statusSelection.getName()))
-			return statusNormal;
+			return statusSelection;
 
 		else
 			return statusElite;
@@ -128,10 +124,6 @@ public class Partner implements Serializable, Observer {
 
 	void changeStatus(Status statusType) {
 		_status = statusType.getName();
-	}
-
-	double getPoints() {
-		return _points;
 	}
 
 	void changePoints(double points) {

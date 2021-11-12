@@ -3,7 +3,6 @@ package ggc.core;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +10,6 @@ public class Recipe implements Serializable {
   private static final long serialVersionUID = 202109192006L;
 
   private double _aggravation;
-  private Product _aggregateProduct;
   private List<Component> _components;
 
   Recipe(double aggravation) {
@@ -21,10 +19,6 @@ public class Recipe implements Serializable {
 
   double getAlpha() {
     return _aggravation;
-  }
-
-  void addAggregateProduct(Product aggregateProduct) {
-    _aggregateProduct = aggregateProduct;
   }
 
   void addComponent(Component component) {
