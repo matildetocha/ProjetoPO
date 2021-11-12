@@ -2,6 +2,7 @@ package ggc.core;
 
 import java.io.Serializable;
 import java.io.IOException;
+	
 
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,9 @@ public class Warehouse implements Serializable {
 		_transactions = new HashMap<>();
 	}
 
+	/*
+	* Time management of the Warehouse.
+	*/
 	int displayDate() {
 		return _date.now();
 	}
@@ -52,27 +56,20 @@ public class Warehouse implements Serializable {
 		return _date.add(days);
 	}
 
+	/*
+	* Currency management of the Warehouse
+	*/
 	int getAccountingBalance() {
-
 		return (int) Math.round(_accountingBalance + getUnpaidTransactionsBalance());
-	}
-
-	double getUnpaidTransactionsBalance() {
-		double res = 0;
-		for (Transaction transaction : getTransactions()) {
-
-			if (!transaction.isPaid()) {
-				((SaleByCredit) transaction).getAmountToPay(_date.now());
-				res += ((SaleByCredit) transaction).getAmountPaid();
-			}
-
-		}
-		return res;
 	}
 
 	int getAvailableBalance() {
 		return (int) Math.round(_availableBalance);
 	}
+
+	/*
+	* Partners management of the Warehouse	
+	*/
 
 	Collection<Partner> getPartners() {
 		return Collections.unmodifiableCollection(_partners.values());
@@ -92,33 +89,31 @@ public class Warehouse implements Serializable {
 		return _partners.get(partnerId.toLowerCase());
 	}
 
-	List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
-		if (_partners.get(partnerId.toLowerCase()) == null)
-			throw new UnknownUserCoreException();
-
-		return Collections.unmodifiableList(_partners.get(partnerId.toLowerCase()).getNotifications());
-	}
-
 	void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
 		if (_partners.get(id.toLowerCase()) != null)
 			throw new DuplicatePartnerCoreException();
 
 		Partner partner = new Partner(name, id, address);
 		_partners.put(partner.getId().toLowerCase(), partner);
+	}
 
-		Set<String> keys = _products.keySet();
-		Iterator<String> iterator = keys.iterator();
-
-		while (iterator.hasNext()) {
-			_products.get(iterator.next()).addObserver(partner);
+	Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null) {
+			throw new UnknownUserCoreException();
 		}
+		return _partners.get(partnerId.toLowerCase()).getAcquistions();
 	}
 
-	int getAvailableStock(String productId) {
-		Product product = _products.get(productId.toLowerCase());
-		return product.getQuantity();
+	Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null) {
+			throw new UnknownUserCoreException();
+		}
+		return _partners.get(partnerId.toLowerCase()).getSales();
 	}
 
+	/*
+	* Product management of the Warehouse 
+	*/
 	Collection<Product> getProducts() {
 		return Collections.unmodifiableCollection(_products.values());
 	}
@@ -142,6 +137,13 @@ public class Warehouse implements Serializable {
 			throw new DuplicateProductCoreException();
 
 		_products.put(product.getId().toLowerCase(), product);
+
+		Set<String> keys = _partners.keySet();
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			_products.get(product.getId().toLowerCase()).addObserver(_partners.get(iterator.next()));
+		}
 	}
 
 	void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantities,
@@ -169,6 +171,15 @@ public class Warehouse implements Serializable {
 		return _products.get(id.toLowerCase()).getRecipe() != null;
 	}
 
+	int getAvailableStock(String productId) {
+		Product product = _products.get(productId.toLowerCase());
+		return product.getQuantity();
+	}
+
+	/*
+	* Batch management of the Warehouse
+	*/
+
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
 
@@ -185,21 +196,6 @@ public class Warehouse implements Serializable {
 
 	List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
-
-		// Set<String> keys = _products.keySet();
-		// Iterator<String> iterator = keys.iterator();
-
-		// while (iterator.hasNext()) {
-		// orderedBatches.addAll(_products.get(iterator.next()).getBatches());
-		// }
-
-		// // remove os com preco menor que o limite
-		// Iterator<Batch> it = orderedBatches.iterator();
-		// while (it.hasNext()) {
-		// if (it.next().getPrice() < priceLimit) {
-		// it.remove();
-		// }
-		// }
 
 		for (Product product : getProducts()) {
 			orderedBatches.addAll(product.getBatches());
@@ -230,22 +226,19 @@ public class Warehouse implements Serializable {
 		partner.addBatch(batch);
 	}
 
-	Collection<Transaction> getTransactions() {
-		return Collections.unmodifiableCollection(_transactions.values());
-	}
+	/*
+	* Transaction management of the Warehouse
+	*/
 
-	Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException {
-		if (_partners.get(partnerId.toLowerCase()) == null) {
-			throw new UnknownUserCoreException();
+	double getUnpaidTransactionsBalance() {
+		double res = 0;
+		for (Transaction transaction : getTransactions()) {
+			if (!transaction.isPaid()) {
+				((SaleByCredit) transaction).getAmountToPay(_date.now());
+				res += ((SaleByCredit) transaction).getAmountPaid();
+			}
 		}
-		return _partners.get(partnerId.toLowerCase()).getAcquistions();
-	}
-
-	Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException {
-		if (_partners.get(partnerId.toLowerCase()) == null) {
-			throw new UnknownUserCoreException();
-		}
-		return _partners.get(partnerId.toLowerCase()).getSales();
+		return res;
 	}
 
 	Transaction getTransaction(int id) throws UnknownTransactionCoreException {
@@ -279,9 +272,6 @@ public class Warehouse implements Serializable {
 
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 
-		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
-		// mais quantiodade
-
 		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadlineDate);
 		partner.addSale(_nextTransactionId, sale);
 		partner.addTransaction(_nextTransactionId, sale);
@@ -289,7 +279,6 @@ public class Warehouse implements Serializable {
 		partner.changeValueSales(baseValue);
 
 		_transactions.put(_nextTransactionId, sale);
-
 		_nextTransactionId++;
 
 		product.updateBatchStock(batchesToSell, quantity);
@@ -303,7 +292,8 @@ public class Warehouse implements Serializable {
 
 		for (Component c : product.getRecipe().getComponents()) {
 			if (c.getQuantity() * amountToCreate < c.getProduct().getQuantity())
-				throw new UnavailableProductCoreException();
+				throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
+						c.getQuantity() * amountToCreate);
 		}
 
 		List<String> productIds = new ArrayList<>();
@@ -321,10 +311,8 @@ public class Warehouse implements Serializable {
 			Product productToComp = getProduct(c.getProduct().getId());
 			List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
 
-			// muda a quantidade dos produtos
 			productToComp.updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
 		}
-		// cria o produto agregado
 		Batch batch = new Batch(_products.get(productId), _partners.get(partnerId),
 				product.getRecipe().getPrice(amountToCreate), quantity);
 		registerBatch(batch);
@@ -340,8 +328,6 @@ public class Warehouse implements Serializable {
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = price * quantity;
-		// vai receber uma nova batch com um preco mais alto possivelmente, e vai ter
-		// mais quantiodade
 
 		Transaction acquisition = new Acquisition(_nextTransactionId, partner, product, 0, baseValue, quantity);
 
@@ -350,12 +336,17 @@ public class Warehouse implements Serializable {
 		partner.addAcquisition(_nextTransactionId, acquisition);
 		partner.addTransaction(_nextTransactionId, acquisition);
 		partner.changeValueAcquisitions(baseValue);
-
+		partner.setStatus();
+		
+		
 		_transactions.put(_nextTransactionId, acquisition);
 		_nextTransactionId++;
 
-		if (product.getQuantity() == 0)
+		if (product.getQuantity() == 0 && product.getMaxPrice() != 0)
 			sendNewNotification(product);
+
+		else if (product.getQuantity() != 0 && price < product.getMinPrice())
+			sendBargainNotification(product);
 
 		Batch batch = new Batch(product, partner, price, quantity);
 		registerBatch(batch);
@@ -363,74 +354,37 @@ public class Warehouse implements Serializable {
 		product.updateMaxPrice();
 		product.updateQuantity(quantity);
 
-		if (product.getQuantity() != 0 && price == product.getMinPrice())
-			sendBargainNotification(product);
-
 		_availableBalance -= baseValue;
 		_accountingBalance -= baseValue;
 	}
 
 	void registerBreakdown(String partnerId, String productId, int quantity) throws UnavailableProductCoreException {
-		// parte 1 - cria transacao regista e consegue as variaveis todas
 		if (_products.get(productId.toLowerCase()).getQuantity() < quantity)
 			throw new UnavailableProductCoreException();
 
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = product.getMaxPrice() * quantity;
-
-		// comecar a ir buscar os componentes PARTE 2
+		double paidValue = 0;
 
 		List<Component> components = product.getRecipe().getComponents();
-		double paidValue = 0;
-		double price = 0;
-		double totalPrice = 0;
-		for (Component c : components) { // se nao houver lotes com o componente entao fica o preco mais alto do
-																			// historico, se houver entao é o mais baixo
 
-			List<Batch> batchesByLowestPrice = new ArrayList<>(c.getProduct().getBatches());
-			Collections.sort(batchesByLowestPrice, new BatchComparator());
-			Batch lowestPriceBatch = batchesByLowestPrice.get(0);
+		double totalPrice = getTotalRecipePrice(components, partner, quantity);
+		totalPrice *= (1 + product.getRecipe().getAlpha());
 
-			if (lowestPriceBatch != null) {
-				price = lowestPriceBatch.getPrice();
-			} else { // se nao houver nenhuma lote com o componente vaise ao passado ver qual a
-								// transacao mais cara com o produto
-				price = c.getProduct().getMaxPrice();
-			}
+		double difference = baseValue - totalPrice;
 
-			// if(_products.get(c.getProduct().getId()) == null){ //caso o componente nao
-			// esteja registado
-
-			// Product newProduct = new Product(c.getProduct().getId());
-			// registerProduct(newProduct);
-
-			// }
-
-			Batch batch = new Batch(c.getProduct(), partner, price, (quantity * c.getQuantity())); // 5 das aguas vezes 2 do
-																																															// hidrogenio (assumir que
-																																															// o produto ja existe)
-			registerBatch(batch);
-			price *= (quantity * c.getQuantity());
-			totalPrice += price;
-		}
-		// fim do for
-
-		totalPrice *= (1 + product.getRecipe().getAlpha()); // basicamente somamos os precos de todos os componentes vezes a
-																												// sua quantidade e multiplicamos pelo alpha
-		double difference = baseValue - totalPrice; // existe a diferenca entre a compra (o preco do produto agregado vezes
-																								// quantidade)
-		// e a venda( soma dos precos dos componentes vezes o alpha)
 		if (difference < 0) {
 			partner.changeValueSales(0);
 			paidValue = 0;
 		} else {
 			partner.changeValueSales(difference);
-			// _accountingBalance += difference;
 			paidValue = difference;
 		}
 
 		Transaction breakdown = new BreakdownSale(_nextTransactionId, product, quantity, partner, difference, paidValue);
+		breakdown.set
+		breakdown.setPaymentDate(_date);
 
 		partner.addBreakdown(_nextTransactionId, breakdown);
 		partner.addTransaction(_nextTransactionId, breakdown);
@@ -439,6 +393,31 @@ public class Warehouse implements Serializable {
 
 		_transactions.put(_nextTransactionId, breakdown);
 		_nextTransactionId++;
+	}
+
+	double getTotalRecipePrice(List<Component> components, Partner partner, int quantity) {
+
+		double price = 0;
+		double totalPrice = 0;
+		for (Component c : components) {
+
+			List<Batch> batchesByLowestPrice = new ArrayList<>(c.getProduct().getBatches());
+			Collections.sort(batchesByLowestPrice, new BatchComparator());
+			Batch lowestPriceBatch = batchesByLowestPrice.get(0);
+
+			if (lowestPriceBatch != null) {
+				price = lowestPriceBatch.getPrice();
+			} else {
+				price = c.getProduct().getMaxPrice();
+			}
+			Batch batch = new Batch(c.getProduct(), partner, price, quantity * c.getQuantity());
+
+			
+			registerBatch(batch);
+			price *= (quantity * c.getQuantity());
+			totalPrice += price;
+		}
+		return totalPrice;
 	}
 
 	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
@@ -471,14 +450,35 @@ public class Warehouse implements Serializable {
 		partner.changePoints(status.getPoints(partner, _date, deadline, price, n));
 	}
 
+	/*
+	* Notification management of the Warehouse
+	*/
+
 	void sendNewNotification(Product product) {
 		DeliveryMethod type = new DefaultMethod();
 		type.sendNewNotification(product);
 	}
 
+	List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null)
+			throw new UnknownUserCoreException();
+
+		return Collections.unmodifiableList(_partners.get(partnerId.toLowerCase()).getNotifications());
+	}
+
+	Collection<Transaction> getTransactions() {
+		return Collections.unmodifiableCollection(_transactions.values());
+	}
+
 	void sendBargainNotification(Product product) {
 		DeliveryMethod type = new DefaultMethod();
 		type.sendBargainNotification(product);
+	}
+
+	void clearAllNotifications(String partnerId) throws UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null)
+			throw new UnknownUserCoreException();
+		_partners.get(partnerId.toLowerCase()).clear();
 	}
 
 	void toogleProductNotifications(String partnerId, String productId)

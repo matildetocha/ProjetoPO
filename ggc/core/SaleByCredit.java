@@ -29,7 +29,6 @@ public class SaleByCredit extends Sale {
 
 		if (product.getRecipe() == null)
 			n = 5;
-
 		else
 			n = 3;
 		_amountPaid = partner.getStatusType().getAmountToPay(currentDate, _deadline, getBaseValue(), n);
