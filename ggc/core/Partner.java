@@ -61,7 +61,6 @@ public class Partner implements Serializable, Observer {
 	}
 
 	Collection<Transaction> getTransactions() {
-
 		return Collections.unmodifiableCollection(_transactions.values());
 	}
 
@@ -106,10 +105,6 @@ public class Partner implements Serializable, Observer {
 
 		else if (_points > 25000)
 			_status = statusElite.getName();
-	} // FIXME não sei se é preciso
-
-	String getStatus() {
-		return _status;
 	}
 
 	Status getStatusType() {
@@ -129,7 +124,7 @@ public class Partner implements Serializable, Observer {
 
 	void changeStatus(Status statusType) {
 		_status = statusType.getName();
-	} // FIXME acho que não precisamos disto
+	} 
 
 	double getPoints() {
 		return _points;
@@ -162,6 +157,11 @@ public class Partner implements Serializable, Observer {
 	@Override
 	public void update(Notification notification) {
 		_notifications.add(notification);
+	}
+
+	@Override
+	public void clear() {
+		_notifications.clear();
 	}
 
 	@Override

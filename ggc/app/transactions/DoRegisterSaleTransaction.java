@@ -36,11 +36,12 @@ public class DoRegisterSaleTransaction extends Command<WarehouseManager> {
       try {
         _receiver.saleAggProduct(stringField("partnerId"), stringField("productId"), integerField("deadline"),
             integerField("quantity"));
-      } catch (UnavailableProductCoreException | DuplicateProductCoreException | UnknownProductCoreException e1) {
+      } catch (DuplicateProductCoreException | UnknownProductCoreException e1) {
         throw new UnavailableProductException(stringField("productId"), integerField("quantity"),
             _receiver.getAvailableStock(stringField("productId")));
+      }catch(UnavailableProductCoreException e2){
+        throw new UnavailableProductException(e2.getProductId(), e2.getRequested(), e2.getAvailable());
       }
-
     }
   }
 

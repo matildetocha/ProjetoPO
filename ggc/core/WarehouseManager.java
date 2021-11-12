@@ -37,15 +37,9 @@ public class WarehouseManager {
 	public Warehouse getWarehouse() {
 		return _warehouse;
 	}
-
-	public int getAccountingBalance() {
-		return _warehouse.getAccountingBalance();
-	}
-
-	public int getAvailableBalance() {
-		return _warehouse.getAvailableBalance();
-	}
-
+	/*
+	 * Time management of the WarehouseManager
+	*/
 	public int displayDate() {
 		return _warehouse.displayDate();
 	}
@@ -60,28 +54,62 @@ public class WarehouseManager {
 		return _warehouse.advanceDate(days);
 	}
 
-	public Partner getPartner(String id) throws UnknownUserCoreException {
-		return _warehouse.getPartner(id);
+	/* 
+	* Currency management of the WarehouseManager
+	*/
+	public int getAccountingBalance() {
+		return _warehouse.getAccountingBalance();
 	}
+
+	public int getAvailableBalance() {
+		return _warehouse.getAvailableBalance();
+	}
+
+	/*
+	 * Partners management of the WarehouseManager
+	*/
 
 	public Collection<Partner> getPartners() {
 		return _warehouse.getPartners();
+	}
+
+	public List<Partner> getSortedPartners() {
+		return _warehouse.getSortedPartners();
+	}
+
+	public Partner getPartner(String id) throws UnknownUserCoreException {
+		return _warehouse.getPartner(id);
 	}
 
 	public void registerPartner(String name, String id, String address) throws DuplicatePartnerCoreException {
 		_warehouse.registerPartner(name, id, address);
 	}
 
-	public Product getProduct(String id) throws UnknownProductCoreException {
-		return _warehouse.getProduct(id);
+	public Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException{
+		return _warehouse.getPartnerAcquistions(partnerId);
 	}
+
+	public Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException{
+		return _warehouse.getPartnerSales(partnerId);
+	}
+
+	/*
+	* Product management of the WarehouseManager
+	*/
 
 	public Collection<Product> getProducts() {
 		return _warehouse.getProducts();
 	}
 
-	/**
-	 * 
+	public List<Product> getSortedProducts() {
+		return _warehouse.getSortedProducts();
+	}
+
+	public Product getProduct(String id) throws UnknownProductCoreException {
+		return _warehouse.getProduct(id);
+	}
+
+	/** 
 	 * @param product
 	 * @throws DuplicateProductCoreException
 	 */
@@ -102,8 +130,20 @@ public class WarehouseManager {
 		return _warehouse.isAggregateProduct(id);
 	}
 
+	public int getAvailableStock(String productId) {
+		return _warehouse.getAvailableStock(productId);
+	}
+
+	/*
+	* Batch management of the WarehouseManager
+	*/
+
 	public List<Batch> getSortedBatches() {
 		return _warehouse.getSortedBatches();
+	}
+
+	public List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
+		return _warehouse.getSortedBatchesUnderLimit(priceLimit);
 	}
 
 	public List<Batch> getBatchesByPartner(String id) throws UnknownUserCoreException {
@@ -118,26 +158,18 @@ public class WarehouseManager {
 		_warehouse.registerBatch(batch);
 	}
 
-	public List<Partner> getSortedPartners() {
-		return _warehouse.getSortedPartners();
-	}
-
-	public List<Product> getSortedProducts() {
-		return _warehouse.getSortedProducts();
-	}
-
 	// public void registerSale(int quantity, String productId, String partnerId,
 	// int deadline)
 	// throws UnavailableProductCoreException {
 	// _warehouse.registerSale(quantity, productId, partnerId, deadline);
 	// }
 
-	public int getAvailableStock(String productId) {
-		return _warehouse.getAvailableStock(productId);
-	}
+	/*
+	* Transaction management of the WarehouseManager
+	*/
 
-	public List<Batch> getSortedBatchesUnderLimit(double priceLimit) {
-		return _warehouse.getSortedBatchesUnderLimit(priceLimit);
+	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
+		return _warehouse.getTransaction(id);
 	}
 
 	public Collection<Transaction> getPayedTransactionsByPartner(String partnerId) throws UnknownUserCoreException {
@@ -147,10 +179,6 @@ public class WarehouseManager {
 	public void registerAcquisition(String partnerId, String productId, double price, int quantity)
 			throws UnknownProductCoreException {
 		_warehouse.registerAcquisition(partnerId, productId, price, quantity);
-	}
-
-	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
-		return _warehouse.getTransaction(id);
 	}
 
 	public void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
@@ -172,14 +200,10 @@ public class WarehouseManager {
 		_warehouse.payTransaction(transactionId);
 	}
 
-	public Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException{
-		return _warehouse.getPartnerAcquistions(partnerId);
-	}
-
-	public Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException{
-		return _warehouse.getPartnerSales(partnerId);
-	}
-
+	/*
+	* Notification management of the Warehouse
+	*/
+	
 	public List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getNotifications(partnerId);
 	}
@@ -190,6 +214,10 @@ public class WarehouseManager {
 
 	public void sendBargainNotification(Product product) {
 		_warehouse.sendBargainNotification(product);
+	}
+
+	public void clearAllNotifications(String partnerId) throws UnknownUserCoreException {
+		_warehouse.clearAllNotifications(partnerId);
 	}
 
 	public void toogleProductNotifications(String partnerId, String productId) throws UnknownUserCoreException, UnknownProductCoreException {

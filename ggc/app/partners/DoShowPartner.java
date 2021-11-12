@@ -24,6 +24,7 @@ class DoShowPartner extends Command<WarehouseManager> {
     try {
       _display.popup(_receiver.getPartner(stringField("id")));
       _display.popup(_receiver.getNotifications(stringField("id")));
+      _receiver.clearAllNotifications(stringField("id"));
     } catch (UnknownUserCoreException e) {
       throw new UnknownPartnerKeyException(stringField("id"));
     }

@@ -29,13 +29,12 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
   public final void execute() throws CommandException {
     try {
       try {
-        
         _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
             integerField("quantity"));
-            
+
       } catch (UnknownProductCoreException e) {
 
-        if (Form.confirm(Message.requestAddRecipe()) ) {
+        if (Form.confirm(Message.requestAddRecipe())) {
           addIntegerField("numberComponents", Message.requestNumberOfComponents());
           addRealField("alpha", Message.requestAlpha());
 
@@ -52,14 +51,13 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
 
           _receiver.createAggregateProduct(stringField("productId"), realField("alpha"), productIds, quantities,
               integerField("numberComponents"));
-          _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
-              integerField("quantity"));
-
-        } else{       
-          _receiver.createSimpleProduct(stringField("productId"));
-          _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
-              integerField("quantity"));
         }
+
+        else
+          _receiver.createSimpleProduct(stringField("productId"));
+
+        _receiver.registerAcquisition(stringField("partnerId"), stringField("productId"), realField("price"),
+            integerField("quantity"));
       }
     } catch (DuplicateProductCoreException | UnknownProductCoreException e) {
       e.printStackTrace();

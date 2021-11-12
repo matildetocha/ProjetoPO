@@ -7,7 +7,6 @@ public class NormalStatus implements Status {
     int i;
     if (difference >= n)
       price *= 0.9;
-    
 
     else if (-difference > 0 && -difference <= n) {
       for (i = 0; i < difference; i++)
@@ -30,9 +29,9 @@ public class NormalStatus implements Status {
     if (difference > 0)
       points += 10 * price;
 
-    else 
+    else
       points = 0;
-    
+
     return points;
   }
 

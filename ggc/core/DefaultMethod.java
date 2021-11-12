@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class DefaultMethod implements DeliveryMethod, Serializable {
   private static final long serialVersionUID = 202109192006L;
   
+  DefaultMethod() {}
+
   @Override
   public void sendNewNotification(Product product) {
     Notification notification = new New(this, product, product.getMaxPrice());

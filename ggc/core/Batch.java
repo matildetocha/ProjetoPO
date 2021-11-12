@@ -90,13 +90,4 @@ public class Batch implements Serializable {
 		return _product.getId() + "|" + _partner.getId() + "|" + Math.round(_price) + "|" + _quantity;
 	}
 
-	/**
-	 * Creates a new Batch with the same characteristics of the current Batch.
-	 * 
-	 * @return a copy of the Batch
-	 */
-	Batch makeCopy() {
-		Batch newBatch = new Batch(_product, _partner, _price, _quantity);
-		return newBatch;
-	}
 }

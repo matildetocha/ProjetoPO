@@ -3,7 +3,6 @@ package ggc.core;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -171,7 +170,7 @@ public abstract class Product implements Serializable {
 		double minPrice = _maxPrice;
 
 		for (Batch b : _batches) {
-			if (b.getPrice() < minPrice) 
+			if (b.getPrice() < minPrice)
 				minPrice = b.getPrice();
 		}
 
@@ -217,13 +216,8 @@ public abstract class Product implements Serializable {
 		_observers.remove(observer);
 	}
 
-	void sendNotification(Notification notification, Partner partner) {
-		partner.update(notification);
-	} //FIXME deve ser lixo, temos que verificar
-
 	void notifyAllObservers(Notification notification) {
-		for (Partner partner : _observers) {
+		for (Partner partner : _observers)
 			partner.update(notification);
-		}
 	}
 }

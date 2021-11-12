@@ -48,7 +48,6 @@ public class Parser {
     }
   }
 
-  // PARTNER|id|nome|endereço
   private void parsePartner(String[] components, String line) throws BadEntryException {
     if (components.length != 4)
       throw new BadEntryException("Invalid partner with wrong number of fields (4): " + line);
@@ -64,7 +63,6 @@ public class Parser {
     }
   }
 
-  // BATCH_S|idProduto|idParceiro|preço|stock-actual
   private void parseSimpleProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 5)
       throw new BadEntryException("Invalid number of fields (4) in simple batch description: " + line);
@@ -95,7 +93,6 @@ public class Parser {
     
   }
 
-  // BATCH_M|idProduto|idParceiro|preço|stock-actual|agravamento|componente-1:quantidade-1#...#componente-n:quantidade-n
   private void parseAggregateProduct(String[] components, String line) throws BadEntryException {
     if (components.length != 7)
       throw new BadEntryException("Invalid number of fields (7) in aggregate batch description: " + line);

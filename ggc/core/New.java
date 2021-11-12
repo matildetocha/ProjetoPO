@@ -7,6 +7,6 @@ public class New extends Notification {
 
   @Override
   public String toString() {
-    return "NEW" + "|" + getProduct().getId() + "|" + getProduct().getMinPrice();
+    return "NEW" + "|" + getProduct().getId() + "|" + Math.round(getProduct().getMaxPrice());
   }
 }

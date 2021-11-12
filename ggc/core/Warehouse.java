@@ -2,7 +2,6 @@ package ggc.core;
 
 import java.io.Serializable;
 import java.io.IOException;
-	
 
 import java.util.List;
 import java.util.Map;
@@ -46,8 +45,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Time management of the Warehouse.
-	*/
+	 * Time management of the Warehouse.
+	 */
 	int displayDate() {
 		return _date.now();
 	}
@@ -57,8 +56,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Currency management of the Warehouse
-	*/
+	 * Currency management of the Warehouse
+	 */
 	int getAccountingBalance() {
 		return (int) Math.round(_accountingBalance + getUnpaidTransactionsBalance());
 	}
@@ -68,8 +67,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Partners management of the Warehouse	
-	*/
+	 * Partners management of the Warehouse
+	 */
 
 	Collection<Partner> getPartners() {
 		return Collections.unmodifiableCollection(_partners.values());
@@ -108,12 +107,17 @@ public class Warehouse implements Serializable {
 		if (_partners.get(partnerId.toLowerCase()) == null) {
 			throw new UnknownUserCoreException();
 		}
+
+		Partner partner = _partners.get(partnerId.toLowerCase());
+		for (Transaction sale : partner.getSales())
+			sale.getAmountToPay(_date.now());
+			
 		return _partners.get(partnerId.toLowerCase()).getSales();
 	}
 
 	/*
-	* Product management of the Warehouse 
-	*/
+	 * Product management of the Warehouse
+	 */
 	Collection<Product> getProducts() {
 		return Collections.unmodifiableCollection(_products.values());
 	}
@@ -177,8 +181,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Batch management of the Warehouse
-	*/
+	 * Batch management of the Warehouse
+	 */
 
 	List<Batch> getSortedBatches() {
 		List<Batch> orderedBatches = new ArrayList<Batch>();
@@ -227,8 +231,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Transaction management of the Warehouse
-	*/
+	 * Transaction management of the Warehouse
+	 */
 
 	double getUnpaidTransactionsBalance() {
 		double res = 0;
@@ -337,8 +341,7 @@ public class Warehouse implements Serializable {
 		partner.addTransaction(_nextTransactionId, acquisition);
 		partner.changeValueAcquisitions(baseValue);
 		partner.setStatus();
-		
-		
+
 		_transactions.put(_nextTransactionId, acquisition);
 		_nextTransactionId++;
 
@@ -370,7 +373,6 @@ public class Warehouse implements Serializable {
 		List<Component> components = product.getRecipe().getComponents();
 
 		double totalPrice = getTotalRecipePrice(components, partner, quantity);
-		totalPrice *= (1 + product.getRecipe().getAlpha());
 
 		double difference = baseValue - totalPrice;
 
@@ -383,7 +385,7 @@ public class Warehouse implements Serializable {
 		}
 
 		Transaction breakdown = new BreakdownSale(_nextTransactionId, product, quantity, partner, difference, paidValue);
-		breakdown.set
+		((BreakdownSale) breakdown).setRecipe(product.getRecipe());
 		breakdown.setPaymentDate(_date);
 
 		partner.addBreakdown(_nextTransactionId, breakdown);
@@ -412,7 +414,6 @@ public class Warehouse implements Serializable {
 			}
 			Batch batch = new Batch(c.getProduct(), partner, price, quantity * c.getQuantity());
 
-			
 			registerBatch(batch);
 			price *= (quantity * c.getQuantity());
 			totalPrice += price;
@@ -451,13 +452,8 @@ public class Warehouse implements Serializable {
 	}
 
 	/*
-	* Notification management of the Warehouse
-	*/
-
-	void sendNewNotification(Product product) {
-		DeliveryMethod type = new DefaultMethod();
-		type.sendNewNotification(product);
-	}
+	 * Notification management of the Warehouse
+	 */
 
 	List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
 		if (_partners.get(partnerId.toLowerCase()) == null)
@@ -468,6 +464,11 @@ public class Warehouse implements Serializable {
 
 	Collection<Transaction> getTransactions() {
 		return Collections.unmodifiableCollection(_transactions.values());
+	}
+
+	void sendNewNotification(Product product) {
+		DeliveryMethod type = new DefaultMethod();
+		type.sendNewNotification(product);
 	}
 
 	void sendBargainNotification(Product product) {

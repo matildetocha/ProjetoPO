@@ -1,48 +1,35 @@
-*** tests/A-18-03-M-ok.out	2021-11-11 14:06:37.815183963 +0000
---- tests/A-18-03-M-ok.outhyp	2021-11-11 23:00:30.477548531 +0000
+*** tests/A-18-03-M-ok.out	2021-11-10 23:23:51.000000000 +0000
+--- tests/A-18-03-M-ok.outhyp	2021-11-12 07:43:44.012203390 +0000
 ***************
-*** 42,48 ****
-  5 - Mostrar compras com parceiro
-  6 - Mostrar vendas (e desagregações) com parceiro
-  0 - Sair
-! Escolha uma opção: Identificador do parceiro: Gestão de Parceiros
-  1 - Mostrar parceiro
-  2 - Mostrar parceiros
-  3 - Registar parceiro
---- 42,48 ----
-  5 - Mostrar compras com parceiro
-  6 - Mostrar vendas (e desagregações) com parceiro
-  0 - Sair
-! Escolha uma opção: Gestão de Parceiros
-  1 - Mostrar parceiro
-  2 - Mostrar parceiros
-  3 - Registar parceiro
-***************
-*** 50,57 ****
+*** 50,73 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
 ! Escolha uma opção: Identificador do parceiro: DESAGREGAÇÃO|0|M2|GARRAFA|5|30|30|0|ROLHA:5:10#VIDRO:10:10
 ! Gestão de Parceiros
-  1 - Mostrar parceiro
-  2 - Mostrar parceiros
-  3 - Registar parceiro
---- 50,57 ----
+! 1 - Mostrar parceiro
+! 2 - Mostrar parceiros
+! 3 - Registar parceiro
+! 4 - Activa/desactivar notificações de um produto
+! 5 - Mostrar compras com parceiro
+! 6 - Mostrar vendas (e desagregações) com parceiro
+! 0 - Sair
+! Escolha uma opção: Menu Principal
+! 1 - Abrir
+! 2 - Guardar
+! 3 - Mostrar Data
+! 4 - Avançar Data
+! 5 - Gestão de Produtos
+! 6 - Gestão de Parceiros
+! 7 - Gestão de Transacções
+! 8 - Menu de Consultas
+! 9 - Ver Saldo Global
+! 0 - Sair
+! Escolha uma opção: 
+\ No newline at end of file
+--- 50,53 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: Número inválido!
-! Escolha uma opção: Gestão de Parceiros
-  1 - Mostrar parceiro
-  2 - Mostrar parceiros
-  3 - Registar parceiro
-***************
-*** 59,64 ****
---- 59,65 ----
-  5 - Mostrar compras com parceiro
-  6 - Mostrar vendas (e desagregações) com parceiro
-  0 - Sair
-+ Escolha uma opção: Número inválido!
-  Escolha uma opção: Menu Principal
-  1 - Abrir
-  2 - Guardar
+! Escolha uma opção: Identificador do parceiro: 
+\ No newline at end of file

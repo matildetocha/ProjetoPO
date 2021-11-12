@@ -10,5 +10,4 @@ public class Acquisition extends Transaction {
 		return "COMPRA|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|"
 				+ getQuantity() + "|" + Math.round(getBaseValue()) + "|" + getPaymentDate().now(); 
 	}
-
 }
