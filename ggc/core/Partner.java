@@ -52,7 +52,7 @@ public class Partner implements Serializable, Observer {
 	Collection<Transaction> getPayedTransactions() {
 		Map<Integer, Transaction> _payedTransactions = new HashMap<>();
 
-		for (Transaction t : _transactions.values()) {
+		for (Transaction t : _sales.values()) {
 			if (t.isPaid())
 				_payedTransactions.put(t.getId(), t);
 		}
@@ -68,7 +68,7 @@ public class Partner implements Serializable, Observer {
 		_batches.add(batch);
 	}
 
-	Collection<Transaction> getSales() {
+	Collection<Transaction> getSalesByCredit() {
 		return Collections.unmodifiableCollection(_sales.values());
 	}
 
@@ -84,6 +84,10 @@ public class Partner implements Serializable, Observer {
 		_acquisitions.put(id, transaction);
 	}
 
+	Collection<Transaction> getBreakdownSales() {
+		return Collections.unmodifiableCollection(_breakdowns.values());
+	}
+
 	void addBreakdown(int id, Transaction transaction) {
 		_breakdowns.put(id, transaction);
 	}
@@ -97,14 +101,15 @@ public class Partner implements Serializable, Observer {
 		Status statusSelection = new SelectionStatus();
 		Status statusElite = new EliteStatus();
 
-		if (_points <= 2000)
+		if (_points <= 2000){
 			_status = statusNormal.getName();
-
-		else if (_points < 25000 && _points > 2000)
+		}
+		else if (_points < 25000 && _points > 2000){
 			_status = statusSelection.getName();
-
-		else if (_points > 25000)
+		}
+		else if (_points > 25000){
 			_status = statusElite.getName();
+		}
 	}
 
 	Status getStatusType() {

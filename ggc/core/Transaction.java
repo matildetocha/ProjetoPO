@@ -5,7 +5,7 @@ import java.io.Serializable;
 public abstract class Transaction implements Serializable{
 	private static final long serialVersionUID = 202109192006L;
 
-	static int _id;
+	private int _id;
 	private Date _paymentDate;
 	private double _baseValue;
 	private int _quantity;
@@ -19,6 +19,7 @@ public abstract class Transaction implements Serializable{
 		_product = product;
 		_baseValue = baseValue;
 		_quantity = quantity;
+		_isPaid = false;
 	}
 
 	boolean isPaid() {
@@ -55,5 +56,15 @@ public abstract class Transaction implements Serializable{
 
 	Product getProduct() {
 		return _product;
+	}
+
+	@Override
+	public int hashCode() {
+		return _id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Transaction && ((Transaction) obj)._id == _id;
 	}
 }

@@ -21,7 +21,9 @@ class DoShowPartnerSales extends Command<WarehouseManager> {
   @Override
   public void execute() throws CommandException {
     try {
-      _display.popup(_receiver.getPartnerSales(stringField("partnerId")));
+      _display.popup(_receiver.getPartnerSalesByCredit(stringField("partnerId")));
+      _display.popup(_receiver.getPartnerBreakdownSale(stringField("partnerId")));
+      
     } catch (UnknownUserCoreException e) {
       throw new UnknownPartnerKeyException(stringField("partnerId"));
     }

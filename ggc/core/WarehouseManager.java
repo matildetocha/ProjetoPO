@@ -37,9 +37,10 @@ public class WarehouseManager {
 	public Warehouse getWarehouse() {
 		return _warehouse;
 	}
+
 	/*
 	 * Time management of the WarehouseManager
-	*/
+	 */
 	public int displayDate() {
 		return _warehouse.displayDate();
 	}
@@ -54,9 +55,9 @@ public class WarehouseManager {
 		return _warehouse.advanceDate(days);
 	}
 
-	/* 
-	* Currency management of the WarehouseManager
-	*/
+	/*
+	 * Currency management of the WarehouseManager
+	 */
 	public int getAccountingBalance() {
 		return _warehouse.getAccountingBalance();
 	}
@@ -67,7 +68,7 @@ public class WarehouseManager {
 
 	/*
 	 * Partners management of the WarehouseManager
-	*/
+	 */
 
 	public Collection<Partner> getPartners() {
 		return _warehouse.getPartners();
@@ -85,17 +86,21 @@ public class WarehouseManager {
 		_warehouse.registerPartner(name, id, address);
 	}
 
-	public Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException{
+	public Collection<Transaction> getPartnerAcquistions(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getPartnerAcquistions(partnerId);
 	}
 
-	public Collection<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException{
-		return _warehouse.getPartnerSales(partnerId);
+	public Collection<Transaction> getPartnerSalesByCredit(String partnerId) throws UnknownUserCoreException {
+		return _warehouse.getPartnerSalesByCredit(partnerId);
+	}
+
+	public Collection<Transaction> getPartnerBreakdownSale(String partnerId) throws UnknownUserCoreException {
+		return _warehouse.getPartnerBreakdownSale(partnerId);
 	}
 
 	/*
-	* Product management of the WarehouseManager
-	*/
+	 * Product management of the WarehouseManager
+	 */
 
 	public Collection<Product> getProducts() {
 		return _warehouse.getProducts();
@@ -109,7 +114,7 @@ public class WarehouseManager {
 		return _warehouse.getProduct(id);
 	}
 
-	/** 
+	/**
 	 * @param product
 	 * @throws DuplicateProductCoreException
 	 */
@@ -135,8 +140,8 @@ public class WarehouseManager {
 	}
 
 	/*
-	* Batch management of the WarehouseManager
-	*/
+	 * Batch management of the WarehouseManager
+	 */
 
 	public List<Batch> getSortedBatches() {
 		return _warehouse.getSortedBatches();
@@ -165,8 +170,8 @@ public class WarehouseManager {
 	// }
 
 	/*
-	* Transaction management of the WarehouseManager
-	*/
+	 * Transaction management of the WarehouseManager
+	 */
 
 	public Transaction getTransaction(int id) throws UnknownTransactionCoreException {
 		return _warehouse.getTransaction(id);
@@ -201,9 +206,9 @@ public class WarehouseManager {
 	}
 
 	/*
-	* Notification management of the Warehouse
-	*/
-	
+	 * Notification management of the Warehouse
+	 */
+
 	public List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getNotifications(partnerId);
 	}
@@ -220,7 +225,8 @@ public class WarehouseManager {
 		_warehouse.clearAllNotifications(partnerId);
 	}
 
-	public void toogleProductNotifications(String partnerId, String productId) throws UnknownUserCoreException, UnknownProductCoreException {
+	public void toogleProductNotifications(String partnerId, String productId)
+			throws UnknownUserCoreException, UnknownProductCoreException {
 		_warehouse.toogleProductNotifications(partnerId, productId);
 	}
 

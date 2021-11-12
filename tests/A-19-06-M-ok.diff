@@ -1,5 +1,5 @@
 *** tests/A-19-06-M-ok.out	2021-11-10 23:24:42.000000000 +0000
---- tests/A-19-06-M-ok.outhyp	2021-11-12 07:43:44.520202498 +0000
+--- tests/A-19-06-M-ok.outhyp	2021-11-12 13:37:26.134514034 +0000
 ***************
 *** 16,29 ****
   4 - Registar compra
@@ -20,7 +20,7 @@
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identificador do produto: Quantidade: Registar venda: Operação inválida: Produto 'ROLHA': pedido=20, existências=75
+! Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identificador do produto: Quantidade: Registar venda: Operação inválida: Produto 'GARRAFA': pedido=4, existências=2
 ! Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
