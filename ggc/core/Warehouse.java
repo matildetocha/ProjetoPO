@@ -76,7 +76,7 @@ public class Warehouse implements Serializable {
 
 	List<Partner> getSortedPartners() {
 		List<Partner> partnersByKey = new ArrayList<Partner>(_partners.values());
-		Collections.sort(partnersByKey, new PartnerComparator());
+		Collections.sort(partnersByKey, Partner.getComparator());
 
 		return partnersByKey;
 	}
@@ -101,6 +101,24 @@ public class Warehouse implements Serializable {
 			throw new UnknownUserCoreException();
 		}
 		return _partners.get(partnerId.toLowerCase()).getAcquistions();
+	}
+
+	List<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null) {
+			throw new UnknownUserCoreException();
+		}
+
+		Partner partner = _partners.get(partnerId.toLowerCase());
+		for (Transaction sale : partner.getSalesByCredit()) {
+			((SaleByCredit) sale).getAmountToPay(_date.now());
+		}
+
+		List<Transaction> sales = new ArrayList<>();
+		sales.addAll(partner.getSalesByCredit());
+		sales.addAll(partner.getBreakdownSales());
+
+		Collections.sort(sales, Transaction.getComparator());
+		return Collections.unmodifiableList(sales);
 	}
 
 	Collection<Transaction> getPartnerSalesByCredit(String partnerId) throws UnknownUserCoreException {
@@ -133,7 +151,7 @@ public class Warehouse implements Serializable {
 
 	List<Product> getSortedProducts() {
 		List<Product> productsByKey = new ArrayList<Product>(_products.values());
-		Collections.sort(productsByKey, new ProductComparator());
+		Collections.sort(productsByKey, Product.getComparator());
 
 		return productsByKey;
 	}
@@ -203,7 +221,7 @@ public class Warehouse implements Serializable {
 			orderedBatches.addAll(_products.get(iterator.next()).getBatches());
 		}
 
-		Collections.sort(orderedBatches, new BatchComparator());
+		Collections.sort(orderedBatches, Batch.getComparator());
 		return Collections.unmodifiableList(orderedBatches);
 	}
 
@@ -214,7 +232,7 @@ public class Warehouse implements Serializable {
 			orderedBatches.addAll(product.getBatches());
 		}
 
-		Collections.sort(orderedBatches, new BatchComparator());
+		Collections.sort(orderedBatches, Batch.getComparator());
 		return orderedBatches;
 	}
 
@@ -272,14 +290,16 @@ public class Warehouse implements Serializable {
 	}
 
 	void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
-			throws UnavailableProductCoreException, UnknownUserCoreException {
-		if (_products.get(productId) == null)
-			throw new UnknownUserCoreException(); //FIXME FAZER O OUTRO GET MAS DO PARTNER
-
+			throws UnavailableProductCoreException, UnknownUserCoreException, UnknownProductCoreException {
+		if (_products.get(productId.toLowerCase()) == null)
+			throw new UnknownProductCoreException(); 
+			
+		if (_partners.get(partnerId.toLowerCase()) == null)
+				throw new UnknownUserCoreException();
+				
 		Product product = _products.get(productId.toLowerCase());
 		Date deadlineDate = new Date(deadline);
 
-		System.out.println(product);
 		if (product.getQuantity() < quantity) {
 			throw new UnavailableProductCoreException();
 		}
@@ -303,7 +323,7 @@ public class Warehouse implements Serializable {
 	}
 
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
-			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
+			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException, UnknownUserCoreException {
 		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
 		int amountToCreate = quantity - product.getQuantity();
 
@@ -311,8 +331,7 @@ public class Warehouse implements Serializable {
 			if (c.getQuantity() * amountToCreate > c.getProduct().getQuantity())
 				throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
 						c.getQuantity() * amountToCreate);
-		} // !!! teste 19.06 ele nao esta a dar um erro errado e dps ja nao tem as
-			// transacoes
+		} 
 
 		List<String> productIds = new ArrayList<>();
 		List<Integer> quantities = new ArrayList<>();
@@ -420,7 +439,7 @@ public class Warehouse implements Serializable {
 		for (Component c : components) {
 
 			List<Batch> batchesByLowestPrice = new ArrayList<>(c.getProduct().getBatches());
-			Collections.sort(batchesByLowestPrice, new BatchComparator());
+			Collections.sort(batchesByLowestPrice, Batch.getComparator());
 			Batch lowestPriceBatch = batchesByLowestPrice.get(0);
 
 			if (lowestPriceBatch != null) {

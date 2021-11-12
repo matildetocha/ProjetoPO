@@ -40,6 +40,7 @@ public class SelectionStatus implements Status {
       points *= 0.10;
       partner.changeStatus(new NormalStatus());
     }
+    
     return points;
   }
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public abstract class Product implements Serializable {
 		int i = amount;
 
 		batchesByLowestPrice = _batches;
-		Collections.sort(batchesByLowestPrice, new BatchComparator());
+		Collections.sort(batchesByLowestPrice, Batch.getComparator());
 		Iterator<Batch> iter = batchesByLowestPrice.iterator();
 
 		while (i > 0) {
@@ -220,4 +221,15 @@ public abstract class Product implements Serializable {
 		for (Partner partner : _observers)
 			partner.update(notification);
 	}
+
+	public static Comparator<Product> getComparator() {
+		return PRODUCT_COMPARATOR;
+	}
+
+	private static final Comparator<Product> PRODUCT_COMPARATOR = new Comparator<Product>() {
+		@Override
+		public int compare(Product a, Product b) {
+			return a.getId().toLowerCase().compareTo(b.getId().toLowerCase());
+		}
+	};
 }

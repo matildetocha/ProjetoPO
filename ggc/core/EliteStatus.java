@@ -29,6 +29,7 @@ public class EliteStatus implements Status {
       points *= 0.25;
       partner.changeStatus(new SelectionStatus());
     }
+    
     return points;
   }
 

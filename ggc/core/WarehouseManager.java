@@ -90,6 +90,10 @@ public class WarehouseManager {
 		return _warehouse.getPartnerAcquistions(partnerId);
 	}
 
+	public List<Transaction> getPartnerSales(String partnerId) throws UnknownUserCoreException {
+		return _warehouse.getPartnerSales(partnerId);
+	}
+
 	public Collection<Transaction> getPartnerSalesByCredit(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getPartnerSalesByCredit(partnerId);
 	}
@@ -163,12 +167,6 @@ public class WarehouseManager {
 		_warehouse.registerBatch(batch);
 	}
 
-	// public void registerSale(int quantity, String productId, String partnerId,
-	// int deadline)
-	// throws UnavailableProductCoreException {
-	// _warehouse.registerSale(quantity, productId, partnerId, deadline);
-	// }
-
 	/*
 	 * Transaction management of the WarehouseManager
 	 */
@@ -187,12 +185,13 @@ public class WarehouseManager {
 	}
 
 	public void registerSaleByCredit(String productId, String partnerId, int deadline, int quantity)
-			throws UnavailableProductCoreException {
+			throws UnavailableProductCoreException, UnknownUserCoreException, UnknownProductCoreException {
 		_warehouse.registerSaleByCredit(productId, partnerId, deadline, quantity);
 	}
 
 	public void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
-			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException {
+			throws UnavailableProductCoreException, DuplicateProductCoreException, UnknownProductCoreException,
+			UnknownUserCoreException {
 		_warehouse.saleAggProduct(partnerId, productId, deadline, quantity);
 	}
 

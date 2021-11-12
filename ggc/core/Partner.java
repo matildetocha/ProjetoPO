@@ -2,6 +2,7 @@ package ggc.core;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,13 +102,11 @@ public class Partner implements Serializable, Observer {
 		Status statusSelection = new SelectionStatus();
 		Status statusElite = new EliteStatus();
 
-		if (_points <= 2000){
+		if (_points <= 2000) {
 			_status = statusNormal.getName();
-		}
-		else if (_points < 25000 && _points > 2000){
+		} else if (_points < 25000 && _points > 2000) {
 			_status = statusSelection.getName();
-		}
-		else if (_points > 25000){
+		} else if (_points > 25000) {
 			_status = statusElite.getName();
 		}
 	}
@@ -129,7 +128,7 @@ public class Partner implements Serializable, Observer {
 
 	void changeStatus(Status statusType) {
 		_status = statusType.getName();
-	} 
+	}
 
 	double getPoints() {
 		return _points;
@@ -184,4 +183,15 @@ public class Partner implements Serializable, Observer {
 		return _id + "|" + _name + "|" + _address + "|" + _status + "|" + Math.round(_points) + "|"
 				+ Math.round(_valueAcquisitions) + "|" + Math.round(_valueSales) + "|" + Math.round(_valuePaidSales);
 	}
+
+	public static Comparator<Partner> getComparator() {
+		return PARTNER_COMPARATOR;
+	}
+
+	private static final Comparator<Partner> PARTNER_COMPARATOR = new Comparator<Partner>() {
+		@Override
+		public int compare(Partner a, Partner b) {
+			return a.getId().toLowerCase().compareTo(b.getId().toLowerCase());
+		}
+	};
 }

@@ -1,6 +1,7 @@
 package ggc.core;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public abstract class Transaction implements Serializable{
 	private static final long serialVersionUID = 202109192006L;
@@ -67,4 +68,15 @@ public abstract class Transaction implements Serializable{
 	public boolean equals(Object obj) {
 		return obj instanceof Transaction && ((Transaction) obj)._id == _id;
 	}
+
+	public static Comparator<Transaction> getComparator() {
+		return TRANSACTION_COMPARATOR;
+	}
+
+	private static final Comparator<Transaction> TRANSACTION_COMPARATOR = new Comparator<Transaction>() {
+		@Override
+		public int compare(Transaction a, Transaction b) {
+			return a.getId() == b.getId() ? 0 : a.getId() > b.getId() ? 1 : -1;
+		}
+	};
 }

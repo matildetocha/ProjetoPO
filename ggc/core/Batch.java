@@ -1,6 +1,7 @@
 package ggc.core;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Batch implements Serializable {
 	private static final long serialVersionUID = 202109192006L;
@@ -90,4 +91,23 @@ public class Batch implements Serializable {
 		return _product.getId() + "|" + _partner.getId() + "|" + Math.round(_price) + "|" + _quantity;
 	}
 
+	public static Comparator<Batch> getComparator() {
+		return BATCH_COMPARATOR;
+	}
+
+	private static final Comparator<Batch> BATCH_COMPARATOR = new Comparator<Batch>() {
+		@Override
+		public int compare(Batch a, Batch b) {
+			if (a.getProduct().getId().toLowerCase().compareTo(b.getProduct().getId().toLowerCase()) == 0) {
+				if (a.getPartner().getId().toLowerCase().compareTo(b.getPartner().getId().toLowerCase()) == 0)
+					if (a.getPrice() == (b.getPrice()))
+						return a.getQuantity() < b.getQuantity() ? -1 : a.getQuantity() == b.getQuantity() ? 0 : 1;
+					else
+						return a.getPrice() < b.getPrice() ? -1 : a.getPrice() == b.getPrice() ? 0 : 1;
+				else
+					return a.getPartner().getId().toLowerCase().compareTo(b.getPartner().getId().toLowerCase());
+			} else
+				return a.getProduct().getId().toLowerCase().compareTo(b.getProduct().getId().toLowerCase());
+		}
+	};
 }
