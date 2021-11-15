@@ -49,7 +49,7 @@ Escolha uma opção: Gestão de Produtos
 4 - Visualizar lotes de um dado produto
 0 - Sair
 Escolha uma opção: GARRAFA|10|500|ROLHA:1#VIDRO:2
-ROLHA|4|-70
+ROLHA|4|30
 SAL|100|500
 VIDRO|1|50
 Gestão de Produtos
@@ -59,7 +59,7 @@ Gestão de Produtos
 4 - Visualizar lotes de um dado produto
 0 - Sair
 Escolha uma opção: GARRAFA|S1|10|500
-ROLHA|M1|4|-70
+ROLHA|M1|4|30
 SAL|S1|100|500
 VIDRO|M1|1|50
 Gestão de Produtos

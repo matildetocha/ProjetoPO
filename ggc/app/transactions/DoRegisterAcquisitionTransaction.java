@@ -33,7 +33,6 @@ public class DoRegisterAcquisitionTransaction extends Command<WarehouseManager> 
             integerField("quantity"));
 
       } catch (UnknownProductCoreException e) {
-
         if (Form.confirm(Message.requestAddRecipe())) {
           addIntegerField("numberComponents", Message.requestNumberOfComponents());
           addRealField("alpha", Message.requestAlpha());

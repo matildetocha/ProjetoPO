@@ -9,12 +9,12 @@ public class NormalStatus implements Status {
       price *= 0.9;
 
     else if (-difference > 0 && -difference <= n) {
-      for (int i = 0; i < difference; i++)
+      for (int i = 0; i < -difference; i++)
         price += price * 0.05;
     }
 
     else if (-difference > n) {
-      for (int i = 0; i < difference; i++)
+      for (int i = 0; i < -difference; i++)
         price += price * 0.1;
     }
 

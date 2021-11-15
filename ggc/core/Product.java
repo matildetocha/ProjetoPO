@@ -86,6 +86,10 @@ public abstract class Product implements Serializable {
 		_batches.add(batch);
 	}
 
+	void removeBatch(Batch batch) {
+		_batches.remove(batch);
+	}
+
 	/**
 	 * A product can see all of the batches it is associated to.
 	 * 
@@ -131,7 +135,7 @@ public abstract class Product implements Serializable {
 		}
 		return res;
 	}
-	
+
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
 		double priceByFractions = 0;
 		int lastBatchAmount = batchesToSell.get(batchesToSell.size() - 1).getQuantity();
@@ -152,12 +156,13 @@ public abstract class Product implements Serializable {
 	 * @return the maximum price of the product
 	 */
 	void updateMaxPrice() {
-		double res = 0;
+		double res = _maxPrice;
 
 		for (Batch b : _batches) {
 			if (b.getPrice() > res)
 				res = b.getPrice();
 		}
+		
 		_maxPrice = res;
 	}
 
@@ -172,22 +177,6 @@ public abstract class Product implements Serializable {
 		return minPrice;
 	}
 
-	void updateBatchStock(List<Batch> batchesToSell, int amount) {
-		int i, lastI = batchesToSell.size() - 1;
-
-		if (batchesToSell.size() != 1) {
-			for (i = 0; i < batchesToSell.size() - 1; i++) {
-				batchesToSell.get(i).changeQuantity(-batchesToSell.get(i).getQuantity());
-				_batches.remove(batchesToSell.get(i));
-				amount -= batchesToSell.get(i).getQuantity();
-			}
-		}
-
-		batchesToSell.get(lastI).changeQuantity(-amount);
-		if (batchesToSell.get(lastI).getQuantity() == 0)
-			_batches.remove(lastI);
-	}
-
 	Recipe getRecipe() {
 		return _recipe;
 	}
@@ -200,12 +189,16 @@ public abstract class Product implements Serializable {
 		return Collections.unmodifiableList(_observers);
 	}
 
+	boolean getObserver(Partner partner) {
+		return _observers.contains(partner);
+	}
+
 	void addObserver(Partner partner) {
 		_observers.add(partner);
 	}
 
-	void removeObserver(Observer observer) {
-		_observers.remove(observer);
+	void removeObserver(Partner partner) {
+		_observers.remove(partner);
 	}
 
 	void notifyAllObservers(Notification notification) {

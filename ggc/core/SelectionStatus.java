@@ -16,7 +16,7 @@ public class SelectionStatus implements Status {
 
     else if (-difference > 0 && -difference <= n) {
       if (-difference > 1) {
-        for (i = 0; i < difference; i++)
+        for (i = 0; i < -difference; i++)
           price += price * 0.02;
       }
     }
@@ -33,7 +33,7 @@ public class SelectionStatus implements Status {
     double points = 0;
     int difference = currentDate.difference(deadline);
 
-    if (difference <= n)
+    if (difference > 0)
       points += 10 * price;
 
     else if (-difference >= 2) {

@@ -5,13 +5,13 @@ public class EliteStatus implements Status {
   public double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
     int difference = currentDate.difference(deadline);
 
-    if (difference <= n)
+    if (difference >= n)
       price *= 0.9;
 
-    else if (difference <= 0 && difference > n)
+    else if (difference >= 0 && difference < n)
       price *= 0.9;
 
-    else if (difference > 0 && difference <= n)
+    else if (-difference > 0 && -difference <= n)
       price *= 0.95;
 
     return price;
@@ -22,7 +22,7 @@ public class EliteStatus implements Status {
     double points = 0;
     int difference = currentDate.difference(deadline);
 
-    if (difference <= n)
+    if (difference > 0)
       points += 10 * price;
 
     else if (-difference >= 15) {

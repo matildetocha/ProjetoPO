@@ -1,5 +1,5 @@
 *** testsFinal/A-14-04-M-ok.out	2021-10-28 17:57:00.309012000 +0100
---- testsFinal/A-14-04-M-ok.outhyp	2021-11-15 15:39:21.797473272 +0000
+--- testsFinal/A-14-04-M-ok.outhyp	2021-11-15 20:27:49.463309527 +0000
 ***************
 *** 59,65 ****
   1 - Produtos com Preço Abaixo de Limite
@@ -13,7 +13,7 @@
   1 - Produtos com Preço Abaixo de Limite
   2 - Facturas pagas por parceiro
   0 - Sair
-! Escolha uma opção: Identificador do parceiro: VENDA|0|M1|ROLHA|10|300|300|10|0
+! Escolha uma opção: Identificador do parceiro: VENDA|0|M1|ROLHA|10|300|270|10|0
   VENDA|1|M1|VIDRO|25|25000|22500|5|0
   Consultas
   1 - Produtos com Preço Abaixo de Limite

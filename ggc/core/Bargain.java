@@ -7,6 +7,6 @@ public class Bargain extends Notification {
 
   @Override
   public String toString() {
-    return "BARGAIN" + "|" + getProduct().getId() + "|" + Math.round(getProduct().getMinPrice());
+    return "BARGAIN" + "|" + getProduct().getId() + "|" + Math.round(getPrice());
   }
 }

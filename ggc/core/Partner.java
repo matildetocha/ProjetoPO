@@ -65,6 +65,10 @@ public class Partner implements Serializable, Observer {
 		_batches.add(batch);
 	}
 
+	void removeBatch(Batch batch) {
+		_batches.remove(batch);
+	}
+
 	Collection<Transaction> getSalesByCredit() {
 		return Collections.unmodifiableCollection(_sales.values());
 	}
@@ -167,7 +171,7 @@ public class Partner implements Serializable, Observer {
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Product && ((Partner) obj)._id.toLowerCase().equals(_id.toLowerCase());
+		return obj instanceof Partner && ((Partner) obj)._id.toLowerCase().equals(_id.toLowerCase());
 	}
 
 	@Override

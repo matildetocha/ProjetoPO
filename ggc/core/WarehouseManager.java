@@ -58,11 +58,11 @@ public class WarehouseManager {
 	/*
 	 * Currency management of the WarehouseManager
 	 */
-	public int getAccountingBalance() {
+	public double getAccountingBalance() {
 		return _warehouse.getAccountingBalance();
 	}
 
-	public int getAvailableBalance() {
+	public double getAvailableBalance() {
 		return _warehouse.getAvailableBalance();
 	}
 
@@ -186,14 +186,6 @@ public class WarehouseManager {
 
 	public List<Notification> getNotifications(String partnerId) throws UnknownUserCoreException {
 		return _warehouse.getNotifications(partnerId);
-	}
-
-	public void sendNewNotification(Product product) {
-		_warehouse.sendNewNotification(product);
-	}
-
-	public void sendBargainNotification(Product product) {
-		_warehouse.sendBargainNotification(product);
 	}
 
 	public void clearAllNotifications(String partnerId) throws UnknownUserCoreException {
