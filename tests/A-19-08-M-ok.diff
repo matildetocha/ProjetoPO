@@ -1,5 +1,5 @@
-*** tests/A-19-06-M-ok.out	2021-11-05 12:26:13.944923000 +0000
---- tests/A-19-06-M-ok.outhyp	2021-11-15 15:35:35.305316768 +0000
+*** tests/A-19-08-M-ok.out	2021-11-06 08:31:15.275004000 +0000
+--- tests/A-19-08-M-ok.outhyp	2021-11-15 15:35:35.573317123 +0000
 ***************
 *** 16,29 ****
   4 - Registar compra
@@ -12,7 +12,7 @@
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|0|M1|GARRAFA|4|81|81|2
+! Escolha uma opção: Identificador da transacção: VENDA|0|M1|GARRAFA|4|181|181|2
   Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
@@ -37,21 +37,24 @@
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: GARRAFA|28|0|ROLHA:10#VIDRO:5
-! ROLHA|2|55
-  SAL|40|500
-! VIDRO|1|35
+! Escolha uma opção: CORTIÇA|M1|1|1400
+! PLASTICO|M1|1|980
+  SAL|S1|100|500
+! VIDRO|M1|1|190
   Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes
---- 49,58 ----
+--- 49,61 ----
   3 - Visualizar lotes fornecidos por parceiro
   4 - Visualizar lotes de um dado produto
   0 - Sair
-! Escolha uma opção: GARRAFA|13|-24|ROLHA:10#VIDRO:5
-! ROLHA|2|75
-  SAL|40|500
-! VIDRO|1|45
+! Escolha uma opção: CORTIÇA|M1|1|1500
+! GARRAFA|M1|6|4
+! GARRAFA|S1|10|-8
+! PLASTICO|M1|1|1000
+! ROLHA|M1|2|-118
+  SAL|S1|100|500
+! VIDRO|M1|1|200
   Gestão de Produtos
   1 - Visualizar todos os produtos
   2 - Visualizar todos os lotes

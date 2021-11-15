@@ -1,0 +1,55 @@
+*** tests/A-16-03-M-ok.out	2021-11-01 17:27:24.282421000 +0000
+--- tests/A-16-03-M-ok.outhyp	2021-11-15 15:35:33.313314112 +0000
+***************
+*** 105,112 ****
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: Saldo disponível: 30
+! Saldo contabilístico: 30
+  Menu Principal
+  1 - Abrir
+  2 - Guardar
+--- 105,112 ----
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+! Escolha uma opção: Saldo disponível: 60
+! Saldo contabilístico: 60
+  Menu Principal
+  1 - Abrir
+  2 - Guardar
+***************
+*** 126,132 ****
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: Identificador do parceiro: S1|Toshiba|Tokyo, Japan|NORMAL|300|0|30|30
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+--- 126,132 ----
+  5 - Mostrar compras com parceiro
+  6 - Mostrar vendas (e desagregações) com parceiro
+  0 - Sair
+! Escolha uma opção: Identificador do parceiro: S1|Toshiba|Tokyo, Japan|NORMAL|600|0|30|60
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+***************
+*** 137,143 ****
+  0 - Sair
+  Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0
+  R1|António Figueiredo|Lisboa|NORMAL|0|0|0|0
+! S1|Toshiba|Tokyo, Japan|NORMAL|300|0|30|30
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros
+--- 137,143 ----
+  0 - Sair
+  Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0
+  R1|António Figueiredo|Lisboa|NORMAL|0|0|0|0
+! S1|Toshiba|Tokyo, Japan|NORMAL|600|0|30|60
+  Gestão de Parceiros
+  1 - Mostrar parceiro
+  2 - Mostrar parceiros

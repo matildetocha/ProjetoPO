@@ -1,0 +1,23 @@
+*** tests/A-12-09-M-ok.out	2021-11-12 10:28:52.338636000 +0000
+--- tests/A-12-09-M-ok.outhyp	2021-11-15 15:35:30.001309630 +0000
+***************
+*** 77,93 ****
+  8 - Menu de Consultas
+  9 - Ver Saldo Global
+  0 - Sair
+- Escolha uma opção: Saldo disponível: 20
+- Saldo contabilístico: 140
+- Menu Principal
+- 1 - Abrir
+- 2 - Guardar
+- 3 - Mostrar Data
+- 4 - Avançar Data
+- 5 - Gestão de Produtos
+- 6 - Gestão de Parceiros
+- 7 - Gestão de Transacções
+- 8 - Menu de Consultas
+- 9 - Ver Saldo Global
+- 0 - Sair
+  Escolha uma opção: 
+\ No newline at end of file
+--- 77,80 ----

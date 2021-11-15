@@ -1,0 +1,30 @@
+*** tests/A-13-04-M-ok.out	2021-10-28 10:57:04.040062000 +0100
+--- tests/A-13-04-M-ok.outhyp	2021-11-15 15:35:30.573310409 +0000
+***************
+*** 13,31 ****
+  1 - Produtos com Preço Abaixo de Limite
+  2 - Facturas pagas por parceiro
+  0 - Sair
+! Escolha uma opção: Preço: Consultas
+! 1 - Produtos com Preço Abaixo de Limite
+! 2 - Facturas pagas por parceiro
+! 0 - Sair
+! Escolha uma opção: Menu Principal
+! 1 - Abrir
+! 2 - Guardar
+! 3 - Mostrar Data
+! 4 - Avançar Data
+! 5 - Gestão de Produtos
+! 6 - Gestão de Parceiros
+! 7 - Gestão de Transacções
+! 8 - Menu de Consultas
+! 9 - Ver Saldo Global
+! 0 - Sair
+! Escolha uma opção: 
+\ No newline at end of file
+--- 13,16 ----
+  1 - Produtos com Preço Abaixo de Limite
+  2 - Facturas pagas por parceiro
+  0 - Sair
+! Escolha uma opção: Preço: 
+\ No newline at end of file
