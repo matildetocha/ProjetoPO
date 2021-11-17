@@ -48,7 +48,7 @@ Escolha uma opção: Gestão de Produtos
 3 - Visualizar lotes fornecidos por parceiro
 4 - Visualizar lotes de um dado produto
 0 - Sair
-Escolha uma opção: GARRAFA|400|13|ROLHA:1#SAL:5#VIDRO:10
+Escolha uma opção: GARRAFA|400|4|ROLHA:1#SAL:5#VIDRO:10
 HIDROGENIO|200|5000
 ROLHA|20|1009
 SAL|26|1045
@@ -59,9 +59,7 @@ Gestão de Produtos
 3 - Visualizar lotes fornecidos por parceiro
 4 - Visualizar lotes de um dado produto
 0 - Sair
-Escolha uma opção: GARRAFA|M1|200|5
-GARRAFA|M1|400|5
-GARRAFA|S1|200|3
+Escolha uma opção: GARRAFA|M1|400|4
 HIDROGENIO|S1|200|5000
 ROLHA|R1|2|9
 ROLHA|R1|2|500
@@ -96,7 +94,7 @@ Escolha uma opção: Gestão de Produtos
 3 - Visualizar lotes fornecidos por parceiro
 4 - Visualizar lotes de um dado produto
 0 - Sair
-Escolha uma opção: GARRAFA|400|13|ROLHA:1#SAL:5#VIDRO:10
+Escolha uma opção: GARRAFA|400|4|ROLHA:1#SAL:5#VIDRO:10
 HIDROGENIO|200|5000
 ROLHA|20|1009
 SAL|26|1045

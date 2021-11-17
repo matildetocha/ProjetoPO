@@ -22,7 +22,7 @@ public class EliteStatus implements Status {
     double points = 0;
     int difference = currentDate.difference(deadline);
 
-    if (difference > 0)
+    if (difference >= 0)
       points += 10 * price;
 
     else if (-difference >= 15) {

@@ -432,6 +432,8 @@ public class Warehouse implements Serializable {
 		Partner partner = _partners.get(partnerId.toLowerCase());
 		double baseValue = product.getMaxPrice() * quantity;
 		double paidValue;
+		List<Batch> batchesToBreakdown = product.getBatchesToSell(quantity);
+		updateBatchStock(batchesToBreakdown, quantity);
 
 		List<Component> components = product.getRecipe().getComponents();
 
@@ -445,7 +447,7 @@ public class Warehouse implements Serializable {
 		}
 
 		else {
-			partner.changeValueSales(difference);
+			partner.changeValueSales(0);
 			paidValue = difference;
 		}
 
