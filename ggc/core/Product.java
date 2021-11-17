@@ -104,7 +104,7 @@ public abstract class Product implements Serializable {
 		List<Batch> batchesToSell = new ArrayList<>();
 		int i = amount;
 
-		Collections.sort(batchesByLowestPrice, Batch.getComparator());
+		Collections.sort(batchesByLowestPrice, Batch.getPriceComparator());
 		Iterator<Batch> iter = batchesByLowestPrice.iterator();
 
 		while (i > 0 && iter.hasNext()) {
@@ -138,13 +138,14 @@ public abstract class Product implements Serializable {
 
 	double getPriceByFractions(List<Batch> batchesToSell, int amount) {
 		double priceByFractions = 0;
-		int lastBatchAmount = batchesToSell.get(batchesToSell.size() - 1).getQuantity();
 		double lastBatchPrice = batchesToSell.get(batchesToSell.size() - 1).getPrice();
 
-		for (int i = 0; i < batchesToSell.size() - 1; i++)
+		for (int i = 0; i < batchesToSell.size() - 1; i++) {
 			priceByFractions += batchesToSell.get(i).getPrice() * batchesToSell.get(i).getQuantity();
+			amount -= batchesToSell.get(i).getQuantity();
+		}
 
-		priceByFractions += lastBatchAmount * lastBatchPrice - (lastBatchAmount - amount) * lastBatchPrice;
+		priceByFractions += amount * lastBatchPrice;
 
 		return priceByFractions;
 	}
@@ -162,7 +163,7 @@ public abstract class Product implements Serializable {
 			if (b.getPrice() > res)
 				res = b.getPrice();
 		}
-		
+
 		_maxPrice = res;
 	}
 

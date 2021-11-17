@@ -50,15 +50,16 @@ public class Partner implements Serializable, Observer {
 		return Collections.unmodifiableList(_batches);
 	}
 
-	Collection<Transaction> getPayedTransactions() {
-		Map<Integer, Transaction> _payedTransactions = new HashMap<>();
+	List<Transaction> getPayedTransactions() {
+		List<Transaction> _payedTransactions = new ArrayList<Transaction>(_breakdowns.values());
 
 		for (Transaction t : _sales.values()) {
 			if (t.isPaid())
-				_payedTransactions.put(t.getId(), t);
+				_payedTransactions.add(t);
 		}
 
-		return Collections.unmodifiableCollection(_payedTransactions.values());
+		Collections.sort(_payedTransactions, Transaction.getComparator());
+		return Collections.unmodifiableList(_payedTransactions);
 	}
 
 	void addBatch(Batch batch) {

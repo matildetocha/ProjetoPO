@@ -105,6 +105,7 @@ public class WarehouseManager {
 	/**
 	 * @param product
 	 * @throws DuplicateProductCoreException
+	 * @throws UnknownProductCoreException
 	 */
 
 	public void createAggregateProduct(String productId, Double alpha, List<String> productIds, List<Integer> quantitys,
@@ -157,7 +158,7 @@ public class WarehouseManager {
 	}
 
 	public void registerAcquisition(String partnerId, String productId, double price, int quantity)
-			throws UnknownProductCoreException {
+			throws UnknownProductCoreException, UnknownUserCoreException {
 		_warehouse.registerAcquisition(partnerId, productId, price, quantity);
 	}
 

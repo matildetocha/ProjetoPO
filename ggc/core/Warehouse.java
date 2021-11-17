@@ -213,11 +213,15 @@ public class Warehouse implements Serializable {
 			if (product.getQuantity() != 0)
 				orderedBatches.addAll(product.getBatches());
 		}
-		for (Batch batch : orderedBatches) {
+
+		Iterator<Batch> iterator = orderedBatches.iterator();
+		while (iterator.hasNext()) {
+			Batch batch = iterator.next();
 			if (batch.getPrice() >= priceLimit || batch.getQuantity() == 0)
-				orderedBatches.remove(batch);
+				iterator.remove();
 		}
-		if(!orderedBatches.isEmpty())
+
+		if (!orderedBatches.isEmpty())
 			Collections.sort(orderedBatches, Batch.getComparator());
 		return Collections.unmodifiableList(orderedBatches);
 	}
@@ -334,7 +338,7 @@ public class Warehouse implements Serializable {
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 
 		Transaction sale = new SaleByCredit(_nextTransactionId, partner, product, baseValue, quantity, deadlineDate);
-		
+
 		partner.addSale(_nextTransactionId, sale);
 		partner.addTransaction(_nextTransactionId, sale);
 		partner.changeValueSales(baseValue);
@@ -372,7 +376,6 @@ public class Warehouse implements Serializable {
 				else
 					tryToAggregate(partnerId, c.getProduct().getId(), deadline, c.getQuantity() * amountToCreate);
 			} else {
-				// Product productToComp = getProduct(c.getProduct().getId());
 				List<Batch> batchesToSell = product.getBatchesToSell(c.getQuantity() * amountToCreate);
 
 				updateBatchStock(batchesToSell, c.getQuantity() * amountToCreate);
@@ -381,10 +384,12 @@ public class Warehouse implements Serializable {
 	}
 
 	void registerAcquisition(String partnerId, String productId, double price, int quantity)
-			throws UnknownProductCoreException {
-		if (_products.get(productId.toLowerCase()) == null) {
+			throws UnknownProductCoreException, UnknownUserCoreException {
+		if (_partners.get(partnerId.toLowerCase()) == null)
+			throw new UnknownUserCoreException();
+
+		else if (_products.get(productId.toLowerCase()) == null)
 			throw new UnknownProductCoreException();
-		}
 
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
@@ -437,14 +442,20 @@ public class Warehouse implements Serializable {
 		if (difference < 0) {
 			partner.changeValueSales(0);
 			paidValue = 0;
-		} else {
+		}
+
+		else {
 			partner.changeValueSales(difference);
 			paidValue = difference;
 		}
 
+		_accountingBalance += paidValue;
+		_availableBalance += paidValue;
+
 		Transaction breakdown = new BreakdownSale(_nextTransactionId, product, quantity, partner, difference, paidValue);
 		((BreakdownSale) breakdown).setRecipe(product.getRecipe());
-		breakdown.setPaymentDate(_date);
+		Date currentDate = new Date(_date.now());
+		breakdown.setPaymentDate(currentDate);
 
 		partner.addBreakdown(_nextTransactionId, breakdown);
 		partner.addTransaction(_nextTransactionId, breakdown);
@@ -492,9 +503,9 @@ public class Warehouse implements Serializable {
 		unpaidTransaction.setPaymentDate(_date);
 		int n;
 
-		if (product.getRecipe() == null) 
+		if (product.getRecipe() == null)
 			n = 5;
-		
+
 		else
 			n = 3;
 

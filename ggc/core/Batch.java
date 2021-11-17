@@ -95,6 +95,10 @@ public class Batch implements Serializable {
 		return BATCH_COMPARATOR;
 	}
 
+	public static Comparator<Batch> getPriceComparator() {
+		return BATCH_PRICE_COMPARATOR;
+	}
+
 	private static final Comparator<Batch> BATCH_COMPARATOR = new Comparator<Batch>() {
 		@Override
 		public int compare(Batch a, Batch b) {
@@ -108,6 +112,13 @@ public class Batch implements Serializable {
 					return a.getPartner().getId().toLowerCase().compareTo(b.getPartner().getId().toLowerCase());
 			} else
 				return a.getProduct().getId().toLowerCase().compareTo(b.getProduct().getId().toLowerCase());
+		}
+	};
+
+	private static final Comparator<Batch> BATCH_PRICE_COMPARATOR = new Comparator<Batch>() {
+		@Override
+		public int compare(Batch a, Batch b) {
+			return a.getPrice() == b.getPrice() ? 0 : a.getPrice() > b.getPrice() ? 1 : -1;
 		}
 	};
 }
