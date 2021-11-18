@@ -29,7 +29,7 @@ public class DoRegisterSaleTransaction extends Command<WarehouseManager> {
       _receiver.registerSaleByCredit(stringField("productId"), stringField("partnerId"), integerField("deadline"),
           integerField("quantity"));
     } catch (UnknownUserCoreException e) {
-      throw new UnknownProductKeyException(stringField("partnerId"));
+      throw new UnknownPartnerKeyException(stringField("partnerId"));
 
     } catch (UnknownProductCoreException e) {
       throw new UnknownProductKeyException(stringField("productId"));

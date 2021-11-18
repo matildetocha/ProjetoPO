@@ -6,42 +6,43 @@ public class SelectionStatus implements Status {
     int difference = currentDate.difference(deadline);
     int i;
 
-    if (difference >= n)
+    if (difference >= n) //p1
       price *= 0.9;
 
-    else if (difference >= 0 && difference < n) {
+    else if (difference >= 0 && difference < n) { // p2
       if (difference >= 2)
         price *= 0.95;
     }
 
-    else if (-difference > 0 && -difference <= n) {
-      if (-difference > 1) {
+    else if (-difference > 0 && -difference <= n) { //p3
+      if (-difference >= 1) {
         for (i = 0; i < -difference; i++)
           price += price * 0.02;
       }
     }
 
-    else if (-difference > n) {
-      for (i = 0; i < -difference; i++)
-        price += price * 0.05;
+    else if (-difference > n) { //p4
+     //for (i = 0; i < -difference; i++)
+      price += price * (0.05 * -difference);
     }
     return price;
   }
 
   @Override
-  public double getPoints(Partner partner, Date currentDate, Date deadline, double price ,int n) {
-    double points = 0;
+  public void changePoints(Partner partner, Date currentDate, Date deadline, double price ,int n) {
+    double points = partner.getPoints();
     int difference = currentDate.difference(deadline);
 
-    if (difference >= 0)
+    if (difference >= 0){
       points += 10 * price;
-
-    else if (-difference >= 2) {
+      partner.changePoints(points);
+      partner.setStatus();
+    }
+    else if (-difference > 2) {
       points *= 0.10;
+      partner.changePoints(points);
       partner.changeStatus(new NormalStatus());
     }
-    
-    return points;
   }
 
   @Override

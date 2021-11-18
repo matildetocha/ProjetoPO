@@ -18,19 +18,21 @@ public class EliteStatus implements Status {
   }
 
   @Override
-  public double getPoints(Partner partner, Date currentDate, Date deadline, double price, int n) {
-    double points = 0;
+  public void changePoints(Partner partner, Date currentDate, Date deadline, double price, int n) {
+    double points = partner.getPoints();
     int difference = currentDate.difference(deadline);
 
-    if (difference >= 0)
+    if (difference >= 0){
       points += 10 * price;
-
-    else if (-difference >= 15) {
-      points *= 0.25;
-      partner.changeStatus(new SelectionStatus());
+      partner.changePoints(points);
+      partner.setStatus();
     }
-    
-    return points;
+
+    else if (-difference > 15) {
+      points *= 0.25;
+      partner.changePoints(points);
+      partner.changeStatus(new SelectionStatus());        
+    }
   }
 
   @Override

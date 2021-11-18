@@ -27,6 +27,7 @@ rm -f saved*
 let res=100*$correct/$total
 echo ""
 echo "Total Tests = " $total
+echo "Correct Tests = " $correct
 echo "Passed = " $res"%"
 printf "$failures"
 echo "Done."

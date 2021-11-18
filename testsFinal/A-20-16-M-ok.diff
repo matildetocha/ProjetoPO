@@ -1,55 +1,53 @@
-*** testsFinal/A-20-11-M-ok.out	2021-11-11 14:27:14.256583000 +0000
---- testsFinal/A-20-11-M-ok.outhyp	2021-11-18 06:28:05.039880309 +0000
+*** testsFinal/A-20-16-M-ok.out	2021-11-11 19:40:23.571655000 +0000
+--- testsFinal/A-20-16-M-ok.outhyp	2021-11-18 06:28:05.911883294 +0000
 ***************
-*** 178,184 ****
+*** 78,84 ****
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|2|M1|SAL|1|100|160|2|8
+! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|10|1000|1000|2
   Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
---- 178,184 ----
+--- 78,84 ----
   4 - Registar compra
   5 - Receber pagamento de venda
   0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|2|M1|SAL|1|100|177|2|8
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-***************
-*** 186,192 ****
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|1|100|115|8|11
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
---- 186,192 ----
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|1|100|116|8|11
+! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|10|1000|1020|2
   Gestão de Transacções
   1 - Visualizar
   2 - Registar desagregação
 ***************
-*** 213,220 ****
-  5 - Mostrar compras com parceiro
+*** 100,106 ****
+  4 - Registar compra
+  5 - Receber pagamento de venda
+  0 - Sair
+! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|10|1000|1000|2|3
+  Gestão de Transacções
+  1 - Visualizar
+  2 - Registar desagregação
+--- 100,106 ----
+  4 - Registar compra
+  5 - Receber pagamento de venda
+  0 - Sair
+! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|10|1000|1020|2|3
+  Gestão de Transacções
+  1 - Visualizar
+  2 - Registar desagregação
+***************
+*** 128,134 ****
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|200|260
-! M2|Toshiba|Tokyo, Japan|NORMAL|0|0|200|215
+  Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|SELECTION|2100|0|1210|1250
+! M2|Toshiba|Tokyo, Japan|SELECTION|2100|0|1210|1210
   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro
---- 213,220 ----
-  5 - Mostrar compras com parceiro
+--- 128,134 ----
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|1000|0|200|277
-! M2|Toshiba|Tokyo, Japan|NORMAL|1000|0|200|216
+  Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|SELECTION|2100|0|1210|1250
+! M2|Toshiba|Tokyo, Japan|SELECTION|2100|0|1210|1230
   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro

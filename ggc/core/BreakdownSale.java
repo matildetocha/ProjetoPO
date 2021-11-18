@@ -11,28 +11,28 @@ public class BreakdownSale extends Sale {
 		_paidValue = paidValue;
 
 	}
+
 	public String toString() {
-		return "DESAGREGAÇÃO|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + 
-				getQuantity() + "|" + Math.round(getBaseValue()) + "|" + Math.round(getPaidValue()) + "|" 
-				+ getPaymentDate().now() + "|" + breakdownRecipe();
+		return "DESAGREGAÇÃO|" + getId() + "|" + getPartner().getId() + "|" + getProduct().getId() + "|" + getQuantity()
+				+ "|" + Math.round(getBaseValue()) + "|" + Math.round(getPaidValue()) + "|" + getPaymentDate().now() + "|"
+				+ breakdownRecipe();
 	}
 
-	double getPaidValue(){
+	double getPaidValue() {
 		return _paidValue;
 	}
 
-	void setRecipe(Recipe recipe){
+	void setRecipe(Recipe recipe) {
 		_recipe = recipe;
 	}
 
-	String breakdownRecipe(){
+	String breakdownRecipe() {
 		String string = "";
 		List<Component> components = _recipe.getComponents();
-		
-		for (Component component : components) {
-		string += component.getProduct().getId() + ":" + (component.getQuantity()*getQuantity()) + ":" +
-				Math.round(component.getProduct().getMaxPrice() * getQuantity() * component.getQuantity()) + "#";
 
+		for (Component component : components) {
+			string += component.getProduct().getId() + ":" + (component.getQuantity() * getQuantity()) + ":"
+					+ Math.round(component.getBreakdownPrice() * getQuantity() * component.getQuantity()) + "#";
 		}
 
 		string = string.substring(0, string.length() - 1);

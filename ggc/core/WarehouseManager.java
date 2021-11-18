@@ -10,6 +10,7 @@ import ggc.core.exception.UnavailableProductCoreException;
 import ggc.core.exception.UnknownUserCoreException;
 import ggc.core.exception.UnknownProductCoreException;
 import ggc.core.exception.UnknownTransactionCoreException;
+import ggc.core.exception.AlreadyPaidTransactionCoreException;
 import ggc.core.exception.BadEntryException;
 
 import java.io.IOException;
@@ -153,8 +154,8 @@ public class WarehouseManager {
 		return _warehouse.getTransaction(id);
 	}
 
-	public Collection<Transaction> getPayedTransactionsByPartner(String partnerId) throws UnknownUserCoreException {
-		return _warehouse.getPayedTransactionsByPartner(partnerId);
+	public Collection<Transaction> getPaidTransactionsByPartner(String partnerId) throws UnknownUserCoreException {
+		return _warehouse.getPaidTransactionsByPartner(partnerId);
 	}
 
 	public void registerAcquisition(String partnerId, String productId, double price, int quantity)
@@ -177,7 +178,7 @@ public class WarehouseManager {
 		_warehouse.registerBreakdown(partnerId, productId, quantity);
 	}
 
-	public void payTransaction(int transactionId) throws UnknownTransactionCoreException {
+	public void payTransaction(int transactionId) throws UnknownTransactionCoreException, AlreadyPaidTransactionCoreException {
 		_warehouse.payTransaction(transactionId);
 	}
 

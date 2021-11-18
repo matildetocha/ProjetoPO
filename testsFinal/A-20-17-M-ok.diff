@@ -1,5 +1,5 @@
-*** testsFinal/A-20-17-M-ok.out	2021-11-17 15:27:39.650684821 +0000
---- testsFinal/A-20-17-M-ok.outhyp	2021-11-17 15:58:21.208213305 +0000
+*** testsFinal/A-20-17-M-ok.out	2021-11-11 19:47:05.027761000 +0000
+--- testsFinal/A-20-17-M-ok.outhyp	2021-11-18 06:28:06.075883855 +0000
 ***************
 *** 77,83 ****
   4 - Registar compra
@@ -18,21 +18,19 @@
   1 - Visualizar
   2 - Registar desagregação
 ***************
-*** 140,147 ****
+*** 140,146 ****
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
 ! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|210|0|1210|1290
-! M2|Toshiba|Tokyo, Japan|NORMAL|210|0|1210|1610
+  M2|Toshiba|Tokyo, Japan|NORMAL|210|0|1210|1610
   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
   Gestão de Parceiros
-  1 - Mostrar parceiro
---- 140,147 ----
+--- 140,146 ----
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|SELECTION|2100|0|1210|1292
-! M2|Toshiba|Tokyo, Japan|SELECTION|2100|0|1210|1687
+! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|210|0|1210|1292
+  M2|Toshiba|Tokyo, Japan|NORMAL|210|0|1210|1610
   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
   Gestão de Parceiros
-  1 - Mostrar parceiro

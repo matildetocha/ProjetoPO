@@ -6,6 +6,7 @@ import pt.tecnico.uilib.menus.CommandException;
 import ggc.app.exception.UnknownTransactionKeyException;
 
 import ggc.core.WarehouseManager;
+import ggc.core.exception.AlreadyPaidTransactionCoreException;
 import ggc.core.exception.UnknownTransactionCoreException;
 
 /**
@@ -24,6 +25,8 @@ public class DoReceivePayment extends Command<WarehouseManager> {
       _receiver.payTransaction(integerField("TransactionId")); 
     } catch (UnknownTransactionCoreException e) {
       throw new UnknownTransactionKeyException(integerField("TransactionId"));
+    } catch (AlreadyPaidTransactionCoreException e) {
+      e.getStackTrace();
     }
 
   }

@@ -50,16 +50,16 @@ public class Partner implements Serializable, Observer {
 		return Collections.unmodifiableList(_batches);
 	}
 
-	List<Transaction> getPayedTransactions() {
-		List<Transaction> _payedTransactions = new ArrayList<Transaction>(_breakdowns.values());
+	List<Transaction> getPaidTransactions() {
+		List<Transaction> _paidTransactions = new ArrayList<Transaction>(_breakdowns.values());
 
 		for (Transaction t : _sales.values()) {
 			if (t.isPaid())
-				_payedTransactions.add(t);
+				_paidTransactions.add(t);
 		}
 
-		Collections.sort(_payedTransactions, Transaction.getComparator());
-		return Collections.unmodifiableList(_payedTransactions);
+		Collections.sort(_paidTransactions, Transaction.getComparator());
+		return Collections.unmodifiableList(_paidTransactions);
 	}
 
 	void addBatch(Batch batch) {
@@ -132,7 +132,12 @@ public class Partner implements Serializable, Observer {
 	}
 
 	void changePoints(double points) {
-		_points += points;
+		if(points > 0)
+			_points = points;
+	}
+
+	double getPoints() {
+		return _points;
 	}
 
 	void changeValueAcquisitions(double price) {
