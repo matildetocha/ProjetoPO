@@ -1,39 +1,5 @@
-*** testsFinal/A-20-11-M-ok.out	2021-11-11 14:27:14.256583000 +0000
---- testsFinal/A-20-11-M-ok.outhyp	2021-11-18 06:28:05.039880309 +0000
-***************
-*** 178,184 ****
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|2|M1|SAL|1|100|160|2|8
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
---- 178,184 ----
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|2|M1|SAL|1|100|177|2|8
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
-***************
-*** 186,192 ****
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|1|100|115|8|11
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
---- 186,192 ----
-  4 - Registar compra
-  5 - Receber pagamento de venda
-  0 - Sair
-! Escolha uma opção: Identificador da transacção: VENDA|3|M2|SAL|1|100|116|8|11
-  Gestão de Transacções
-  1 - Visualizar
-  2 - Registar desagregação
+*** testsFinal/A-20-11-M-ok.out	2021-11-17 15:27:39.650684821 +0000
+--- testsFinal/A-20-11-M-ok.outhyp	2021-11-18 18:36:04.265791902 +0000
 ***************
 *** 213,220 ****
   5 - Mostrar compras com parceiro
@@ -48,8 +14,8 @@
   5 - Mostrar compras com parceiro
   6 - Mostrar vendas (e desagregações) com parceiro
   0 - Sair
-! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|1000|0|200|277
-! M2|Toshiba|Tokyo, Japan|NORMAL|1000|0|200|216
+! Escolha uma opção: M1|Rohit Figueiredo|New Delhi, India|NORMAL|1000|0|200|260
+! M2|Toshiba|Tokyo, Japan|NORMAL|1000|0|200|215
   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
   Gestão de Parceiros
   1 - Mostrar parceiro

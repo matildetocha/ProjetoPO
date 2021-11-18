@@ -496,12 +496,10 @@ public class Warehouse implements Serializable {
 		updateBatchStock(batchesToBreakdown, quantity);
 
 		if (difference < 0) {
-			partner.changeValueSales(0);
 			paidValue = 0;
 		}
 
 		else {
-			partner.changeValueSales(0);
 			paidValue = difference;
 		}
 

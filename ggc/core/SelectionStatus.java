@@ -6,24 +6,22 @@ public class SelectionStatus implements Status {
     int difference = currentDate.difference(deadline);
     int i;
 
-    if (difference >= n) //p1
+    if (difference >= n) 
       price *= 0.9;
 
-    else if (difference >= 0 && difference < n) { // p2
+    else if (difference >= 0 && difference < n) { 
       if (difference >= 2)
         price *= 0.95;
     }
 
-    else if (-difference > 0 && -difference <= n) { //p3
-      if (-difference >= 1) {
-        for (i = 0; i < -difference; i++)
-          price += price * 0.02;
+    else if (-difference > 0 && -difference <= n) { 
+      if (-difference > 1) {
+        price += ((price * 0.02) * -difference);
       }
     }
 
-    else if (-difference > n) { //p4
-     //for (i = 0; i < -difference; i++)
-      price += price * (0.05 * -difference);
+    else if (-difference > n) { 
+      price += price * 0.05;
     }
     return price;
   }
