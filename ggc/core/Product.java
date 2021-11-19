@@ -99,8 +99,12 @@ public abstract class Product implements Serializable {
 		return Collections.unmodifiableList(_batches);
 	}
 
-	List<Batch> getBatchesToSell(int amount) {
-		List<Batch> batchesByLowestPrice = new ArrayList<Batch>(_batches);
+	void updateBatches(List<Batch> batches) {
+		_batches = batches;
+	}
+
+	List<Batch> getBatchesToSell(int amount, List<Batch> batches) {
+		List<Batch> batchesByLowestPrice = new ArrayList<Batch>(batches);
 		List<Batch> batchesToSell = new ArrayList<>();
 		int i = amount;
 
@@ -109,16 +113,13 @@ public abstract class Product implements Serializable {
 
 		while (i > 0 && iter.hasNext()) {
 			Batch b = iter.next();
-			batchesToSell.add(b);
-			i -= b.getQuantity();
+			if (b.getProduct().equals(this)) {
+				batchesToSell.add(b);
+				i -= b.getQuantity();
+			}
 		}
 
 		return Collections.unmodifiableList(batchesToSell);
-	}
-
-	List<Batch> copyBatches() {
-		List<Batch> copy = new ArrayList<Batch>(_batches);
-		return copy;
 	}
 
 	/**

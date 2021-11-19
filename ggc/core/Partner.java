@@ -132,7 +132,7 @@ public class Partner implements Serializable, Observer {
 	}
 
 	void changePoints(double points) {
-		if(points > 0)
+		if(points >= 0)
 			_points = points;
 	}
 

@@ -4,7 +4,6 @@ public class SelectionStatus implements Status {
   @Override
   public double getAmountToPay(Date currentDate, Date deadline, double price, int n) {
     int difference = currentDate.difference(deadline);
-    int i;
 
     if (difference >= n) 
       price *= 0.9;
@@ -21,7 +20,7 @@ public class SelectionStatus implements Status {
     }
 
     else if (-difference > n) { 
-      price += price * 0.05;
+      price += price * 0.05 * -difference;
     }
     return price;
   }

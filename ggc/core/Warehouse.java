@@ -270,41 +270,32 @@ public class Warehouse implements Serializable {
 		partner.removeBatch(batch);
 	}
 
-	void removeBatchCopy(Batch batch) {
-		Product product = batch.getProduct();
-		List<Batch> copyBatches = new ArrayList<Batch>(product.copyBatches());
-
-		copyBatches.remove(batch);
-	}
-
 	void updateBatchStock(List<Batch> batchesToSell, int amount) {
 		int i, lastI = batchesToSell.size() - 1;
-
 		if (batchesToSell.size() != 1) {
 			for (i = 0; i < batchesToSell.size() - 1; i++) {
 				amount -= batchesToSell.get(i).getQuantity();
 				removeBatch(batchesToSell.get(i));
 			}
 		}
-
 		batchesToSell.get(lastI).changeQuantity(-amount);
 		if (batchesToSell.get(lastI).getQuantity() == 0)
 			removeBatch(batchesToSell.get(lastI));
 	}
 
-	void updateBatchStockCopy(List<Batch> batchesToSell, int amount) {
+	void updateBatchStockCopy(List<Batch> batchesToSell, List<Batch> copyBatches, int amount) {
 		int i, lastI = batchesToSell.size() - 1;
 
 		if (batchesToSell.size() != 1) {
 			for (i = 0; i < batchesToSell.size() - 1; i++) {
 				amount -= batchesToSell.get(i).getQuantity();
-				removeBatchCopy(batchesToSell.get(i));
+				copyBatches.remove(batchesToSell.get(i));
 			}
 		}
 
 		batchesToSell.get(lastI).changeQuantity(-amount);
 		if (batchesToSell.get(lastI).getQuantity() == 0)
-			removeBatchCopy(batchesToSell.get(lastI));
+			copyBatches.remove(batchesToSell.get(lastI));
 	}
 
 	/*
@@ -362,7 +353,7 @@ public class Warehouse implements Serializable {
 			throw new UnavailableProductCoreException();
 
 		Partner partner = _partners.get(partnerId.toLowerCase());
-		List<Batch> batchesToSell = product.getBatchesToSell(quantity);
+		List<Batch> batchesToSell = product.getBatchesToSell(quantity, product.getBatches());
 
 		double baseValue = product.getPriceByFractions(batchesToSell, quantity);
 
@@ -380,64 +371,87 @@ public class Warehouse implements Serializable {
 
 	void saleAggProduct(String partnerId, String productId, int deadline, int quantity)
 			throws UnavailableProductCoreException, UnknownUserCoreException, UnknownProductCoreException {
-		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
-		int amountToCreate = quantity - product.getQuantity();
+		List<Batch> copyBatches = new ArrayList<>();
+		AggregateProduct aggProduct = (AggregateProduct) _products.get(productId.toLowerCase());
 
-		tryToAggregate(partnerId, productId, deadline, quantity);
-
-		List<Batch> batchesToSell = new ArrayList<>();
-
-		for (Component c : product.getRecipe().getComponents())
-			batchesToSell.addAll(c.getProduct().getBatchesToSell(amountToCreate * c.getQuantity()));
-
-		if (batchesToSell.size() == product.getRecipe().getComponents().size()) {
-			Batch batch = new Batch(_products.get(productId.toLowerCase()), _partners.get(partnerId.toLowerCase()),
-					product.getRecipe().getPrice(amountToCreate), amountToCreate);
-			registerBatch(batch);
-		}
-
-		else {
-			List<Double> prices = new ArrayList<>();
-			int i = amountToCreate;
-			while (i > 0) {
-				prices.add(product.getRecipe().getPrice(amountToCreate));
-				for (Component c : product.getRecipe().getComponents())
-					updateBatchStock(c.getProduct().getBatchesToSell(c.getQuantity()), c.getQuantity());
-			
-				i--;
+		for (Batch batch : getSortedBatches())
+			try {
+				copyBatches.add((Batch) batch.copy());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
 			}
 
-			for (double price : prices) {
-				Batch batch = new Batch(_products.get(productId.toLowerCase()), _partners.get(partnerId.toLowerCase()), price,
-						1);
-				registerBatch(batch);
+		copyBatches = tryToAggregate(partnerId, productId, deadline, quantity, copyBatches);
+		
+		for (Product product: getProducts()) {
+			List<Batch> copyProdBatches = new ArrayList<>();
+			for (Batch copy : copyBatches) {
+				if (copy.getProduct().equals(product))
+					copyProdBatches.add(copy);
 			}
+			product.updateBatches(copyProdBatches);
 		}
 
-		product.updateMaxPrice();
+		aggProduct.updateMaxPrice();
 
 		registerSaleByCredit(productId, partnerId, deadline, quantity);
 	}
 
-	void tryToAggregate(String partnerId, String productId, int deadline, int quantity)
+	List<Batch> tryToAggregate(String partnerId, String productId, int deadline, int quantity, List<Batch> copyBatches)
 			throws UnavailableProductCoreException, UnknownProductCoreException {
 		AggregateProduct product = (AggregateProduct) _products.get(productId.toLowerCase());
+		Map<Double, Integer> prices = new HashMap<>();
 		int amountToCreate = quantity - product.getQuantity();
+		int i = 0;
 
-		for (Component c : product.getRecipe().getComponents()) {
-			if (c.getQuantity() * amountToCreate > c.getProduct().getQuantity()) {
-				if (!isAggregateProduct(c.getProduct().getId()))
-					throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
-							c.getQuantity() * amountToCreate);
-				else
-					tryToAggregate(partnerId, c.getProduct().getId(), deadline, c.getQuantity() * amountToCreate);
+		while (i < amountToCreate) {
+			double price = 0;
+			for (Component c : product.getRecipe().getComponents()) {
+				if (c.getQuantity() * amountToCreate > c.getProduct().getQuantity()) {
+					if (!isAggregateProduct(c.getProduct().getId())) {
+						throw new UnavailableProductCoreException(c.getProduct().getId(), c.getProduct().getQuantity(),
+								c.getQuantity() * amountToCreate);
+					} else
+						tryToAggregate(partnerId, c.getProduct().getId(), deadline, c.getQuantity() * amountToCreate, copyBatches);
+				}
+
+				else {
+					List<Batch> batchesToSell = c.getProduct().getBatchesToSell(c.getQuantity(), copyBatches);
+					price += (1 + product.getRecipe().getAlpha())
+							* c.getProduct().getPriceByFractions(batchesToSell, c.getQuantity());
+					updateBatchStockCopy(batchesToSell, copyBatches, c.getQuantity());
+				}
 			}
 
-			else {
-				List<Batch> batchesToSell = c.getProduct().getBatchesToSell(c.getQuantity() * amountToCreate);
-				updateBatchStockCopy(batchesToSell, c.getQuantity() * amountToCreate);
+			for (Component c : product.getRecipe().getComponents()) {
+				if (isAggregateProduct(c.getProduct().getId())) {
+					List<Batch> batchesToSell = c.getProduct().getBatchesToSell(c.getQuantity(), copyBatches);
+					price += (1 + product.getRecipe().getAlpha())
+							* c.getProduct().getPriceByFractions(batchesToSell, c.getQuantity());
+					updateBatchStockCopy(batchesToSell, copyBatches, c.getQuantity());
+				}
 			}
+
+			if (!prices.containsKey(price))
+				prices.put(price, 1);
+			else
+				prices.replace(price, prices.get(price) + 1);
+
+			i++;
 		}
+
+		Set<Double> keys = prices.keySet();
+		Iterator<Double> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			double price = iterator.next();
+			Batch batch = new Batch(product, _partners.get(partnerId.toLowerCase()), price, prices.get(price));
+			copyBatches.add(batch);
+		}
+
+		prices.clear();
+
+		return copyBatches;
 	}
 
 	void registerAcquisition(String partnerId, String productId, double price, int quantity)
@@ -486,7 +500,7 @@ public class Warehouse implements Serializable {
 
 		Product product = _products.get(productId.toLowerCase());
 		Partner partner = _partners.get(partnerId.toLowerCase());
-		List<Batch> batchesToBreakdown = product.getBatchesToSell(quantity);
+		List<Batch> batchesToBreakdown = product.getBatchesToSell(quantity, product.getBatches());
 		double baseValue = product.getPriceByFractions(batchesToBreakdown, quantity);
 		double paidValue;
 		List<Component> components = product.getRecipe().getComponents();

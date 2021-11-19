@@ -23,7 +23,7 @@ Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identi
 4 - Registar compra
 5 - Receber pagamento de venda
 0 - Sair
-Escolha uma opção: Identificador da transacção: VENDA|0|M1|GARRAFA|4|79|79|2
+Escolha uma opção: Identificador da transacção: VENDA|0|M1|GARRAFA|4|233|233|2
 Gestão de Transacções
 1 - Visualizar
 2 - Registar desagregação
@@ -38,7 +38,7 @@ Escolha uma opção: Identificador do parceiro: Data limite de pagamento: Identi
 4 - Registar compra
 5 - Receber pagamento de venda
 0 - Sair
-Escolha uma opção: Identificador da transacção: VENDA|1|M1|GARRAFA|1|30|30|2
+Escolha uma opção: Identificador da transacção: VENDA|1|M1|GARRAFA|1|224|224|2
 Gestão de Transacções
 1 - Visualizar
 2 - Registar desagregação
@@ -63,13 +63,13 @@ Escolha uma opção: Gestão de Produtos
 3 - Visualizar lotes fornecidos por parceiro
 4 - Visualizar lotes de um dado produto
 0 - Sair
-Escolha uma opção: AA|2|2|B:1#C:1
-B|1|1475
-C|1|1475
-CORTIÇA|1|1355
-GARRAFA|30|0|ROLHA:11#VIDRO:5
-PLASTICO|1|971
-ROLHA|2|2|AA:1#CORTIÇA:5#PLASTICO:1
+Escolha uma opção: AA|2|682|B:1#C:1
+B|1|780
+C|1|780
+CORTIÇA|1|1300
+GARRAFA|224|0|ROLHA:11#VIDRO:5
+PLASTICO|1|960
+ROLHA|2|-2|AA:1#CORTIÇA:5#PLASTICO:1
 SAL|100|500
 VIDRO|1|185
 Gestão de Produtos
@@ -78,12 +78,49 @@ Gestão de Produtos
 3 - Visualizar lotes fornecidos por parceiro
 4 - Visualizar lotes de um dado produto
 0 - Sair
-Escolha uma opção: AA|M1|2|2
-B|M1|1|1475
-C|M1|1|1475
-CORTIÇA|M1|1|1355
-PLASTICO|M1|1|971
-ROLHA|M1|2|2
+Escolha uma opção: AA|M1|2|16
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+AA|M1|2|18
+B|M1|1|780
+C|M1|1|780
+CORTIÇA|M1|1|1300
+PLASTICO|M1|1|960
+ROLHA|M1|9|-2
 SAL|S1|100|500
 VIDRO|M1|1|185
 Gestão de Produtos

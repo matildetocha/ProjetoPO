@@ -3,7 +3,7 @@ package ggc.core;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class Batch implements Serializable {
+public class Batch implements Serializable, Cloneable {
 	private static final long serialVersionUID = 202109192006L;
 
 	/** A Batch has a product's quantity and price defined in it. */
@@ -77,6 +77,10 @@ public class Batch implements Serializable {
 	 */
 	Partner getPartner() {
 		return _partner;
+	}
+
+	Object copy() throws CloneNotSupportedException {
+		return this.clone();
 	}
 
 	/**
